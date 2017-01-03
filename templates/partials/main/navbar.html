@@ -1,0 +1,43 @@
+<!-- Navigation -->
+<nav id="mainNav" class="navbar navbar-fixed-top">
+    <div class="container">
+        <a class="navbar-brand page-scroll" href="#page-top">Trips & Trucks</a>
+        <button class="btn btn-primary btn-toggle hidden-md-up float-xs-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fa fa-bars"></i></button>
+        <!-- Clearfix with a utility class added to allow for better navbar responsiveness. -->
+        <div class="clearfix hidden-md-up"></div>
+        <div class="collapse navbar-toggleable-sm" id="navbarResponsive">
+            <ul class="nav navbar-nav float-md-right">
+                {{#if loggedIn}}
+                    <li class="nav-item">
+                        <a class="nav-link page-scroll" href="/dashboard.html">Dashboard</a>
+                    </li>
+                {{/if}}
+                <li class="nav-item">
+                    <a class="nav-link page-scroll" href="#services">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link page-scroll" href="#portfolio">Portfolio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link page-scroll" href="#about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link page-scroll" href="#pricing">Pricing</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link page-scroll" href="#contact">Contact</a>
+                </li>
+                {{#if loggedIn}}
+                    <li class="nav-item">
+                         <span class="nav-link page-scroll" href="#" id="logout">Logout</span>
+                    </li>
+                {{else}}
+                    <li class="nav-item">
+                        <a class="nav-link page-scroll" href="#auth">Login/ Sign Up</a>
+                    </li>
+                {{/if}}
+                                   
+            </ul>
+        </div>
+    </div>
+</nav>
