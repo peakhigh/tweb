@@ -1,5 +1,13 @@
 {{> navbar}}
 
-{{> page}}
+<div id="page-wrapper">
+    <div class="container-fluid">
+        {{> header}}
+        <div id="content-wrapper">
+            {{> content}}
+        </div>            
+    </div>
+</div>
+{{> footer}}
 <!-- Theme JavaScript -->
 <script async src="js/dashboard/dashboard.min.js"></script>

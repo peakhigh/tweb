@@ -6,6 +6,8 @@ var header = require('gulp-header');
 var cleanCSS = require('gulp-clean-css');
 var rename = require("gulp-rename");
 var uglify = require('gulp-uglify');
+var gutil = require('gulp-util');
+var inject = require('gulp-inject');
 var pkg = require('./package.json');
 
 // Set the banner content
@@ -83,6 +85,40 @@ gulp.task('minify-js-dashboard', function() {
         .pipe(browserSync.reload({
             stream: true
         }))
+})
+
+// Actions
+gulp.task('compile-actions', function() {
+    fs = require("fs");
+    var actions = fs.readdirSync('actions');
+    var template = fs.readFileSync('templates/action-template.html');
+    actions.forEach(function(action){ 
+        fs.writeFileSync('actions/'+action+'/'+action+'-compiled.html', template);
+
+        gulp.src('actions/'+action+'/'+action+'-compiled.html')
+        .pipe(inject(gulp.src(['actions/'+action+'/'+action+'.less']).pipe(less()).pipe(cleanCSS({ compatibility: 'ie8' })), {
+            starttag: '<!-- inject:css -->',
+            transform: function (filePath, file) {
+                // return file contents as string 
+                return file.contents.toString('utf8')
+            }
+        }))
+        .pipe(inject(gulp.src(['actions/'+action+'/'+action+'.html']), {
+            starttag: '<!-- inject:html -->',
+            transform: function (filePath, file) {
+                // return file contents as string 
+                return file.contents.toString('utf8')
+            }
+        }))
+        .pipe(inject(gulp.src(['actions/'+action+'/'+action+'.js']).pipe(uglify()), {
+            starttag: '<!-- inject:js -->',
+            transform: function (filePath, file) {
+                // return file contents as string 
+                return file.contents.toString('utf8')
+            }
+        }))
+        .pipe(gulp.dest('actions/'+action));
+    });
 })
 
 // Copy vendor libraries from /node_modules into /vendor

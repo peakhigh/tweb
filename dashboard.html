@@ -26,11 +26,13 @@
             templateExtension: 'html',
             partialPath: 'templates/partials/dashboard',
             partialExtension: 'html',
-            partials: ['navbar', 'topmenu', 'messagemenu', 'alertmenu', 'usermenu', 'sidemenu', 'page', 'header', 'cards', 'tile', 'footer']
+            partials: ['navbar', 'topmenu', 'messagemenu', 'alertmenu', 'usermenu', 'sidemenu', 'content', 'header', 'cards', 'tile', 'footer']
         });
         if(API_HELPER.testToken()){
             helperData.loggedIn = true;
             helperData.loggedInUser = API_HELPER.getLoggedInUser();
+        } else {
+            window.location = '/';
         }   
     </script>
 
