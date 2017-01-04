@@ -31,6 +31,7 @@
         if(API_HELPER.testToken()){
             helperData.loggedIn = true;
             helperData.loggedInUser = API_HELPER.getLoggedInUser();
+            console.log(helperData.loggedInUser);
         } else {
             window.location = '/';
         }   

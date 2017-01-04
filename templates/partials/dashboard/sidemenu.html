@@ -4,8 +4,8 @@
         {{#each loggedInUser.menu.SideMenu}}
              <li class="list-group-item">
                 {{#if Menu}}
-                    <a href="javascript:MENU_HELPER.menuClick('{{action}}'');" data-toggle="collapse" data-target="#submenu{{action}}"><i class="fa fa-fw {{icon}}"></i> {{title}} <i class="fa fa-fw fa-caret-down"></i></a>
-                    <ul id="submenu{{key}}" class="list-group collapse">
+                    <a href="javascript:MENU_HELPER.menuClick('{{action}}');" data-toggle="collapse" data-target="#submenu{{action}}"><i class="fa fa-fw {{icon}}"></i> {{title}} <i class="fa fa-fw fa-caret-down"></i></a>
+                    <ul id="submenu{{action}}" class="list-group collapse">
                         {{#each Menu}}
                             <li class="list-group-item">
                                 <a href="javascript:MENU_HELPER.menuClick('{{action}}','{{../action}}');"><i class="fa fa-fw {{icon}}"></i> {{title}}</a>
