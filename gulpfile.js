@@ -9,6 +9,8 @@ var uglify = require('gulp-uglify');
 var gutil = require('gulp-util');
 var inject = require('gulp-inject');
 var pkg = require('./package.json');
+var replace = require('gulp-replace');
+var removeEmptyLines = require('gulp-remove-empty-lines');
 
 // Set the banner content
 var banner = ['/*!\n',
@@ -87,11 +89,11 @@ gulp.task('minify-js-dashboard', function() {
         }))
 })
 
-// Actions
+// Compile Actions
 gulp.task('compile-actions', function() {
     fs = require("fs");
     var actions = fs.readdirSync('actions');
-    var template = fs.readFileSync('templates/action-template.html');
+    var template = fs.readFileSync('action-template.html');
     actions.forEach(function(action){ 
         fs.writeFileSync('actions/'+action+'/'+action+'-compiled.html', template);
 
@@ -117,6 +119,18 @@ gulp.task('compile-actions', function() {
                 return file.contents.toString('utf8')
             }
         }))
+        .pipe(replace('<!-- inject:css -->', ''))
+        .pipe(replace('<!-- inject:js -->', ''))
+        .pipe(replace('<!-- inject:html -->', ''))
+        .pipe(replace('<!-- endinject -->', ''))
+        .pipe(removeEmptyLines({
+            removeComments: true
+        }))
+        .pipe(replace(new RegExp('<style>\n</style>', 'g'), ''))
+        .pipe(replace(new RegExp('<script type="text/javascript">\n</script>', 'g'), ''))
+        .pipe(removeEmptyLines({
+            removeComments: true
+         }))
         .pipe(gulp.dest('actions/'+action));
     });
 })
