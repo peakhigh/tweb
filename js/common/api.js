@@ -21,16 +21,24 @@ API_HELPER = new function() {
         API_HELPER.clearToken();    
         window.location = '/';
     }   
+    this.getLoggedInUser = function() {
+        let user = localStorage.getItem('loggedInUser');
+        if(user) {
+            return JSON.parse(user);
+        }
+        return null;
+    }
     this.setToken = function(response) {
         if(response && response.token) {
-            sessionStorage.setItem('auth-token', response.token);
+            localStorage.setItem('auth-token', response.token);
+            localStorage.setItem('loggedInUser', JSON.stringify(response.user));
         }
     }
     this.clearToken = function() {
-        sessionStorage.removeItem('auth-token');
+        localStorage.removeItem('auth-token');
     }
     this.testToken = function() {
         //TODO - test from the backend
-        return sessionStorage.getItem('auth-token') ? true : false;
+        return localStorage.getItem('auth-token') ? true : false;
     }
 }

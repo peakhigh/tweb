@@ -18,7 +18,7 @@ var banner = ['/*!\n',
 ].join('');
 
 // Compile LESS files from /less into /css
-gulp.task('less', function() {
+gulp.task('less-main', function() {
     return gulp.src('less/main/style.less')
         .pipe(less())
         .pipe(header(banner, { pkg: pkg }))
@@ -28,8 +28,19 @@ gulp.task('less', function() {
         }))
 });
 
+// Compile LESS files from /less into /css
+gulp.task('less-dashboard', function() {
+    return gulp.src('less/dashboard/style.less')
+        .pipe(less())
+        .pipe(header(banner, { pkg: pkg }))
+        .pipe(gulp.dest('css/dashboard'))
+        .pipe(browserSync.reload({
+            stream: true
+        }))
+});
+
 // Minify compiled CSS
-gulp.task('minify-css', ['less'], function() {
+gulp.task('minify-css-main', ['less-main', 'less-dashboard'], function() {
     return gulp.src('css/main/style.css')
         .pipe(cleanCSS({ compatibility: 'ie8' }))
         .pipe(rename({ suffix: '.min' }))
@@ -39,17 +50,40 @@ gulp.task('minify-css', ['less'], function() {
         }))
 });
 
-// Minify JS
-gulp.task('minify-js', function() {
-    return gulp.src('js/main.js')
-        .pipe(uglify())
-        .pipe(header(banner, { pkg: pkg }))
+// Minify compiled CSS
+gulp.task('minify-css-dashboard', ['less-main', 'less-dashboard'], function() {
+    return gulp.src('css/dashboard/style.css')
+        .pipe(cleanCSS({ compatibility: 'ie8' }))
         .pipe(rename({ suffix: '.min' }))
-        .pipe(gulp.dest('js'))
+        .pipe(gulp.dest('css/dashboard'))
         .pipe(browserSync.reload({
             stream: true
         }))
 });
+
+// Minify JS
+gulp.task('minify-js-main', function() {
+    return gulp.src('js/main/main.js')
+        .pipe(uglify())
+        .pipe(header(banner, { pkg: pkg }))
+        .pipe(rename({ suffix: '.min' }))
+        .pipe(gulp.dest('js/main'))
+        .pipe(browserSync.reload({
+            stream: true
+        }))
+});
+
+// Minify JS
+gulp.task('minify-js-dashboard', function() {
+    return gulp.src('js/dashboard/dashboard.js')
+        .pipe(uglify())
+        .pipe(header(banner, { pkg: pkg }))
+        .pipe(rename({ suffix: '.min' }))
+        .pipe(gulp.dest('js/dashboard'))
+        .pipe(browserSync.reload({
+            stream: true
+        }))
+})
 
 // Copy vendor libraries from /node_modules into /vendor
 gulp.task('copy', function() {
@@ -74,7 +108,7 @@ gulp.task('copy', function() {
 })
 
 // Run everything
-gulp.task('default', ['less', 'minify-css', 'minify-js', 'copy']);
+gulp.task('default', ['less-main', 'minify-css-main', 'minify-js-main', 'less-dashboard', 'minify-css-dashboard', 'minify-js-dashboard', 'copy']);
 
 // Configure the browserSync task
 gulp.task('browserSync', function() {
@@ -86,12 +120,16 @@ gulp.task('browserSync', function() {
 });
 
 // Dev task with browserSync
-gulp.task('dev', ['browserSync', 'less', 'minify-css', 'minify-js'], function() {
-    gulp.watch('less/*.less', ['less']);
-    gulp.watch('css/*.css', ['minify-css']);
-    gulp.watch('js/*.js', ['minify-js']);
+gulp.task('dev', ['browserSync', 'less-main', 'minify-css-main', 'minify-js-main', 'less-dashboard', 'minify-css-dashboard', 'minify-js-dashboard'], function() {
+    gulp.watch('less/*.less', ['less-main', 'less-dashboard']);
+    gulp.watch('less/**/*.less', ['less-main', 'less-dashboard']);
+    gulp.watch('css/*.css', ['minify-css-main', 'minify-css-dashboard']);
+    gulp.watch('css/**/*.css', ['minify-css-main', 'minify-css-dashboard']);
+    gulp.watch('js/*.js', ['minify-js-main', 'minify-js-dashboard']);
+    gulp.watch('js/**/*.js', ['minify-js-main', 'minify-js-dashboard']);
     // Reloads the browser whenever HTML or JS files change
     gulp.watch('*.html', browserSync.reload);
+    gulp.watch('templates/*.html', browserSync.reload);
     gulp.watch('templates/**/*.html', browserSync.reload);
     gulp.watch('templates/**/**/*.html', browserSync.reload);
     gulp.watch('less/**/*.less', browserSync.reload);

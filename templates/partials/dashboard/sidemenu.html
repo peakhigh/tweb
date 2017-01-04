@@ -1,0 +1,22 @@
+<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+<div class="collapse navbar-collapse navbar-toggleable-sm navbar-ex1-collapse">
+    <ul class="nav navbar-nav side-nav list-group">
+        {{#each loggedInUser.menu.SideMenu}}
+             <li class="list-group-item">
+                {{#if Menu}}
+                    <a href="javascript:MENU_HELPER.menuClick('{{key}}'');" data-toggle="collapse" data-target="#submenu{{key}}"><i class="fa fa-fw {{icon}}"></i> {{title}} <i class="fa fa-fw fa-caret-down"></i></a>
+                    <ul id="submenu{{key}}" class="list-group collapse">
+                        {{#each Menu}}
+                            <li class="list-group-item">
+                                <a href="javascript:MENU_HELPER.menuClick('{{key}}','{{../key}}');"><i class="fa fa-fw {{icon}}"></i> {{title}}</a>
+                            </li>
+                        {{/each}}
+                    </ul>                        
+                {{else}}
+                    <a href="#"><i class="fa fa-fw {{icon}}"></i> {{title}}</a>
+                {{/if}}                 
+            </li>
+        {{/each}}            
+    </ul>
+</div>
+<!-- /.navbar-collapse -->
