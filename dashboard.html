@@ -18,7 +18,7 @@
     <script src="js/common/helpers.js"></script>
     <script src="js/common/menu_helper.js"></script>
     <script type="text/javascript">
-        var helperData = {
+        MODULE_DATA = {
             loggedIn: false
         }; 
         $.handlebars({
@@ -29,9 +29,9 @@
             partials: ['navbar', 'topmenu', 'messagemenu', 'alertmenu', 'usermenu', 'sidemenu', 'content', 'header', 'cards', 'tile', 'footer']
         });
         if(API_HELPER.testToken()){
-            helperData.loggedIn = true;
-            helperData.loggedInUser = API_HELPER.getLoggedInUser();
-            console.log(helperData.loggedInUser);
+            MODULE_DATA.loggedIn = true;
+            MODULE_DATA.loggedInUser = API_HELPER.getLoggedInUser();
+            console.log(MODULE_DATA.loggedInUser);
         } else {
             window.location = '/';
         }   
@@ -74,9 +74,10 @@
         $.ajaxPrefilter(function( options, original_Options, jqXHR ) {
             options.async = true;
         });
-        helperData.pageHeading = 'Dashboard';
-        helperData.pageSubHeading = 'Dashboard';
-        $('#wrapper').render('dashboard', helperData);
+        MODULE_DATA.pageHeading = 'Dashboard';
+        MODULE_DATA.pageSubHeading = 'Dashboard';
+        MODULE_DATA.pageIcon = 'fa-dashboard';
+        $('#wrapper').render('dashboard', MODULE_DATA);
     </script>
 </body>
 </html>

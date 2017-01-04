@@ -1,1 +1,1 @@
-alert("Manage Trips");
+console.log("Manage Trips");
