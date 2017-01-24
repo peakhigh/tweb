@@ -103,7 +103,7 @@ gulp.task('compile-html-modules', function() {
             template_module = fs.readdirSync(currentPath);
             module_folders.forEach(function(module_folder){
                 currentPath = basePath + '/' + template_module_path + '/' + module_folder;
-                if (fs.statSync(currentPath).isDirectory()) {
+                if (fs.existsSync(currentPath) && fs.statSync(currentPath).isDirectory()) {
                     var possible_module_folder = fs.readdirSync(currentPath);
                     possible_module_folder.forEach(function(possible_module){
                         currentPath = basePath + '/' + template_module_path + '/' + module_folder + '/' + possible_module;
@@ -119,11 +119,11 @@ gulp.task('compile-html-modules', function() {
 })
 
 function watchHtmlDirForModuleChanges(baseDirPath){
-    if (fs.statSync(baseDirPath).isDirectory()) {
+    if (fs.existsSync(baseDirPath) && fs.statSync(baseDirPath).isDirectory()) {
         var possible_module_folder = fs.readdirSync(baseDirPath);
         possible_module_folder.forEach(function(possible_module){
             var currentPath = baseDirPath + '/' + possible_module;
-            if (fs.statSync(currentPath).isDirectory()) {
+            if (fs.existsSync(currentPath) && fs.statSync(currentPath).isDirectory()) {
                 gutil.log('..', currentPath)
                 gulp.watch(currentPath+'/**', function () {
                     gutil.log('compiling module', currentPath)
