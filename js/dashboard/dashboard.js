@@ -1,4 +1,7 @@
 CURRENT_MODULE = 'dashboard';
+CURRENT_PAGE = 'dashboard';
+CURRENT_PARENT_PAGE = null;
+CURRENT_PAGE_CONFIG = null;
 $(function() {
     $(window).bind("load resize", setPageHeight);
 

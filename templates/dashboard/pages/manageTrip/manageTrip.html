@@ -1,0 +1,11 @@
+{{> header}}
+<div class='manage-trips'>
+    Manage Trips
+    <div class='manage-trips-content'>
+            Manage Trips Content<br/>
+            {{#each templateData}}
+                {{stringify this}}
+                <br/>
+            {{/each}}            
+    </div>
+</div> 

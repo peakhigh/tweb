@@ -22,7 +22,7 @@ API_HELPER = new function() {
         window.location = '/';
     }   
     this.getLoggedInUser = function() {
-        let user = localStorage.getItem('loggedInUser');
+        let user = STORAGE.getItem('loggedInUser');
         if(user) {
             return JSON.parse(user);
         }
@@ -30,15 +30,32 @@ API_HELPER = new function() {
     }
     this.setToken = function(response) {
         if(response && response.token) {
-            localStorage.setItem('auth-token', response.token);
-            localStorage.setItem('loggedInUser', JSON.stringify(response.user));
+            STORAGE.setItem('auth-token', response.token);
+            STORAGE.setItem('loggedInUser', JSON.stringify(response.user));
         }
     }
+    this.getToken = function() {
+        return STORAGE.getItem('auth-token') || '';
+    }
     this.clearToken = function() {
-        localStorage.removeItem('auth-token');
+        STORAGE.removeItem('auth-token');
     }
     this.testToken = function() {
         //TODO - test from the backend
-        return localStorage.getItem('auth-token') ? true : false;
+        return STORAGE.getItem('auth-token') ? true : false;
+    }
+    this.loadService = function(options, callback) {
+        $.ajax({
+            type: 'GET', 
+            dataType: 'json',
+            url: CONSTANTS.apiServer + options.service,
+            headers: {'Authorization': 'Bearer ' + API_HELPER.getToken()},                                   
+            success: function (response) {  
+                callback(null, response);
+            },
+            error: function (e) {
+                callback(e, null);
+            }
+        });
     }
 }
