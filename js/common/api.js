@@ -31,7 +31,7 @@ API_HELPER = new function() {
     this.setToken = function(response) {
         if(response && response.token) {
             STORAGE.setItem('auth-token', response.token);
-            STORAGE.setItem('loggedInUser', JSON.stringify(response.user));
+            STORAGE.setItem('loggedInUser', response.user);
         }
     }
     this.getToken = function() {

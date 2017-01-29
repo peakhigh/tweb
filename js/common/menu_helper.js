@@ -36,10 +36,7 @@ MENU_HELPER = new function () {
                 });
             } else {
                 $('#content-wrapper').render(page, helperData);
-            }
-            //use data in template
-            //use sub partials in #each
-            //get data in js file            
+            }           
         }        
     }  
 
