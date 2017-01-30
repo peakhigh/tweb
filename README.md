@@ -1,5 +1,9 @@
 #jquery-handlebars
 https://github.com/71104/jquery-handlebars
+#alpaca form generator
+http://www.alpacajs.org/
+#handlebars
+http://handlebarsjs.com/
 
 
 

@@ -1,10 +1,10 @@
 {{> header}}
 <div class='new-trips'>
-    New Trips
     <div class='new-trips-content'>
-            New Trips Content
+    </div>
+    <div class='new-trips-content-test'>
     </div>
 </div> 
 <script type="text/javascript">
-    console.log(UTILS.getCurrentTemplateData());
+    console.log(JSON.stringify(UTILS.getCurrentTemplateData())),$(".new-trips-content").alpaca({data:"100.60",schema:{format:"ip-address"}});
 </script>

@@ -214,6 +214,8 @@ gulp.task('dev', ['browserSync', 'compile-html-modules', 'less-main', 'minify-cs
     gulp.watch('less/**/*.less', ['less-main', 'less-dashboard']);
     gulp.watch('css/*.css', ['minify-css-main', 'minify-css-dashboard']);
     gulp.watch('css/**/*.css', ['minify-css-main', 'minify-css-dashboard']);
+    // gulp.watch('css/main/*.css', ['minify-css-main']);
+    // gulp.watch('css/dashboard/*.css', ['minify-css-dashboard']);
     gulp.watch('js/*.js', ['minify-js-main', 'minify-js-dashboard']);
     gulp.watch('js/**/*.js', ['minify-js-main', 'minify-js-dashboard']);
     // Reloads the browser whenever HTML or JS files change    

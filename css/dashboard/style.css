@@ -272,3 +272,8 @@ ul.alert-dropdown {
 .bg-white {
   background: #fff;
 }
+/* alpaca overrides */
+[type=checkbox],
+[type=radio] {
+  margin-right: 5px;
+}

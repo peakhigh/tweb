@@ -27,8 +27,10 @@
     "url": "https://github.com/BlackrockDigital/startbootstrap-agency.git"
   },
   "dependencies": {
+    "bootstrap-datepicker": "^1.6.4",
     "gulp-inject": "^4.2.0",
     "gulp-remove-empty-lines": "0.0.8",
-    "gulp-replace": "^0.5.4"
+    "gulp-replace": "^0.5.4",
+    "moment": "^2.17.1"
   }
 }
