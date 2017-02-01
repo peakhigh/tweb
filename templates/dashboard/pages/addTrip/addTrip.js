@@ -6,12 +6,13 @@ console.log(JSON.stringify(UTILS.getCurrentTemplateData()));
 //         "format": "ip-address"
 //     }
 // });
-
-$(".new-trips-content-test").alpaca({
-    "data": "10/15/2001",
-    "schema": {
-        "format": "date"
-    }
+$(document).ready(function() {
+    $(".new-trips-content").alpaca({
+        "data": "10/15/2001",
+        "schema": {
+            "format": "date"
+        }
+    });
 });
 $(".new-trips-content-test").alpaca({
     "schema": {
