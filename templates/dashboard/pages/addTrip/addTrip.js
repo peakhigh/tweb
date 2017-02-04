@@ -1,59 +1,34 @@
 console.log(JSON.stringify(UTILS.getCurrentTemplateData()));
 
-// $(".new-trips-content").alpaca({
-//     "data": "100.60",
-//     "schema": {
-//         "format": "ip-address"
-//     }
-// });
-$(document).ready(function() {
-    $(".new-trips-content").alpaca({
-        "data": "10/15/2001",
-        "schema": {
-            "format": "date"
+$(document).ready(function () {
+    var config = UTILS.getCurrentTemplateData();
+    config.options = {
+        fields: {
+            pickup: {
+                order: 1
+            }, 
+            drop: {
+                order: 2
+            },
+            vehicleRequirements: {
+                order: 3
+            },
+            comments: {
+                order: 4
+            },
+            totalWeight: {
+                order: 5
+            }
+        }
+    };
+    // console.log(UTILS.getCurrentTemplateData());
+    FORM_HELPER.draw(".new-trips-content", config, {
+        bindings: {            
+            "pickup": "column-1",
+            "drop": "column-2",
+            "vehicleRequirements": "column-1",            
+            "comments": "column-2",
+            "totalWeight": "column-1"
         }
     });
-});
-$(".new-trips-content-test").alpaca({
-    "schema": {
-        "title":"User Feedback",
-        "description":"What do you think about Alpaca?",
-        "type":"object",
-        "properties": {
-            "name": {
-                "type":"string",
-                "title":"Name"
-            },
-            "feedback": {
-                "type":"string",
-                "title":"Feedback"
-            },
-            "ranking": {
-                "type":"string",
-                "title":"Ranking",
-                "enum":['excellent','ok','so so']
-            }
-        }
-    },
-    "options": {
-        "helper": "Tell us what you think about Alpaca!",
-        "fields": {
-            "name": {
-                "size": 20,
-                "helper": "Please enter your name.",
-                "placeholder": "Enter your name"
-            },
-            "feedback" : {
-                "type": "textarea",
-                "rows": 5,
-                "cols": 40,
-                "helper": "Please enter your feedback."
-            },
-            "ranking": {
-                "type": "select",
-                "helper": "Select your ranking.",
-                "optionLabels": ["Awesome!", "It's Ok", "Hmm..."]
-            }
-        }
-    }
 });

@@ -1,6 +1,6 @@
 UTILS = new function () {
     this.getCurrentTemplateData = function (page){
-        return UTILS.getTemplateData(CURRENT_PAGE);
+        return UTILS.getTemplateData(page || CURRENT_PAGE);
     }
     this.getTemplateData = function (page){
         let data = STORAGE.getItem(page+'-template-data');

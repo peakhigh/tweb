@@ -1,7 +1,8 @@
+var pageDetails = MENU_HELPER.getCurrentPageDetailsByLocation();
 CURRENT_MODULE = 'dashboard';
-CURRENT_PAGE = 'dashboard';
-CURRENT_PARENT_PAGE = null;
-CURRENT_PAGE_CONFIG = null;
+CURRENT_PAGE = pageDetails.page;
+CURRENT_PARENT_PAGE = pageDetails.parentPage;
+CURRENT_PAGE_CONFIG = pageDetails.currentPageConfig;
 $(function() {
     $(window).bind("load resize", setPageHeight);
 

@@ -4,16 +4,16 @@
         {{#each loggedInUser.menu.SideMenu}}
              <li class="list-group-item">
                 {{#if Menu}}
-                    <a href="javascript:MENU_HELPER.menuClick('{{page}}');" data-toggle="collapse" data-target="#submenu{{page}}"><i class="fa fa-fw {{icon}}"></i> {{title}} <i class="fa fa-fw fa-caret-down"></i></a>
+                    <a id="amenu{{page}}" href="javascript:MENU_HELPER.menuClick('{{page}}');" data-toggle="collapse" data-target="#submenu{{page}}"><i class="fa fa-fw {{icon}}"></i> {{title}} <i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="submenu{{page}}" class="list-group collapse">
                         {{#each Menu}}
                             <li class="list-group-item">
-                                <a href="javascript:MENU_HELPER.menuClick('{{page}}','{{../page}}');"><i class="fa fa-fw {{icon}}"></i> {{title}}</a>
+                                <a id="amenu{{../page}}-{{page}}" href="javascript:MENU_HELPER.menuClick('{{page}}','{{../page}}');"><i class="fa fa-fw {{icon}}"></i> {{title}}</a>
                             </li>
                         {{/each}}
                     </ul>                        
                 {{else}}
-                    <a href="javascript:MENU_HELPER.menuClick('{{page}}');"><i class="fa fa-fw {{icon}}"></i> {{title}}</a>
+                    <a id="amenu{{page}}" href="javascript:MENU_HELPER.menuClick('{{page}}');"><i class="fa fa-fw {{icon}}"></i> {{title}}</a>
                 {{/if}}                 
             </li>
         {{/each}}            
