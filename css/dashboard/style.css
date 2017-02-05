@@ -277,6 +277,9 @@ ul.alert-dropdown {
 [type=radio] {
   margin-right: 5px;
 }
+.alpaca-layout-binding-holder {
+  margin-bottom: 10px;
+}
 .hide-ele {
   display: none !important;
 }

@@ -1,4 +1,5 @@
-console.log(JSON.stringify(UTILS.getCurrentTemplateData()));
+// console.log(JSON.stringify(UTILS.getCurrentTemplateData()));
+console.log(UTILS.getCurrentTemplateData());
 
 $(document).ready(function () {
     var config = UTILS.getCurrentTemplateData();
@@ -24,11 +25,11 @@ $(document).ready(function () {
     // console.log(UTILS.getCurrentTemplateData());
     FORM_HELPER.draw(".new-trips-content", config, {
         bindings: {            
-            "pickup": "column-1",
-            "drop": "column-2",
-            "vehicleRequirements": "column-1",            
-            "comments": "column-2",
-            "totalWeight": "column-1"
+            pickup: "column-1",
+            drop: "column-2",
+            vehicleRequirements: "column-1",            
+            comments: "column-2",
+            totalWeight: "column-2"
         }
     });
 });

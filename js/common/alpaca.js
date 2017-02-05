@@ -102,7 +102,16 @@ FORM_HELPER = new function (options) {
                 }
                 FORM_HELPER.setDefaults(schemaFields[field].properties, fieldOptions[field].fields, defaultData[field], formOptions);
             } else if (schemaFields[field].type === 'date') {
-                schemaFields[field].format = "date";
+                if (!fieldOptions[field]) {
+                    fieldOptions[field] = {};
+                }
+                fieldOptions[field].picker = {};//set also date format from constants here for all date time pickers  
+
+                if(!schemaFields[field].format) {
+                    schemaFields[field].format = "date";
+                } else {                    
+                    fieldOptions[field].picker.showClose = true;//show close button button for timepicker
+                }     
                 schemaFields[field].type = "string"
             } else if (schemaFields[field].type === 'objectid') {
                 schemaFields[field].type = "string"
