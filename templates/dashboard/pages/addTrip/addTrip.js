@@ -2,26 +2,7 @@
 console.log(UTILS.getCurrentTemplateData());
 
 $(document).ready(function () {
-    var config = UTILS.getCurrentTemplateData();
-    config.options = {
-        fields: {
-            pickup: {
-                order: 1
-            }, 
-            drop: {
-                order: 2
-            },
-            vehicleRequirements: {
-                order: 3
-            },
-            comments: {
-                order: 4
-            },
-            totalWeight: {
-                order: 5
-            }
-        }
-    };
+    var config = UTILS.getCurrentTemplateData();   
     // console.log(UTILS.getCurrentTemplateData());
     FORM_HELPER.draw(".new-trips-content", config, {
         bindings: {            
@@ -30,6 +11,25 @@ $(document).ready(function () {
             vehicleRequirements: "column-1",            
             comments: "column-2",
             totalWeight: "column-2"
+        },
+        optionsOverride: {
+            fields: {
+                pickup: {
+                    order: 1
+                }, 
+                drop: {
+                    order: 2
+                },
+                vehicleRequirements: {
+                    order: 3
+                },
+                comments: {
+                    order: 4
+                },
+                totalWeight: {
+                    order: 5
+                }
+            }
         }
     });
 });

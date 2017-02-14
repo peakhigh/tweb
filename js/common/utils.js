@@ -10,4 +10,15 @@ UTILS = new function () {
             return {};
         }
     }
+    this.overrideObject = function(source, destination) {
+        if (!destination) {
+            destination = {};
+        }
+        if (source && Object.keys(source).length > 0) {
+             Object.keys(source).forEach(function (key) {
+                destination[key] = source[key];
+            });
+        }       
+        return destination;
+    }
 };

@@ -28,13 +28,13 @@ FORM_HELPER = new function (options) {
                 if (!config.data) {
                     config.data = {};
                 }
-                FORM_HELPER.setDefaults(config.schema.properties, config.options.fields, config.data, options);
+                FORM_HELPER.setDefaults(config.schema.properties, config.options.fields, config.data, options, options.optionsOverride.fields);
                 console.log(config);
                 $(elementSelector).alpaca(config);
             }
         }
     }
-    this.setDefaults = function (schemaFields, fieldOptions, defaultData, formOptions) {
+    this.setDefaults = function (schemaFields, fieldOptions, defaultData, formOptions, overrideFieldOptions) {
         Object.keys(schemaFields).forEach((field) => {
             if (schemaFields[field].type === 'array') {
                 if (schemaFields[field].items.type === 'object') {
@@ -66,7 +66,11 @@ FORM_HELPER = new function (options) {
                         }]
                     }
                     //go for child items
-                    FORM_HELPER.setDefaults(schemaFields[field].items.properties, fieldOptions[field].items.fields, defaultData[field][0], formOptions);
+                    if (overrideFieldOptions && overrideFieldOptions[field]) { //override options from UI pespective
+                        UTILS.overrideObject(overrideFieldOptions[field], fieldOptions[field]);
+                    }                    
+                    FORM_HELPER.setDefaults(schemaFields[field].items.properties, fieldOptions[field].items.fields, defaultData[field][0], formOptions, 
+                        (overrideFieldOptions && overrideFieldOptions[field] && overrideFieldOptions[field].items && overrideFieldOptions[field].items.fields) ? overrideFieldOptions[field].items.fields : null);
                 } else if (schemaFields[field].items.type === 'string') {
                     if (!formOptions.type || formOptions.type === 'create') {
                         schemaFields[field].default = " ";
@@ -85,6 +89,9 @@ FORM_HELPER = new function (options) {
                             action: "down",
                             enabled: false
                         }]
+                    }  
+                    if (overrideFieldOptions && overrideFieldOptions[field]) {//override options from UI pespective
+                        UTILS.overrideObject(overrideFieldOptions[field], fieldOptions[field]);
                     }                    
                 }
             } else if (schemaFields[field].type === 'object') {//set default data in create mode to display controls by default
@@ -100,7 +107,11 @@ FORM_HELPER = new function (options) {
                 if (!fieldOptions[field].fields) {
                     fieldOptions[field].fields = {};
                 }
-                FORM_HELPER.setDefaults(schemaFields[field].properties, fieldOptions[field].fields, defaultData[field], formOptions);
+                if (overrideFieldOptions && overrideFieldOptions[field]) {//override options from UI pespective
+                    UTILS.overrideObject(overrideFieldOptions[field], fieldOptions[field]);
+                } 
+                FORM_HELPER.setDefaults(schemaFields[field].properties, fieldOptions[field].fields, defaultData[field], formOptions, 
+                    ((overrideFieldOptions && overrideFieldOptions[field] && overrideFieldOptions[field].fields) ? overrideFieldOptions[field].fields : null));
             } else if (schemaFields[field].type === 'date') {
                 if (!fieldOptions[field]) {
                     fieldOptions[field] = {};
@@ -112,9 +123,22 @@ FORM_HELPER = new function (options) {
                 } else {                    
                     fieldOptions[field].picker.showClose = true;//show close button button for timepicker
                 }     
-                schemaFields[field].type = "string"
+                schemaFields[field].type = "string";
+                if (overrideFieldOptions && overrideFieldOptions[field]) {//override options from UI pespective
+                    UTILS.overrideObject(overrideFieldOptions[field], fieldOptions[field]);
+                } 
             } else if (schemaFields[field].type === 'objectid') {
-                schemaFields[field].type = "string"
+                schemaFields[field].type = "string";
+                if (overrideFieldOptions && overrideFieldOptions[field]) {//override options from UI pespective
+                    UTILS.overrideObject(overrideFieldOptions[field], fieldOptions[field]);
+                } 
+            } else {//for string, numbers etc
+                if (!fieldOptions[field]) {
+                    fieldOptions[field] = {};
+                }
+                if (overrideFieldOptions && overrideFieldOptions[field]) {//override options from UI pespective
+                    UTILS.overrideObject(overrideFieldOptions[field], fieldOptions[field]);
+                } 
             }
         });
     }
