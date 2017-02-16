@@ -59,7 +59,14 @@ FORM_HELPER = new function (options) {
             config.options.form.attributes.method = "post";
         }
         if (!config.options.form.attributes.action) {
-            config.options.form.attributes.action = options.postUrl;
+            if (options.postUrl.indexOf('://') > 0) {
+                config.options.form.attributes.action = options.postUrl;
+            } else {
+                if (options.postUrl.indexOf('/') === 0) {
+                    options.postUrl = options.postUrl.substring(1, options.postUrl.length)
+                }
+                config.options.form.attributes.action = CONSTANTS.apiServer + options.postUrl;
+            }
         }        
         if (!config.options.form.buttons.submit.click) {
             config.options.form.buttons.submit.click = function() {

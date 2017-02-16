@@ -41,6 +41,7 @@ $(document).ready(function () {
            afterSubmit: function() {},
            onSubmitError: function() {},//on submission if error occurs
            postRender: function() {}//custom design ur form accroding to the needs
-       } 
+       },
+       postUrl: "trips/service/addTrip"
     });
 });
