@@ -28,12 +28,66 @@ FORM_HELPER = new function (options) {
                 if (!config.data) {
                     config.data = {};
                 }
-                FORM_HELPER.setDefaults(config.schema.properties, config.options.fields, config.data, options, options.optionsOverride.fields);
+                FORM_HELPER.setDefaults(config.schema.properties, config.options.fields, config.data, options, options.optionsOverride.fields);                
+                FORM_HELPER.setFormDetails(elementSelector, config, options);
+                if (options.callbacks && options.callbacks.postRender) {
+                    config.postRender = function(control) {
+                        options.callbacks.postRender.apply(this, [control]);   
+                    }                    
+                }
                 console.log(config);
                 $(elementSelector).alpaca(config);
             }
         }
     }
+
+    this.setFormDetails = function (elementSelector, config, options) {
+        //set options -> form buttons       
+        config.options.form = options.optionsOverride.form || {};                   
+        if (!config.options.form.buttons)
+            config.options.form.buttons = {};
+        if (!config.options.form.buttons.submit)
+            config.options.form.buttons.submit = {};
+        if (!config.options.form.buttons.submit.title) {
+            config.options.form.buttons.submit.title = 'Submit';
+        }
+        if (!config.options.form.attributes) {
+            config.options.form.attributes = {};
+        }
+        //form.attributes{post, action} - used to post a form
+        if (!config.options.form.attributes.method) {
+            config.options.form.attributes.method = "post";
+        }
+        if (!config.options.form.attributes.action) {
+            config.options.form.attributes.action = options.postUrl;
+        }        
+        if (!config.options.form.buttons.submit.click) {
+            config.options.form.buttons.submit.click = function() {
+                //this.getValue() - gives you the json object of the form
+                this.refreshValidationState(true);//refresh validation state on every submit
+                if (!this.isValid(true)) {//if not valid
+                    this.focus();//focus on first error element
+                    return;
+                }
+                if (options.callbacks && options.callbacks.beforeSubmit) {
+                    options.callbacks.beforeSubmit.apply(this, []);
+                }
+                var promise = this.ajaxSubmit();
+                promise.done(function() {                   
+                    if (options.callbacks && options.callbacks.afterSubmit) {
+                        options.callbacks.afterSubmit.apply(this, []);
+                    }
+                });
+                promise.fail(function() {                   
+                    if (options.callbacks && options.callbacks.onSubmitError) {
+                        options.callbacks.onSubmitError.apply(this, []);
+                    }
+                });
+                promise.always(function() {});
+            }
+        }
+    }
+
     this.setDefaults = function (schemaFields, fieldOptions, defaultData, formOptions, overrideFieldOptions) {
         Object.keys(schemaFields).forEach((field) => {
             if (schemaFields[field].type === 'array') {
