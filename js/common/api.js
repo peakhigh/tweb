@@ -49,13 +49,21 @@ API_HELPER = new function() {
             type: 'GET', 
             dataType: 'json',
             url: CONSTANTS.apiServer + options.service,
-            headers: {'Authorization': 'Bearer ' + API_HELPER.getToken()},                                   
+            // headers: {'Authorization': 'Bearer ' + API_HELPER.getToken()},                                   
             success: function (response) {  
                 callback(null, response);
             },
             error: function (e) {
                 callback(e, null);
             }
+        });
+    }
+    this.attachPreFiltersToAllAjaxRequests = function() {
+        $.ajaxPrefilter( function(options) {
+            // set tokens for all the api requests
+            if (options.url.indexOf(CONSTANTS.apiServer) === 0) {
+                options.headers = {'Authorization': 'Bearer ' + API_HELPER.getToken()};        
+            }                
         });
     }
 }

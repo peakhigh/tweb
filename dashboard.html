@@ -97,6 +97,7 @@
         $.ajaxPrefilter(function (options, original_Options, jqXHR) {
             options.async = true;
         });
+        API_HELPER.attachPreFiltersToAllAjaxRequests();
         MODULE_DATA.pageHeading = 'Dashboard';
         MODULE_DATA.pageSubHeading = 'Dashboard';
         MODULE_DATA.pageIcon = 'fa-dashboard';        
