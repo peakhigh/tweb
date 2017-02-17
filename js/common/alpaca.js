@@ -35,6 +35,14 @@ FORM_HELPER = new function (options) {
                         options.callbacks.postRender.apply(this, [control]);   
                     }                    
                 }
+                if (options.optionsOverride && Object.keys(options.optionsOverride).length > 0) {
+                    let processedOptionKeys = ['fields'];
+                    Object.keys(options.optionsOverride).forEach(function(key) {
+                        if (processedOptionKeys.indexOf(key) < 0) {
+                            config.options[key] = options.optionsOverride[key];//set options like focus, etc
+                        }
+                    });
+                }
                 console.log(config);
                 $(elementSelector).alpaca(config);
             }

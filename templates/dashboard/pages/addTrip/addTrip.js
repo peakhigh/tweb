@@ -18,9 +18,10 @@ $(document).ready(function () {
             totalWeight: "column-2"
         },
         optionsOverride: {
+            focus: 'pickup[0]/date',
             fields: {
                 pickup: {
-                    order: 1
+                    order: 1            
                 }, 
                 drop: {
                     order: 2
