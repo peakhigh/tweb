@@ -28,7 +28,10 @@ FORM_HELPER = new function (options) {
                 if (!config.data) {
                     config.data = {};
                 }
-                FORM_HELPER.setDefaults(config.schema.properties, config.options.fields, config.data, options, options.optionsOverride.fields);                
+                FORM_HELPER.setDefaults(config.schema.properties, config.options.fields, config.data, options, 
+                    (options.optionsOverride && options.optionsOverride.fields) ?  options.optionsOverride.fields : null, 
+                    (options.schemaOverride && options.schemaOverride.fields) ?  options.schemaOverride.fields : null);
+
                 FORM_HELPER.setFormDetails(elementSelector, config, options);
                 if (options.callbacks && options.callbacks.postRender) {
                     config.postRender = function(control) {
@@ -40,6 +43,14 @@ FORM_HELPER = new function (options) {
                     Object.keys(options.optionsOverride).forEach(function(key) {
                         if (processedOptionKeys.indexOf(key) < 0) {
                             config.options[key] = options.optionsOverride[key];//set options like focus, etc
+                        }
+                    });
+                }
+                if (options.schemaOverride && Object.keys(options.schemaOverride).length > 0) {
+                    let processedOptionKeys = ['fields'];
+                    Object.keys(options.schemaOverride).forEach(function(key) {
+                        if (processedOptionKeys.indexOf(key) < 0) {
+                            config.schema[key] = options.schemaOverride[key];//set override schema options 
                         }
                     });
                 }
@@ -66,7 +77,7 @@ FORM_HELPER = new function (options) {
         if (!config.options.form.attributes.method) {
             config.options.form.attributes.method = "post";
         }
-        if (!config.options.form.attributes.action) {
+        if (options.postUrl) {
             if (options.postUrl.indexOf('://') > 0) {
                 config.options.form.attributes.action = options.postUrl;
             } else {
@@ -103,10 +114,12 @@ FORM_HELPER = new function (options) {
         }
     }
 
-    this.setDefaults = function (schemaFields, fieldOptions, defaultData, formOptions, overrideFieldOptions) {
+    this.setDefaults = function (schemaFields, fieldOptions, defaultData, formOptions, overrideFieldOptions, overrideFieldSchema) {
         Object.keys(schemaFields).forEach((field) => {
-            if (schemaFields[field].type === 'array') {
+            if (schemaFields[field].type === 'array') {                
                 if (schemaFields[field].items.type === 'object') {
+                    if (!schemaFields[field].minItems)
+                        schemaFields[field].minItems = 1;
                     if (!formOptions.type || formOptions.type === 'create') {//set default data in create mode to display controls by default
                         if (!defaultData) {
                             defaultData = {}
@@ -133,13 +146,17 @@ FORM_HELPER = new function (options) {
                             action: "down",
                             enabled: false
                         }]
-                    }
-                    //go for child items
-                    if (overrideFieldOptions && overrideFieldOptions[field]) { //override options from UI pespective
-                        UTILS.overrideObject(overrideFieldOptions[field], fieldOptions[field]);
                     }                    
+                    if (overrideFieldOptions && overrideFieldOptions[field]) { //override options from UI pespective
+                        jQuery.extend(true, fieldOptions[field], overrideFieldOptions[field]);
+                    }  
+                    if (overrideFieldSchema && overrideFieldSchema[field]) {//override shcema from UI pespective
+                        jQuery.extend(true, schemaFields[field], overrideFieldSchema[field]);
+                    } 
+                    //go for child items                    
                     FORM_HELPER.setDefaults(schemaFields[field].items.properties, fieldOptions[field].items.fields, defaultData[field][0], formOptions, 
-                        (overrideFieldOptions && overrideFieldOptions[field] && overrideFieldOptions[field].items && overrideFieldOptions[field].items.fields) ? overrideFieldOptions[field].items.fields : null);
+                        (overrideFieldOptions && overrideFieldOptions[field] && overrideFieldOptions[field].items && overrideFieldOptions[field].items.fields) ? overrideFieldOptions[field].items.fields : null,
+                        (overrideFieldSchema && overrideFieldSchema[field] && overrideFieldSchema[field].items && overrideFieldSchema[field].items.fields) ? overrideFieldSchema[field].items.fields : null);
                 } else if (schemaFields[field].items.type === 'string') {
                     if (!formOptions.type || formOptions.type === 'create') {
                         schemaFields[field].default = " ";
@@ -160,7 +177,10 @@ FORM_HELPER = new function (options) {
                         }]
                     }  
                     if (overrideFieldOptions && overrideFieldOptions[field]) {//override options from UI pespective
-                        UTILS.overrideObject(overrideFieldOptions[field], fieldOptions[field]);
+                        jQuery.extend(true, fieldOptions[field], overrideFieldOptions[field]);
+                    } 
+                    if (overrideFieldSchema && overrideFieldSchema[field]) {//override shcema from UI pespective
+                        jQuery.extend(true, schemaFields[field], overrideFieldSchema[field]);
                     }                    
                 }
             } else if (schemaFields[field].type === 'object') {//set default data in create mode to display controls by default
@@ -177,10 +197,14 @@ FORM_HELPER = new function (options) {
                     fieldOptions[field].fields = {};
                 }
                 if (overrideFieldOptions && overrideFieldOptions[field]) {//override options from UI pespective
-                    UTILS.overrideObject(overrideFieldOptions[field], fieldOptions[field]);
+                    jQuery.extend(true, fieldOptions[field], overrideFieldOptions[field]);
+                } 
+                if (overrideFieldSchema && overrideFieldSchema[field]) {//override shcema from UI pespective
+                    jQuery.extend(true, schemaFields[field], overrideFieldSchema[field]);
                 } 
                 FORM_HELPER.setDefaults(schemaFields[field].properties, fieldOptions[field].fields, defaultData[field], formOptions, 
-                    ((overrideFieldOptions && overrideFieldOptions[field] && overrideFieldOptions[field].fields) ? overrideFieldOptions[field].fields : null));
+                    ((overrideFieldOptions && overrideFieldOptions[field] && overrideFieldOptions[field].fields) ? overrideFieldOptions[field].fields : null),
+                    ((overrideFieldSchema && overrideFieldSchema[field] && overrideFieldSchema[field].fields) ? overrideFieldSchema[field].fields : null));
             } else if (schemaFields[field].type === 'date') {
                 if (!fieldOptions[field]) {
                     fieldOptions[field] = {};
@@ -194,19 +218,31 @@ FORM_HELPER = new function (options) {
                 }     
                 schemaFields[field].type = "string";
                 if (overrideFieldOptions && overrideFieldOptions[field]) {//override options from UI pespective
-                    UTILS.overrideObject(overrideFieldOptions[field], fieldOptions[field]);
+                    jQuery.extend(true, fieldOptions[field], overrideFieldOptions[field]);
+                } 
+                if (overrideFieldSchema && overrideFieldSchema[field]) {//override shcema from UI pespective
+                    jQuery.extend(true, schemaFields[field], overrideFieldSchema[field]);
                 } 
             } else if (schemaFields[field].type === 'objectid') {
                 schemaFields[field].type = "string";
                 if (overrideFieldOptions && overrideFieldOptions[field]) {//override options from UI pespective
-                    UTILS.overrideObject(overrideFieldOptions[field], fieldOptions[field]);
+                    jQuery.extend(true, fieldOptions[field], overrideFieldOptions[field]);
                 } 
             } else {//for string, numbers etc
                 if (!fieldOptions[field]) {
                     fieldOptions[field] = {};
                 }
+                if (schemaFields[field].format === 'phone') {
+                    if (!defaultData) {
+                        defaultData = {}
+                    }
+                    defaultData[field] = '';
+                }
                 if (overrideFieldOptions && overrideFieldOptions[field]) {//override options from UI pespective
-                    UTILS.overrideObject(overrideFieldOptions[field], fieldOptions[field]);
+                    jQuery.extend(true, fieldOptions[field], overrideFieldOptions[field]);
+                } 
+                if (overrideFieldSchema && overrideFieldSchema[field]) {//override shcema from UI pespective
+                    jQuery.extend(true, schemaFields[field], overrideFieldSchema[field]);
                 } 
             }
         });
