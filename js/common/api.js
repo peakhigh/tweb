@@ -48,8 +48,9 @@ API_HELPER = new function() {
         $.ajax({
             type: 'GET', 
             dataType: 'json',
-            url: CONSTANTS.apiServer + options.service,
+            url: CONSTANTS.apiServer + options.service + ((options.extraOptions && options.extraOptions.extraHref) ? '/' + options.extraOptions.extraHref : ''),
             // headers: {'Authorization': 'Bearer ' + API_HELPER.getToken()},                                   
+            data: options.data || {},
             success: function (response) {  
                 callback(null, response);
             },

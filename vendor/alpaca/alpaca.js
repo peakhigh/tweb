@@ -11627,6 +11627,14 @@
 
                     if (this.controlDescriptor) {
                         control = Alpaca.tmpl(this.controlDescriptor, model);
+                        //added by bhavani - start
+                        if (model.data && control.length > 0 && !control[0].value) {
+                            control[0].value = model.data;
+                        }
+                        // if(control.length > 0 && model.data) {//set field data as a data attribute 
+                        //     control[0]['data-field-data'] = model.data;
+                        // }
+                        //added by bhavani - end
                     }
 
                     callback(control);
@@ -13697,6 +13705,10 @@
                     var csrfToken = self.determineCsrfToken();
                     if (csrfToken) {
                         config.headers[Alpaca.CSRF_HEADER_NAME] = csrfToken;
+                    }
+
+                    if (config.preSubmit) {
+                        config.preSubmit(config);
                     }
 
                     return $.ajax(config);

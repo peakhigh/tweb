@@ -1,3 +1,11 @@
+//Alpaca global settings
+Alpaca.defaultErrorCallback = function (err) {
+    // log it for our own purposes
+    console.log("Behold!  An Alpaca error: " + JSON.stringify(err));
+    // and throw a proper JS error
+    throw new Error("Alpaca caught an error with the default error handler: " + JSON.stringify(error));
+};
+
 FORM_HELPER = new function (options) {
     this.setDefaultView = function (config, options) {
         config.view = {
@@ -16,6 +24,9 @@ FORM_HELPER = new function (options) {
         if (config) {
             //  $(elementSelector).html('{{> loading }}');
             //  $(elementSelector).html(Handlebars.compile($(elementSelector).html())({}));
+            if (config.data && !options.type) {
+                options.type = 'modify';
+            }
             if (!config.view) {
                 FORM_HELPER.setDefaultView(config, options);
             }
@@ -28,6 +39,20 @@ FORM_HELPER = new function (options) {
                 if (!config.data) {
                     config.data = {};
                 }
+                // if (options.type === 'modify') {
+                //     if (!config.schema.properties._id) {
+                //         config.schema.properties._id = {
+                //             type: 'string',
+                //             required: true,
+                //             title: 'id'
+                //         }
+                //     }
+                //     if (!config.options.fields._id) {
+                //         config.options.fields._id = {
+                //             // type: 'hidden'
+                //         }
+                //     }
+                // }
                 FORM_HELPER.setDefaults(config.schema.properties, config.options.fields, config.data, options, 
                     (options.optionsOverride && options.optionsOverride.fields) ?  options.optionsOverride.fields : null, 
                     (options.schemaOverride && options.schemaOverride.fields) ?  options.schemaOverride.fields : null);
@@ -35,6 +60,10 @@ FORM_HELPER = new function (options) {
                 FORM_HELPER.setFormDetails(elementSelector, config, options);
                 if (options.callbacks && options.callbacks.postRender) {
                     config.postRender = function(control) {
+                        if (options.type === 'modify') {
+                            //enable the submit button in edit mode
+                            $('.alpaca-form-button-submit').removeProp('disabled');
+                        }
                         options.callbacks.postRender.apply(this, [control]);   
                     }                    
                 }
@@ -55,6 +84,10 @@ FORM_HELPER = new function (options) {
                     });
                 }
                 console.log(config);
+                config.error = function() {//configure error handler
+                    console.log('Form Render Errors', arguments);
+                };
+
                 $(elementSelector).alpaca(config);
             }
         }
@@ -90,15 +123,23 @@ FORM_HELPER = new function (options) {
         if (!config.options.form.buttons.submit.click) {
             config.options.form.buttons.submit.click = function() {
                 //this.getValue() - gives you the json object of the form
+                console.log(this.getValue());
                 this.refreshValidationState(true);//refresh validation state on every submit
                 if (!this.isValid(true)) {//if not valid
                     this.focus();//focus on first error element
                     return;
-                }
+                }            
                 if (options.callbacks && options.callbacks.beforeSubmit) {
                     options.callbacks.beforeSubmit.apply(this, []);
                 }
-                var promise = this.ajaxSubmit();
+                var promise = this.ajaxSubmit({
+                    preSubmit: function(ajaxConfig) {
+                        if (options.type === 'modify' && config.data && config.data._id && ajaxConfig.data && !ajaxConfig.data._id) {
+                            //on modify, set _id to all the post requests
+                            ajaxConfig.data._id = config.data._id;
+                        }                        
+                    }
+                });
                 promise.done(function() {                   
                     if (options.callbacks && options.callbacks.afterSubmit) {
                         options.callbacks.afterSubmit.apply(this, []);
@@ -124,7 +165,8 @@ FORM_HELPER = new function (options) {
                         if (!defaultData) {
                             defaultData = {}
                         }
-                        defaultData[field] = [{}];
+                        if (!defaultData[field])
+                            defaultData[field] = [{}];
                     }
                     if (!fieldOptions[field]) {
                         fieldOptions[field] = {};
@@ -188,7 +230,8 @@ FORM_HELPER = new function (options) {
                     if (!defaultData) {
                         defaultData = {}
                     }
-                    defaultData[field] = {};
+                    if (!defaultData[field])
+                        defaultData[field] = {};
                 }
                 if (!fieldOptions[field]) {
                     fieldOptions[field] = {};
@@ -236,7 +279,8 @@ FORM_HELPER = new function (options) {
                     if (!defaultData) {
                         defaultData = {}
                     }
-                    defaultData[field] = '';
+                    if (!defaultData[field])
+                        defaultData[field] = '';
                 }
                 if (overrideFieldOptions && overrideFieldOptions[field]) {//override options from UI pespective
                     jQuery.extend(true, fieldOptions[field], overrideFieldOptions[field]);

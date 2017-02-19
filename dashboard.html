@@ -53,6 +53,10 @@
     <!-- jquery handlebars plugin -->
     <script type="text/javascript" src="vendor/handlebars/jquery-plugin-hbs.js"></script>
 
+    <!-- alpaca -->
+    <link type="text/css" href="vendor/alpaca/alpaca.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="vendor/alpaca/alpaca.js"></script>
+
     <!-- self libs -->
     <script type="text/javascript" src="js/common/constants.js"></script>
     <script type="text/javascript" src="js/common/storage.js"></script>
@@ -89,11 +93,6 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-<!-- alpaca -->
-<link type="text/css" href="vendor/alpaca/alpaca.min.css" rel="stylesheet" />
-<script type="text/javascript" src="vendor/alpaca/alpaca.js"></script>
-
 </head>
 
 <body>
@@ -112,7 +111,10 @@
             CURRENT_MODULE = 'dashboard';
             if (window.location.href.indexOf('#') > 0) {
                 var pageDetails = MENU_HELPER.getCurrentPageDetailsByLocation();
-                MENU_HELPER.menuClick(pageDetails.page, pageDetails.parentPage);
+                var extraOptions = {
+                    extraHref: pageDetails.extraHref
+                }
+                MENU_HELPER.menuClick(pageDetails.page, pageDetails.parentPage, extraOptions);
                 MENU_HELPER.setUIMenuItem(pageDetails.page, pageDetails.parentPage);
             }
         });          

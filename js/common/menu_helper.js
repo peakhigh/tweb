@@ -1,5 +1,5 @@
 MENU_HELPER = new function () {
-    this.menuClick = function (page, parentpage) {        
+    this.menuClick = function (page, parentpage, extraOptions) {        
         // console.log(page, parentpage, CURRENT_MODULE);
         // console.log(MODULE_DATA); 
         $('#content-wrapper').html("{{> loading}}");
@@ -30,11 +30,20 @@ MENU_HELPER = new function () {
             helperData.pageSubHeading = currentPageDetails.title;
             helperData.pageIcon = currentPageDetails.icon;
             // console.log(currentPageDetails);
-            if (currentPageDetails.service) {//first load the service, get the service data & render the template                                
+            currentPageDetails.extraOptions = extraOptions;
+            if (currentPageDetails.service) {//first load the service, get the service data & render the template 
+                if (MENU_HELPER_CALLBACKS[page] && MENU_HELPER_CALLBACKS[page].setFilters) {
+                    MENU_HELPER_CALLBACKS[page].setFilters(currentPageDetails);
+                } else if (parentpage)  {
+                    var key = parentpage + '#' + page;
+                    if (MENU_HELPER_CALLBACKS[key] && MENU_HELPER_CALLBACKS[key].setFilters) {
+                        MENU_HELPER_CALLBACKS[key].setFilters(currentPageDetails);
+                    }                    
+                }                         
                 API_HELPER.loadService(currentPageDetails, function (error, response) {                    
                     // console.log (error, response);
                     if (error) {
-                        console.log(error);
+                        console.log('error', error);
                         return;
                     }
                     helperData.templateData = response;
@@ -46,11 +55,19 @@ MENU_HELPER = new function () {
                     MENU_HELPER.setCurrentPageDetails(page, parentpage, currentPageDetails);
                 });
             }
+            var href =  'dashboard.html#';
             if (parentpage) {
-                window.location.href = 'dashboard.html#' + parentpage + '/' + page;
-            } else {
-                window.location.href = 'dashboard.html#' + page;
+                href += parentpage + '/';
             }
+            if (page) {
+                 href += page;
+            }
+            if (extraOptions && Object.keys(extraOptions.length > 0)) {
+                if (extraOptions.extraHref) {
+                    href += '/' + extraOptions.extraHref;
+                }
+            }
+            window.location.href = href;
         }
     }
 
@@ -63,9 +80,9 @@ MENU_HELPER = new function () {
     this.getMenuItem = function (menu, page, parentpage) {
         for (var i = 0; i < menu.length; i++) {
             if (parentpage && menu[i]['page'] === parentpage) {
-                return MENU_HELPER.getMenuItem(menu[i].Menu, page);
+                return $.extend(true, {}, MENU_HELPER.getMenuItem(menu[i].Menu, page));
             } else if (menu[i]['page'] === page) {
-                return menu[i];
+                return $.extend(true, {}, menu[i]);
             }
         }
         return null;
@@ -91,6 +108,11 @@ MENU_HELPER = new function () {
             if (currentPagePathDetails.length > 1) {
                 details.page = currentPagePathDetails[1];
                 details.parentPage = currentPagePathDetails[0];
+                currentPagePathDetails.shift();
+                currentPagePathDetails.shift();
+                if (currentPagePathDetails.length > 0) {
+                    details.extraHref = currentPagePathDetails.join('/');
+                }
             } else {
                 details.page = currentPagePathDetails[0];
                 details.parentPage = null;
@@ -103,5 +125,15 @@ MENU_HELPER = new function () {
             details.currentPageConfig = MENU_HELPER.getMenuItem(MODULE_DATA.loggedInUser.menu.SideMenu, details.page, details.parentPage);
         }
         return details;
+    }
+}
+
+MENU_HELPER_CALLBACKS = {//define callbacks for each menu item
+    manageTrip: {
+        setFilters: function(config) {//set filters for all manage calls
+            config.data = {//set where, skip, limit, sort
+                // where: { _id: '58a917f4e904510f97fd19ef'}
+            }
+        }
     }
 }
