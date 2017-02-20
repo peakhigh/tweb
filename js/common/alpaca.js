@@ -140,7 +140,8 @@ FORM_HELPER = new function (options) {
                         }                        
                     }
                 });
-                promise.done(function() {                   
+                promise.done(function() {   
+                    console.log(JSON.stringify(arguments[0]));                
                     if (options.callbacks && options.callbacks.afterSubmit) {
                         options.callbacks.afterSubmit.apply(this, []);
                     }
