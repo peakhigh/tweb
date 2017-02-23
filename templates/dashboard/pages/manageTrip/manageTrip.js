@@ -32,7 +32,7 @@ $(document).ready(function () {
             postRender: function(rowData, rowElement) {
                 console.log(' hu ha ', rowData, rowElement);
                 //if anything returned will be appended, or u can modify the data
-                return 'hu ha';
+                return '';
             }
         }
     }));

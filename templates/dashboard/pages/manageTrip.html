@@ -2,8 +2,7 @@
 {{{{/raw-helper}}}}
 {{> header}}
 <div class='manage-trips'>
-    Manage Trips
-    <div class='manage-trips-content'>
+    <div class='manage-trips-content' style="outline: 1px solid orange;">
             <!--Manage Trips Content<br/>-->
             <!--{{#each templateData}}
                 {{stringify this}}
@@ -13,21 +12,63 @@
 </div> 
 {{{{raw-helper}}}}
 <script id="grid-header-template" type="text/x-handlebars-template">
-  I am Header <br/>
+  <!-- I am Header <br/> -->
+   <div class="container-fluid" >
+    <div class="row">
+         <div class="col-sm-2">
+            <b>Vechicle Type</b>
+         </div>
+         <div class="col-sm-2">
+            <b>Total Weight</b>
+         </div>
+         <div class="col-sm-2">
+            <b>Pick Up</b>
+         </div>
+         <div class="col-sm-2">
+            <b>Drop Off</b>
+         </div>
+         <div class="col-sm-2">
+            <b>Comments</b>
+         </div>
+         <div class="col-sm-2">
+            <b>Quote</b>
+         </div>
+    </div>
+    </div>
+    <br/>
 </script>
 <script id="grid-row-template" type="text/x-handlebars-template">
-  I am Row {{_id}} totalWeight: {{totalWeight}}  {{vehicleRequirements.capacityUnit}}
-  {{#each pickup}}
-        {{date}}
-        {{#each contact}}
-            {{firstName}}
-        {{/each}}
-  {{/each}}
-  <br/>
+  <div class="container-fluid" style="border-top: 1px solid orange;">
+    <div class="row">
+      <div class="col-sm-2">
+          {{vehicleRequirements.vechicleType}}
+        </div>
+        <div class="col-sm-2">
+          {{totalWeight}} tons
+        </div>
+        <div class="col-sm-2">
+            {{#each pickup}}
+              {{address.city}} {{date}}
+            {{/each}}
+        </div>
+        <div class="col-sm-2">
+          {{#each drop}}
+              {{address.city}} {{date}}
+          {{/each}}
+        </div>
+        <div class="col-sm-2">
+            {{comments}}
+        </div>
+        <div class="col-sm-2">
+              <button type="submit" class="btn btn-default  text-capitalize"><p class="text-capitalize">Quote</p></button>
+        </div>
+    </div>
+  </div>
+<br/>
 </script>
 {{{{/raw-helper}}}}
 {{{{raw-helper}}}}
 <script type="text/javascript">
-    console.log("Manage Trips"),console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData(),t=Handlebars.compile("{{> grid }}");$(".manage-trips-content").html(t({gridData:e.data,headerTemplateId:"grid-header-template",gridId:"gridManageTrips",postRender:function(){console.log(arguments)},rowConfig:{template:"grid-row-template",rowId:"row{{_id}}",preRender:function(e){return e},postRender:function(e,t){return console.log(" hu ha ",e,t),"hu ha"}}}))});
+    console.log("Manage Trips"),console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData(),t=Handlebars.compile("{{> grid }}");$(".manage-trips-content").html(t({gridData:e.data,headerTemplateId:"grid-header-template",gridId:"gridManageTrips",postRender:function(){console.log(arguments)},rowConfig:{template:"grid-row-template",rowId:"row{{_id}}",preRender:function(e){return e},postRender:function(e,t){return console.log(" hu ha ",e,t),""}}}))});
 </script>
 {{{{/raw-helper}}}}
