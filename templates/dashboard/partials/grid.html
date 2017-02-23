@@ -1,0 +1,7 @@
+{{gridPreHook this}}  
+{{{compileTemplateByName headerTemplateId headerData}}}
+{{#each gridData}}
+    {{{compileTemplateByName ../rowConfig.template this ../rowConfig}}}
+    {{gridRowPostHook ../this.rowConfig this (compileTemplateByHtml ../rowConfig.rowId this)}}  
+{{/each}}
+{{gridPostHook this (compileTemplateByHtml this.gridId this)}}  

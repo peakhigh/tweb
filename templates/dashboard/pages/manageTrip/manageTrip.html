@@ -9,3 +9,18 @@
             {{/each}}            -->
     </div>
 </div> 
+{{{{raw-helper}}}}
+<script id="grid-header-template" type="text/x-handlebars-template">
+  I am Header <br/>
+</script>
+<script id="grid-row-template" type="text/x-handlebars-template">
+  I am Row {{_id}} totalWeight: {{totalWeight}}  {{vehicleRequirements.capacityUnit}}
+  {{#each pickup}}
+        {{date}}
+        {{#each contact}}
+            {{firstName}}
+        {{/each}}
+  {{/each}}
+  <br/>
+</script>
+{{{{/raw-helper}}}}

@@ -156,7 +156,7 @@ function compileHtmlTemplateModule(moduleName, dirPath, parentDirPath) {
         starttag: '<!-- inject:js -->',
         transform: function (filePath, file) {
             // return file contents as string 
-            return file.contents.toString('utf8')
+            return file.contents.toString('utf8');
         }
     }))
     .pipe(replace('<!-- inject:css -->', ''))
