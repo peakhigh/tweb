@@ -1,0 +1,11 @@
+{{gridPreHook this}}  
+{{{compileTemplateByName headerTemplateId headerData}}}
+{{#if gridData.data}}
+    {{#each gridData.data}}
+        {{{compileTemplateByName ../rowConfig.template this ../rowConfig}}}
+        {{gridRowPostHook ../this.rowConfig this (compileTemplateByHtml ../rowConfig.rowId this)}}  
+    {{/each}}
+{{else}}
+    No Records Found
+{{/if}}
+{{gridPostHook this (compileTemplateByHtml this.gridId this)}} 

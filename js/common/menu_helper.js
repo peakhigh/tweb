@@ -1,5 +1,5 @@
 MENU_HELPER = new function () {
-    this.menuClick = function (page, parentpage, extraOptions) {        
+    this.menuClick = function (page, parentpage, extraOptions) {
         // console.log(page, parentpage, CURRENT_MODULE);
         // console.log(MODULE_DATA); 
         $('#content-wrapper').html("{{> loading}}");
@@ -24,7 +24,7 @@ MENU_HELPER = new function () {
                 partialPath: 'templates/' + CURRENT_MODULE + '/partials',
                 partialExtension: 'html',
                 partials: ['loading']
-            });            
+            });
             var helperData = {};
             helperData.pageHeading = currentPageDetails.title;
             helperData.pageSubHeading = currentPageDetails.title;
@@ -32,15 +32,24 @@ MENU_HELPER = new function () {
             // console.log(currentPageDetails);
             currentPageDetails.extraOptions = extraOptions;
             if (currentPageDetails.service) {//first load the service, get the service data & render the template 
+                if (extraOptions && extraOptions.data) {
+                    if (!extraOptions.data) {
+                        extraOptions.data = {};
+                    }
+                    if (!currentPageDetails.data) {
+                        currentPageDetails.data = {};
+                    }
+                    $.extend(true, currentPageDetails.data, extraOptions.data);
+                }
                 if (MENU_HELPER_CALLBACKS[page] && MENU_HELPER_CALLBACKS[page].setFilters) {
                     MENU_HELPER_CALLBACKS[page].setFilters(currentPageDetails);
-                } else if (parentpage)  {
+                } else if (parentpage) {
                     var key = parentpage + '#' + page;
                     if (MENU_HELPER_CALLBACKS[key] && MENU_HELPER_CALLBACKS[key].setFilters) {
                         MENU_HELPER_CALLBACKS[key].setFilters(currentPageDetails);
-                    }                    
-                }                         
-                API_HELPER.loadService(currentPageDetails, function (error, response) {                    
+                    }
+                }
+                API_HELPER.loadService(currentPageDetails, function (error, response) {
                     // console.log (error, response);
                     if (error) {
                         console.log('error', error);
@@ -55,12 +64,12 @@ MENU_HELPER = new function () {
                     MENU_HELPER.setCurrentPageDetails(page, parentpage, currentPageDetails);
                 });
             }
-            var href =  'dashboard.html#';
+            var href = 'dashboard.html#';
             if (parentpage) {
                 href += parentpage + '/';
             }
             if (page) {
-                 href += page;
+                href += page;
             }
             if (extraOptions && Object.keys(extraOptions.length > 0)) {
                 if (extraOptions.extraHref) {
@@ -103,7 +112,7 @@ MENU_HELPER = new function () {
     }
     this.getCurrentPageDetailsByLocation = function () {
         var details = {};
-        if (window.location.href.indexOf('#') > 0) {            
+        if (window.location.href.indexOf('#') > 0) {
             var currentPagePathDetails = window.location.href.substr(window.location.href.indexOf('#') + 1, window.location.href.length - 1).split('/');
             if (currentPagePathDetails.length > 1) {
                 details.page = currentPagePathDetails[1];
@@ -126,14 +135,40 @@ MENU_HELPER = new function () {
         }
         return details;
     }
+    this.reloadData = function (options, cb) {
+        var pageDetails = MENU_HELPER.getCurrentPageDetailsByLocation();
+        pageDetails.currentPageConfig.extraOptions = {
+            extraHref: pageDetails.extraHref
+        };
+        if (options && Object.keys(options).length > 0) {
+            $.extend(true, pageDetails.currentPageConfig, options);
+        }
+        if (MENU_HELPER_CALLBACKS[pageDetails.page] && MENU_HELPER_CALLBACKS[pageDetails.page].setFilters) {
+            MENU_HELPER_CALLBACKS[pageDetails.page].setFilters(pageDetails.currentPageConfig);
+        } else if (pageDetails.parentpage) {
+            var key = pageDetails.parentpage + '#' + pageDetails.page;
+            if (MENU_HELPER_CALLBACKS[key] && MENU_HELPER_CALLBACKS[key].setFilters) {
+                MENU_HELPER_CALLBACKS[key].setFilters(pageDetails.currentPageConfig);
+            }
+        }
+        API_HELPER.loadService(pageDetails.currentPageConfig, function (error, response) {
+            // console.log (error, response);
+            if (error) {
+                console.log('error', error);
+                return;
+            }
+            cb(response);
+        });
+    }
 }
 
 MENU_HELPER_CALLBACKS = {//define callbacks for each menu item
     manageTrip: {
-        setFilters: function(config) {//set filters for all manage calls
-            config.data = {//set where, skip, limit, sort
-                // where: { _id: '58a917f4e904510f97fd19ef'}
-            }
+        setFilters: function (config) {//set filters for all manage calls
+            //change config.data here
+            // config.data = {//set where, skip, limit, sort
+            //     // where: { _id: '58a917f4e904510f97fd19ef'}
+            // }
         }
     }
 }

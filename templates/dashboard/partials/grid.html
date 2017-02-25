@@ -1,7 +1,9 @@
-{{gridPreHook this}}  
-{{{compileTemplateByName headerTemplateId headerData}}}
-{{#each gridData}}
-    {{{compileTemplateByName ../rowConfig.template this ../rowConfig}}}
-    {{gridRowPostHook ../this.rowConfig this (compileTemplateByHtml ../rowConfig.rowId this)}}  
-{{/each}}
-{{gridPostHook this (compileTemplateByHtml this.gridId this)}}  
+<div class="grid-container">
+    {{#if drawPager}}
+        <div class="pager-container">
+        </div>
+    {{/if}}
+    <div id="{{gridId}}" class="grid-data-container">    
+        {{> griddata}}        
+    </div>
+</div>

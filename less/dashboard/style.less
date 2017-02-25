@@ -363,3 +363,76 @@ ul.alert-dropdown {
 .list-group-item a.active {
     background-color: black; 
 }
+
+
+/** grid **/
+.grid-row {
+    border: 1px solid @grid-border-color;
+    margin-bottom: 10px;
+    padding: 5px;
+    // &-container {
+    //     // border: 1px solid #eceeef;
+    //     // padding: 5px;
+    //     // margin: 3px;
+    // }
+    &-title {
+        font-weight: 600;
+        font-size: 16px;
+    }
+    &-tile {
+        font-weight: 400;
+        // margin-left: 5px;
+        &-title {
+            font-weight: 500;
+            font-size: 15px;
+        }
+        &-label {
+            font-weight: 500;
+            font-size: 14px;
+        }
+         &-label::after {
+            content: ": ";
+            font-size: 14px;
+        }
+        &-text {
+            font-style: normal;
+            font-size: 14px;
+        }
+    }    
+}
+
+/** Pager */
+.pager {
+    padding: 10px 30px;
+    font-size: 30px;
+    &-textbox {
+        border: none;
+        border-bottom: 1px solid @pager-text-border-color;
+        width: 50px;        
+        text-align: center;
+    }
+    &-slash {
+        font-size: 30px;
+    }
+    &-suffix {
+        font-size: 10px;
+    }
+    &-button {
+        font-size: 30px;
+        margin-top: 15px;
+        cursor: pointer;  
+        // color: #fed136;
+        // color: #3b3736;
+        color: @active-color;
+        &-prev {
+            margin-right: 10px; 
+        }
+        &-next {
+            margin-left: 20px; 
+        }      
+    }
+    &-button[disabled="disabled"] {         
+        color: @pager-text-border-color;
+        cursor: not-allowed;
+    }
+}

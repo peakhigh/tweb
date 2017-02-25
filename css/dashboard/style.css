@@ -297,3 +297,65 @@ ul.alert-dropdown {
 .list-group-item a.active {
   background-color: black;
 }
+/** grid **/
+.grid-row {
+  border: 1px solid #eceeef;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+.grid-row-title {
+  font-weight: 600;
+  font-size: 16px;
+}
+.grid-row-tile {
+  font-weight: 400;
+}
+.grid-row-tile-title {
+  font-weight: 500;
+  font-size: 15px;
+}
+.grid-row-tile-label {
+  font-weight: 500;
+  font-size: 14px;
+}
+.grid-row-tile-label::after {
+  content: ": ";
+  font-size: 14px;
+}
+.grid-row-tile-text {
+  font-style: normal;
+  font-size: 14px;
+}
+/** Pager */
+.pager {
+  padding: 10px 30px;
+  font-size: 30px;
+}
+.pager-textbox {
+  border: none;
+  border-bottom: 1px solid #999999;
+  width: 50px;
+  text-align: center;
+}
+.pager-slash {
+  font-size: 30px;
+}
+.pager-suffix {
+  font-size: 10px;
+}
+.pager-button {
+  font-size: 30px;
+  margin-top: 15px;
+  cursor: pointer;
+  color: #000000;
+}
+.pager-button-prev {
+  margin-right: 10px;
+}
+.pager-button-next {
+  margin-left: 20px;
+}
+.pager-button[disabled="disabled"] {
+  color: #999999;
+  cursor: not-allowed;
+}

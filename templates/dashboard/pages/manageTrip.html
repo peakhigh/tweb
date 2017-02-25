@@ -1,70 +1,151 @@
+{{{{raw-helper}}}}
+{{{{/raw-helper}}}}
 {{> header}}
 <div class='manage-trips'>
-    <div class='manage-trips-content' style="outline: 1px solid orange;">
-            <!--Manage Trips Content<br/>-->
-            <!--{{#each templateData}}
-                {{stringify this}}
-                <br/>
-            {{/each}}            -->
+    <div class='manage-trips-content'>            
     </div>
 </div> 
 {{{{raw-helper}}}}
-<script id="grid-header-template" type="text/x-handlebars-template">
-  <!-- I am Header <br/> -->
-   <div class="container-fluid" >
-    <div class="row">
-         <div class="col-sm-2">
-            <b>Vechicle Type</b>
-         </div>
-         <div class="col-sm-2">
-            <b>Total Weight</b>
-         </div>
-         <div class="col-sm-2">
-            <b>Pick Up</b>
-         </div>
-         <div class="col-sm-2">
-            <b>Drop Off</b>
-         </div>
-         <div class="col-sm-2">
-            <b>Comments</b>
-         </div>
-         <div class="col-sm-2">
-            <b>Quote</b>
-         </div>
-    </div>
-    </div>
-    <br/>
-</script>
 <script id="grid-row-template" type="text/x-handlebars-template">
-  <div class="container-fluid" style="border-top: 1px solid orange;">
-    <div class="row">
-      <div class="col-sm-2">
-          {{vehicleRequirements.vechicleType}}
-        </div>
-        <div class="col-sm-2">
-          {{totalWeight}} tons
-        </div>
-        <div class="col-sm-2">
-            {{#each pickup}}
-              {{address.city}} {{date}}
-            {{/each}}
-        </div>
-        <div class="col-sm-2">
-          {{#each drop}}
-              {{address.city}} {{date}}
-          {{/each}}
-        </div>
-        <div class="col-sm-2">
-            {{comments}}
-        </div>
-        <div class="col-sm-2">
-              <button type="submit" class="btn btn-default  text-capitalize"><p class="text-capitalize">Quote</p></button>
-        </div>
+  <div class="container-fluid">
+    <div class="row grid-row">
+        <div class="col-sm-4 grid-row-container">
+            <div class="grid-row-title">Pickup point(s):</div>                      
+                {{#each pickup}}
+                    {{{exceptOnFirst @index '<hr/>'}}}
+                    <div class="row">     
+                        <div class="grid-row-tile col-sm-12">                
+                            <div>
+                                <span class="grid-row-tile-label">Date & time</span>
+                                <span class="grid-row-tile-text">{{date}}</span>
+                            </div>
+                            <div>
+                                <span class="grid-row-tile-label">Address</span>
+                                <span class="grid-row-tile-text">
+                                    {{#if address.street}} {{address.street}}, {{/if}}
+                                    {{address.city}}, {{address.state}}, {{address.zip}}.
+                                </span>                    
+                            </div>                            
+                        </div>  
+                    </div>
+                    <div class="row"> 
+                         <div class="grid-row-tile col-sm-12">
+                            <span class="grid-row-tile-label">Contact(s)</span>
+                            <div>        
+                                {{#each contact}} 
+                                    <div>                                        
+                                         <span class="grid-row-tile-text">
+                                            {{#if firstName}} {{firstName}} {{lastName}} - {{/if}} {{mobile}} {{#if email}} - {{email}} {{/if}} 
+                                        </span>                   
+                                    </div>                                                                             
+                                {{/each}}
+                            </div>
+                        </div> 
+                    </div> 
+                    <div class="row"> 
+                         <div class="grid-row-tile col-sm-12">
+                            <span class="grid-row-tile-label">Material(s)</span>
+                            <div>        
+                                {{#each material}} 
+                                    <div>                                        
+                                         <span class="grid-row-tile-text">
+                                            {{name}} 
+                                            {{#if weight}} ({{weight}} {{weightUnit}}) {{/if}}
+                                            {{#if materialType}} - {{materialType}} {{/if}}
+                                            {{#if approximateCost}} - valued at {{currency approximateCost}} {{/if}}
+                                        </span>                   
+                                    </div>                                                                             
+                                {{/each}}
+                            </div>
+                        </div> 
+                    </div>                    
+                {{/each}}                                   
+        </div>   
+        <div class="col-sm-4 grid-row-container">
+            <div class="grid-row-title">Drop point(s):</div>                      
+                {{#each drop}}
+                    <div class="row">     
+                        <div class="grid-row-tile col-sm-12">                
+                            <div>
+                                <span class="grid-row-tile-label">Date & time</span>
+                                <span class="grid-row-tile-text">{{date}}</span>
+                            </div>
+                            <div>
+                                <span class="grid-row-tile-label">Address</span>
+                                <span class="grid-row-tile-text">
+                                    {{#if address.street}} {{address.street}}, {{/if}}
+                                    {{address.city}}, {{address.state}}, {{address.zip}}.
+                                </span>                    
+                            </div>                            
+                        </div>  
+                    </div>
+                    <div class="row"> 
+                         <div class="grid-row-tile col-sm-12">
+                            <span class="grid-row-tile-label">Contact(s)</span>
+                            <div>        
+                                {{#each contact}} 
+                                    <div>                                        
+                                         <span class="grid-row-tile-text">
+                                            {{#if firstName}} {{firstName}} {{lastName}} - {{/if}} {{mobile}} {{#if email}} - {{email}} {{/if}} 
+                                        </span>                   
+                                    </div>                                                                             
+                                {{/each}}
+                            </div>
+                        </div> 
+                    </div> 
+                    <div class="row"> 
+                         <div class="grid-row-tile col-sm-12">
+                            <div>        
+                                <span class="grid-row-tile-label">Items to drop</span>
+                                <span class="grid-row-tile-text">
+                                    {{commaSeperatedArray itemsToDrop}}                                    
+                                </span>
+                            </div>
+                        </div> 
+                    </div>                                     
+                {{/each}}                                   
+        </div>  
+        <div class="col-sm-4 grid-row-container">
+            <div class="grid-row-title">Vehicle Requirements:</div> 
+            <div class="row">     
+                <div class="grid-row-tile col-sm-12">                
+                    <div>
+                        <span class="grid-row-tile-text">
+                            {{vehicleRequirements.vechicleType}} with capacity {{vehicleRequirements.requiredCapacity}} {{vehicleRequirements.capacityUnit}} 
+                            {{#if vehicleRequirements.minRating}} with rating {{vehicleRequirements.minRating}} {{/if}}
+                        </span>
+                    </div>                                           
+                </div>  
+            </div>
+            <div class="grid-row-title">Total Weight:</div> 
+             <div class="row">     
+                <div class="grid-row-tile col-sm-12">                
+                    <div>
+                        <span class="grid-row-tile-text">
+                            {{totalWeight}} {{totalWeightUnit}}
+                        </span>
+                    </div>                                           
+                </div>  
+            </div>
+            <div class="grid-row-title">Comments:</div>  
+             <div class="row">     
+                <div class="grid-row-tile col-sm-12">                
+                    <div>
+                        <span class="grid-row-tile-text">
+                            {{#each comments}}
+                                {{this}} <br/>
+                            {{/each}}
+                        </span>
+                    </div>                                           
+                </div>  
+            </div>
+        </div>     
     </div>
   </div>
-<br/>
 </script>
 {{{{/raw-helper}}}}
+{{{{raw-helper}}}}
 <script type="text/javascript">
-    console.log("Manage Trips"),console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData(),t=Handlebars.compile("{{> grid }}");$(".manage-trips-content").html(t({gridData:e.data,headerTemplateId:"grid-header-template",gridId:"gridManageTrips",postRender:function(){console.log(arguments)},rowConfig:{template:"grid-row-template",rowId:"row{{_id}}",preRender:function(e){return e},postRender:function(e,t){return console.log(" hu ha ",e,t),""}}}))});
+    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();new GRID_HELPER.GRID(".manage-trips-content",{gridData:e,gridId:"gridManageTrips",rowConfig:{template:"grid-row-template"}})});
 </script>
+{{{{/raw-helper}}}}

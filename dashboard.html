@@ -65,12 +65,13 @@
     <script type="text/javascript" src="js/common/helpers.js"></script>
     <script type="text/javascript" src="js/common/menu_helper.js"></script>
     <script type="text/javascript" src="js/common/alpaca.js"></script>
+    <script type="text/javascript" src="js/common/grid_helper.js"></script>
 
     <script type="text/javascript">
         MODULE_DATA = {
             loggedIn: false
         };
-        var partials = ['navbar', 'topmenu', 'messagemenu', 'alertmenu', 'usermenu', 'sidemenu', 'header', 'loading', 'cards', 'tile', 'footer', 'grid'];
+        var partials = ['navbar', 'topmenu', 'messagemenu', 'alertmenu', 'usermenu', 'sidemenu', 'header', 'loading', 'cards', 'tile', 'footer', 'grid', 'griddata', 'pager'];
         partials.push(MENU_HELPER.getHomePageByLocation(true));
         $.handlebars({
             templatePath: 'templates/dashboard',
