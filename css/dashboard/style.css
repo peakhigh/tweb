@@ -328,7 +328,7 @@ ul.alert-dropdown {
 }
 /** Pager */
 .pager {
-  padding: 10px 30px;
+  margin-bottom: 15px;
   font-size: 30px;
 }
 .pager-textbox {
@@ -358,4 +358,11 @@ ul.alert-dropdown {
 .pager-button[disabled="disabled"] {
   color: #999999;
   cursor: not-allowed;
+}
+.sorter {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.sorter .dropdown-menu {
+  width: 250px;
 }

@@ -6,6 +6,24 @@ $(document).ready(function () {
         gridId: 'gridManageTrips',
         rowConfig: {
             template: 'grid-row-template'            
+        }, 
+        sortConfig: {
+            options: [
+                {
+                    title: 'Pickup Date',
+                    key: 'pickup.date',
+                    selected: true,
+                    order: 'desc'                 
+                },
+                {
+                    title: 'Drop Date',
+                    key: 'drop.date'             
+                },
+                {
+                    title: 'Material Value',
+                    key: 'pickup.material.approximateCost'                  
+                }
+            ]
         }
     });
 });

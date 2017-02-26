@@ -24,7 +24,8 @@ GRID_HELPER = new function () {
         me.template = Handlebars.compile('{{> grid }}');
         me.dataTemplate = Handlebars.compile('{{> griddata }}');
         me.options = {
-            drawPager: true
+            drawPager: true,
+            drawSort: true
         };
         jQuery.extend(true, me.options, options);
         if (!me.options.gridId) {
@@ -33,7 +34,7 @@ GRID_HELPER = new function () {
         me.draw = function () {
             //draw grid
             $(elementSelector).html(me.template(me.options));
-            if (me.options.drawPager) {
+            if (me.options.drawPager) {               
                 if (!me.options.pagerConfig) {
                     me.options.pagerConfig = {}
                 }
@@ -52,6 +53,18 @@ GRID_HELPER = new function () {
                         });
                     });
                 }
+            }
+            if (me.options.drawSort) {
+                me.sorter = new GRID_HELPER.SORTER($(elementSelector).find('.sort-container'), me.options.sortConfig, function(sortOptions) {
+                    // MENU_HELPER.reloadData({
+                    //     data: {
+                    //         skip: (page - 1) * size
+                    //     }
+                    // }, function(response) {                            
+                    //     me.redraw(response);
+                    // });
+                    console.log(sortOptions);
+                });
             }
         }
         me.redraw = function(response) {
@@ -181,6 +194,56 @@ GRID_HELPER = new function () {
         }
         me.hide = function () {
             me.element.addClass('hideEle');
+        }
+
+        me.draw();
+        return me;
+    }
+
+    this.SORTER = function (elementSelector, options, callback) {
+        var me = this;
+        me.template = Handlebars.compile('{{> gridsort }}');
+        me.options = {};
+        jQuery.extend(true, me.options, options);
+        //set defaults
+        if (!me.options.sortId) {
+            me.options.sortId = 'sorter_' + (new Date()).getTime();
+        }        
+        
+        me.draw = function () {
+            me.element = $(elementSelector);
+            $(elementSelector).hide()
+            me.element.html(me.template(me.options)); 
+            $('#'+me.options.sortId).multiselect({
+                buttonWidth: '250px',
+                nonSelectedText: 'Sort By',
+                onChange: function(option, checked, select) {
+                    // console.log('Changed option ' + $(option).val() + '.', checked, select);
+                    if (checked) {
+                        var unselect = option.val().split('-')[1] === 'asc' ? (option.val().split('-')[0] + '-desc') : (option.val().split('-')[0] + '-asc');                        
+                        // $('#'+me.options.sortId).find('optgroup[key="'+option.attr('key')+'"]').find('option[value="'+unselect+'"]').removeAttr('selected').prop('selected', false);
+                        $('#'+me.options.sortId).multiselect('deselect', unselect);
+                        // $('#'+me.options.sortId).multiselect('refresh');
+                        // console.log($('#'+me.options.sortId).val());
+                    }
+                },
+                buttonText: function(options, select) {
+                    if (options.length === 0) {
+                        return 'Sort By'; 
+                    } else if (options.length === 1) {
+                        return $(select).find('optgroup[key="'+options.attr('key')+'"]').attr('label') + '-' + options.html();
+                            // (options.val() === 'asc' ? 'Ascending' : 'Descending');
+                    } else {
+                        return options.length + ' Sort options selected';
+                    }       
+                }
+            });             
+            me.element.find('optgroup[selected="true"]').each(function(index, ele) {
+                var order = $(ele).attr('order') || 'asc';
+                $(ele).find('option[value="' + $(ele).attr('key') + '-' + order+'"]').prop('selected', true);
+            });
+            $('#'+me.options.sortId).multiselect('rebuild');
+            $(elementSelector).show();
         }
 
         me.draw();

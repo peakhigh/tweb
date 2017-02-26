@@ -4,7 +4,8 @@ https://github.com/71104/jquery-handlebars
 http://www.alpacajs.org/
 #handlebars
 http://handlebarsjs.com/
-
+#bootstrap multiselect
+http://davidstutz.github.io/bootstrap-multiselect
 
 
 # [Start Bootstrap](http://startbootstrap.com/) - [Agency](http://startbootstrap.com/template-overviews/agency/)
