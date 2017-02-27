@@ -1,0 +1,10 @@
+<div class="sorter">
+    <select id="{{sortId}}" multiple="multiple">
+        {{#each options}}
+            <optgroup label="{{title}}" key="{{key}}" selected="{{selected}}" order="{{order}}" class="sort-group">            
+                <option value="{{key}}-asc" key="{{key}}">Asc</option>
+                <option value="{{key}}-desc" key="{{key}}">Desc</option>
+            </optgroup>
+        {{/each}}
+    </select>
+</div>
