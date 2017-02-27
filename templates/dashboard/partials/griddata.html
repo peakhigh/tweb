@@ -4,7 +4,13 @@
     {{#each gridData.data}}
         <div class="grid-row-default" _id="{{_id}}">
             {{{compileTemplateByName ../rowConfig.template this ../rowConfig}}}
-            <div class="grid-row-options-default" _id="{{_id}}"></div>
+            {{#if ../rowConfig.detailsTemplate}}
+                <div class="grid-row-details-default" _id="{{_id}}">                    
+                </div>                              
+            {{/if}}                     
+            {{#if ../rowConfig.optionsTemplate}}
+                <div class="grid-row-options-default" _id="{{_id}}"></div>
+            {{/if}} 
             {{gridRowPostHook ../this.rowConfig this (compileTemplateByHtml ../rowConfig.rowId this)}}  
         </div>                
     {{/each}}

@@ -4,7 +4,7 @@
     </div>
 </div> 
 {{{{raw-helper}}}}
-<script id="grid-row-template" type="text/x-handlebars-template">
+<script id="grid-row-template-details" type="text/x-handlebars-template">
   <div class="container-fluid">
     <div class="row grid-row">
         <div class="col-sm-4 grid-row-container">
@@ -143,9 +143,53 @@
 </script>
 <script id="grid-row-options-template" type="text/x-handlebars-template">
   <div class="container-fluid">
-    <div class="row grid-row">
-       {{id}}
+    <div class="row grid-row">       
+        <div class="col-sm-12">
+            <div class="pull-right">
+                <button type="button" class="btn btn-default btn-primary comments-trip" _id="{{_id}}">Add Comments</button>
+                <button type="button" class="btn btn-default btn-primary driver-details-trip" _id="{{_id}}">Set Driver Details</button>
+                <button type="button" class="btn btn-default btn-primary quote-trip" _id="{{_id}}">Set Quote</button>
+                <button type="button" class="btn btn-default btn-primary edit-trip" _id="{{_id}}">Edit</button>
+            </div>
+        </div>       
     </div>
   </div>
+</script>
+<script id="grid-row-template" type="text/x-handlebars-template">
+  <div class="container-fluid">
+    <div class="row grid-row">
+        <div class="col-sm-12 grid-row-container">
+            <span class="grid-row-title">Pickup</span> at 
+            {{#each pickup}}
+                {{address.city}} on {{date}}
+                {{{exceptOnFirst @index ','}}}
+                (<span class="grid-row-title">Contact:</span>             
+                {{#each contact}} 
+                    {{mobile}}
+                    {{{exceptOnFirst @index ','}}}
+                {{/each}})
+                (<span class="grid-row-title">Material:</span> 
+                {{#each material}} 
+                    {{name}} - {{materialType}}
+                    {{{exceptOnFirst @index ','}}}
+                {{/each}})
+            {{/each}}            
+            <br/>
+            <span class="grid-row-title">Drop</span> at 
+            {{#each drop}}
+                {{address.city}} on {{date}}
+                {{{exceptOnFirst @index ','}}}
+                (<span class="grid-row-title">Contact:</span> 
+                 {{#each contact}}                  
+                    {{mobile}}
+                    {{{exceptOnFirst @index ','}}}
+                {{/each}})
+                (<span class="grid-row-title">Items:</span> 
+                {{itemsToDrop}}
+                )
+            {{/each}}                       
+        </div>
+    </div>
+</div>
 </script>
 {{{{/raw-helper}}}}

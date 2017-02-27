@@ -4,10 +4,18 @@ $(document).ready(function () {
     var grid = new GRID_HELPER.GRID('.manage-trips-content', {
         gridData: moduleData,
         gridId: 'gridManageTrips',
-        rowConfig: {
-            template: 'grid-row-template',
+        rowConfig: {            
+            template: 'grid-row-template-details',
+            // detailsTemplate: 'grid-row-template-details', 
+            //detailsEvent: 'mouseover',           
             optionsTemplate: 'grid-row-options-template',
-            optionsEvent: 'mouseover'
+            optionsEvent: 'mouseover',
+            optionsPostRender: function(rowElement, record) {
+                console.log(record);
+                $(rowElement).find('.edit-trip').click(function() {
+                    MENU_HELPER.menuClick('addTrip', 'manageTrip', {extraHref: record._id});
+                });
+            }
             // click: function() {
             //     console.log(arguments);
             // }, 

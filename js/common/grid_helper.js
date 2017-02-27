@@ -33,8 +33,11 @@ GRID_HELPER = new function () {
         }
         me.draw = function () {
             //draw grid
-            $(elementSelector).html(me.template(me.options));    
-            me.options.rowConfig.optionsTemplate = Handlebars.compile(me.options.rowConfig.optionsTemplate);   
+            $(elementSelector).html(me.template(me.options)); 
+            if (me.options.rowConfig.optionsTemplate)   
+                me.options.rowConfig.optionsTemplate = Handlebars.compile($('#' + me.options.rowConfig.optionsTemplate).html()); 
+            // if (me.options.rowConfig.detailsTemplate)
+            //     me.options.rowConfig.detailsTemplate = Handlebars.compile($('#' + me.options.rowConfig.detailsTemplate).html());
             me.attachRowHooks();      
             if (me.options.drawPager) {               
                 if (!me.options.pagerConfig) {
@@ -49,7 +52,8 @@ GRID_HELPER = new function () {
                          me.showLoading();
                          MENU_HELPER.reloadData({
                             data: {
-                                skip: (page - 1) * size
+                                skip: (page - 1) * size,
+                                limit: size
                             }
                         }, function(response) {   
                             me.hideLoading();                         
@@ -108,16 +112,33 @@ GRID_HELPER = new function () {
                         }                        
                     });
                 }
+                // if (me.options.rowConfig.detailsTemplate) {
+                //     $(row).bind(me.options.rowConfig.detailsEvent || 'mouseover', function(e) {                        
+                //         if (!me.currentDetailsRowId || $(row).attr('_id') !== me.currentDetailsRowId) {
+                //             $('#'+me.options.gridId).find('.grid-row-details-default').hide(250);
+                //             if (!$(row).find('.grid-row-details-default').data('rendered')) {
+                //                 $(row).find('.grid-row-details-default').html(me.options.rowConfig.detailsTemplate(me.getRecordById($(row).attr('_id'))));
+                //                 $(row).find('.grid-row-details-default').data('rendered', true);
+                //             }                            
+                //             $(row).find('.grid-row-details-default').slideDown(250);
+                //             me.currentDetailsRowId = $(row).attr('_id');
+                //         }                        
+                //     });
+                // }
                 if (me.options.rowConfig.optionsTemplate) {
                     $(row).bind(me.options.rowConfig.optionsEvent || 'mouseover', function(e) {                        
-                        if (!me.currentHoverRowId || $(row).attr('_id') !== me.currentHoverRowId) {
+                        if (!me.currentOptionsRowId || $(row).attr('_id') !== me.currentOptionsRowId) {
                             $('#'+me.options.gridId).find('.grid-row-options-default').hide(250);
                             if (!$(row).find('.grid-row-options-default').data('rendered')) {
-                                $(row).find('.grid-row-options-default').html(me.options.rowConfig.optionsTemplate(me.getRecordById($(row).attr('_id'))));
+                                var record = me.getRecordById($(row).attr('_id'));
+                                $(row).find('.grid-row-options-default').html(me.options.rowConfig.optionsTemplate(record));
                                 $(row).find('.grid-row-options-default').data('rendered', true);
+                                if (me.options.rowConfig.optionsPostRender) {
+                                    me.options.rowConfig.optionsPostRender($(row).find('.grid-row-options-default'), record);
+                                }
                             }                            
                             $(row).find('.grid-row-options-default').slideDown(250);
-                            me.currentHoverRowId = $(row).attr('_id');
+                            me.currentOptionsRowId = $(row).attr('_id');
                         }                        
                     });
                 }

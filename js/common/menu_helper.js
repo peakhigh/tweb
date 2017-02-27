@@ -166,6 +166,9 @@ MENU_HELPER_CALLBACKS = {//define callbacks for each menu item
     manageTrip: {
         setFilters: function (config) {//set filters for all manage calls
             //change config.data here
+            // config.data = {
+            //     limit: CONSTANTS.gridPageSize
+            // }
             // config.data = {//set where, skip, limit, sort
             //     // where: { _id: '58a917f4e904510f97fd19ef'}
             // }
