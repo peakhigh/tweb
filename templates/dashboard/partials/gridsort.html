@@ -1,9 +1,9 @@
 <div class="sorter">
-    <select id="{{sortId}}" multiple="multiple">
+    <select id="{{sortId}}" {{#if multiple}}multiple="multiple"{{/if}}>
         {{#each options}}
             <optgroup label="{{title}}" key="{{key}}" selected="{{selected}}" order="{{order}}" class="sort-group">            
-                <option value="{{key}}-asc" key="{{key}}">Asc</option>
-                <option value="{{key}}-desc" key="{{key}}">Desc</option>
+                <option value="{{key}}#asc" key="{{key}}">Asc</option>
+                <option value="{{key}}#desc" key="{{key}}">Desc</option>
             </optgroup>
         {{/each}}
     </select>

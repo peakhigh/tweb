@@ -5,9 +5,18 @@ $(document).ready(function () {
         gridData: moduleData,
         gridId: 'gridManageTrips',
         rowConfig: {
-            template: 'grid-row-template'            
+            template: 'grid-row-template',
+            optionsTemplate: 'grid-row-options-template',
+            optionsEvent: 'mouseover'
+            // click: function() {
+            //     console.log(arguments);
+            // }, 
+            // hover: function() {
+            //     console.log(arguments);
+            // }   
         }, 
         sortConfig: {
+            multiple: false,
             options: [
                 {
                     title: 'Pickup Date',

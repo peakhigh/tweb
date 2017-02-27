@@ -326,6 +326,9 @@ ul.alert-dropdown {
   font-style: normal;
   font-size: 14px;
 }
+.grid-row-options-default {
+  display: none;
+}
 /** Pager */
 .pager {
   margin-bottom: 15px;

@@ -143,9 +143,16 @@
     </div>
   </div>
 </script>
+<script id="grid-row-options-template" type="text/x-handlebars-template">
+  <div class="container-fluid">
+    <div class="row grid-row">
+       {{id}}
+    </div>
+  </div>
+</script>
 {{{{/raw-helper}}}}
 {{{{raw-helper}}}}
 <script type="text/javascript">
-    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();new GRID_HELPER.GRID(".manage-trips-content",{gridData:e,gridId:"gridManageTrips",rowConfig:{template:"grid-row-template"},sortConfig:{options:[{title:"Pickup Date",key:"pickup.date",selected:!0,order:"desc"},{title:"Drop Date",key:"drop.date"},{title:"Material Value",key:"pickup.material.approximateCost"}]}})});
+    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();new GRID_HELPER.GRID(".manage-trips-content",{gridData:e,gridId:"gridManageTrips",rowConfig:{template:"grid-row-template",optionsTemplate:"grid-row-options-template",optionsEvent:"mouseover"},sortConfig:{multiple:!1,options:[{title:"Pickup Date",key:"pickup.date",selected:!0,order:"desc"},{title:"Drop Date",key:"drop.date"},{title:"Material Value",key:"pickup.material.approximateCost"}]}})});
 </script>
 {{{{/raw-helper}}}}

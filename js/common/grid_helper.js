@@ -33,7 +33,9 @@ GRID_HELPER = new function () {
         }
         me.draw = function () {
             //draw grid
-            $(elementSelector).html(me.template(me.options));
+            $(elementSelector).html(me.template(me.options));    
+            me.options.rowConfig.optionsTemplate = Handlebars.compile(me.options.rowConfig.optionsTemplate);   
+            me.attachRowHooks();      
             if (me.options.drawPager) {               
                 if (!me.options.pagerConfig) {
                     me.options.pagerConfig = {}
@@ -44,11 +46,13 @@ GRID_HELPER = new function () {
                 //deal the pager
                 if ($(elementSelector).find('.pager-container')) {
                     me.pager = new GRID_HELPER.PAGER($(elementSelector).find('.pager-container'), me.options.pagerConfig, function(page, size) {
+                         me.showLoading();
                          MENU_HELPER.reloadData({
                             data: {
                                 skip: (page - 1) * size
                             }
-                        }, function(response) {                            
+                        }, function(response) {   
+                            me.hideLoading();                         
                             me.redraw(response);
                         });
                     });
@@ -56,21 +60,90 @@ GRID_HELPER = new function () {
             }
             if (me.options.drawSort) {
                 me.sorter = new GRID_HELPER.SORTER($(elementSelector).find('.sort-container'), me.options.sortConfig, function(sortOptions) {
-                    // MENU_HELPER.reloadData({
-                    //     data: {
-                    //         skip: (page - 1) * size
-                    //     }
-                    // }, function(response) {                            
-                    //     me.redraw(response);
-                    // });
                     console.log(sortOptions);
+                    var sort = {};
+                    if (sortOptions && Array.isArray(sortOptions) && sortOptions.length > 0) {                        
+                        sortOptions.forEach(function(entry) {
+                            var details = entry.split('#');
+                            if (details.length === 2) {
+                                sort[details[0]] = (details[1] === 'asc') ? 1 : -1;
+                            } else {
+                                sort[details[0]] = 1;
+                            }                            
+                        });
+                    } else if(typeof sortOptions === 'string') {
+                        var details = sortOptions.split('#');
+                        sort[sortOptions] = 1;
+                        if (details.length === 2) {
+                            sort[details[0]] = (details[1] === 'asc') ? 1 : -1;
+                        } else {
+                            sort[details[0]] = 1;
+                        } 
+                    }
+                    me.showLoading();
+                    MENU_HELPER.reloadData({
+                        data: {
+                            sort: sort
+                        }
+                    }, function(response) { 
+                        me.hideLoading();                           
+                        me.redraw(response);
+                    });                    
                 });
             }
+        }
+        me.attachRowHooks = function() {
+            //for all rows
+            $('#' + me.options.gridId).find('.grid-row-default').each(function(index, row){
+                if (me.options.rowConfig.click) {
+                    $(row).bind('click', function(e) {
+                        me.options.rowConfig.click(e, me.getRecordById($(row).attr('_id')), row);
+                    });
+                }
+                if (me.options.rowConfig.hover) {
+                    $(row).bind('mouseover', function(e) {
+                        if (!me.currentHoverRowId || $(row).attr('_id') !== me.currentHoverRowId) {
+                            me.options.rowConfig.hover(e, me.getRecordById($(row).attr('_id')), row);
+                            me.currentHoverRowId = $(row).attr('_id');
+                        }                        
+                    });
+                }
+                if (me.options.rowConfig.optionsTemplate) {
+                    $(row).bind(me.options.rowConfig.optionsEvent || 'mouseover', function(e) {                        
+                        if (!me.currentHoverRowId || $(row).attr('_id') !== me.currentHoverRowId) {
+                            $('#'+me.options.gridId).find('.grid-row-options-default').hide(250);
+                            if (!$(row).find('.grid-row-options-default').data('rendered')) {
+                                $(row).find('.grid-row-options-default').html(me.options.rowConfig.optionsTemplate(me.getRecordById($(row).attr('_id'))));
+                                $(row).find('.grid-row-options-default').data('rendered', true);
+                            }                            
+                            $(row).find('.grid-row-options-default').slideDown(250);
+                            me.currentHoverRowId = $(row).attr('_id');
+                        }                        
+                    });
+                }
+            });
+        }
+        me.getRecordById = function(id) {
+            if (me.options.gridData && me.options.gridData.data && Array.isArray(me.options.gridData.data)) {
+                for(var i=0;i<me.options.gridData.data.length;i++) {
+                    if(me.options.gridData.data[i]._id === id) {
+                        return me.options.gridData.data[i];
+                    }
+                }               
+            }
+            return {};
+        }
+        me.showLoading = function() {
+            $('#' + me.options.gridId).html('<div style="font-size:24px;text-align:center;width:100%;margin-top: 100px;">Loading...</div>');//show loading image - TODO
+        }
+        me.hideLoading = function() {
+            $('#' + me.options.gridId).html('');
         }
         me.redraw = function(response) {
             console.log(response);
             me.options.gridData = response;
             $('#' + me.options.gridId).html(me.dataTemplate(me.options));
+            me.attachRowHooks();
         }
         me.draw();
         return me;
@@ -203,7 +276,9 @@ GRID_HELPER = new function () {
     this.SORTER = function (elementSelector, options, callback) {
         var me = this;
         me.template = Handlebars.compile('{{> gridsort }}');
-        me.options = {};
+        me.options = {
+            multiple: true
+        };
         jQuery.extend(true, me.options, options);
         //set defaults
         if (!me.options.sortId) {
@@ -218,21 +293,17 @@ GRID_HELPER = new function () {
                 buttonWidth: '250px',
                 nonSelectedText: 'Sort By',
                 onChange: function(option, checked, select) {
-                    // console.log('Changed option ' + $(option).val() + '.', checked, select);
                     if (checked) {
-                        var unselect = option.val().split('-')[1] === 'asc' ? (option.val().split('-')[0] + '-desc') : (option.val().split('-')[0] + '-asc');                        
-                        // $('#'+me.options.sortId).find('optgroup[key="'+option.attr('key')+'"]').find('option[value="'+unselect+'"]').removeAttr('selected').prop('selected', false);
-                        $('#'+me.options.sortId).multiselect('deselect', unselect);
-                        // $('#'+me.options.sortId).multiselect('refresh');
-                        // console.log($('#'+me.options.sortId).val());
+                        var unselect = option.val().split('#')[1] === 'asc' ? (option.val().split('#')[0] + '#desc') : (option.val().split('#')[0] + '#asc');                        
+                        $('#'+me.options.sortId).multiselect('deselect', unselect);                        
                     }
+                    callback($('#'+me.options.sortId).val());
                 },
                 buttonText: function(options, select) {
                     if (options.length === 0) {
                         return 'Sort By'; 
                     } else if (options.length === 1) {
-                        return $(select).find('optgroup[key="'+options.attr('key')+'"]').attr('label') + '-' + options.html();
-                            // (options.val() === 'asc' ? 'Ascending' : 'Descending');
+                        return $(select).find('optgroup[key="'+options.attr('key')+'"]').attr('label') + ' - ' + options.html();
                     } else {
                         return options.length + ' Sort options selected';
                     }       
@@ -240,7 +311,7 @@ GRID_HELPER = new function () {
             });             
             me.element.find('optgroup[selected="true"]').each(function(index, ele) {
                 var order = $(ele).attr('order') || 'asc';
-                $(ele).find('option[value="' + $(ele).attr('key') + '-' + order+'"]').prop('selected', true);
+                $(ele).find('option[value="' + $(ele).attr('key') + '#' + order+'"]').prop('selected', true);
             });
             $('#'+me.options.sortId).multiselect('rebuild');
             $(elementSelector).show();

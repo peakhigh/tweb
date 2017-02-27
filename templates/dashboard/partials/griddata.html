@@ -2,8 +2,11 @@
 {{{compileTemplateByName headerTemplateId headerData}}}
 {{#if gridData.data}}
     {{#each gridData.data}}
-        {{{compileTemplateByName ../rowConfig.template this ../rowConfig}}}
-        {{gridRowPostHook ../this.rowConfig this (compileTemplateByHtml ../rowConfig.rowId this)}}  
+        <div class="grid-row-default" _id="{{_id}}">
+            {{{compileTemplateByName ../rowConfig.template this ../rowConfig}}}
+            <div class="grid-row-options-default" _id="{{_id}}"></div>
+            {{gridRowPostHook ../this.rowConfig this (compileTemplateByHtml ../rowConfig.rowId this)}}  
+        </div>                
     {{/each}}
 {{else}}
     No Records Found
