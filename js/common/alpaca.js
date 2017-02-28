@@ -8,17 +8,22 @@ Alpaca.defaultErrorCallback = function (err) {
 
 FORM_HELPER = new function (options) {
     this.setDefaultView = function (config, options) {
-        config.view = {
-            parent: "bootstrap-create-horizontal",
-            layout: {
-                template: "<div class='row'><div class='col-md-6' id='column-1'></div><div class='col-md-6' id='column-2'></div></div>"
+        config.view = options.view;
+        if (!config.view) {
+            if (options.bindings) {
+                config.view = {
+                    parent: "bootstrap-create-horizontal",
+                    layout: {
+                        template: "<div class='row'><div class='col-md-6' id='column-1'></div><div class='col-md-6' id='column-2'></div></div>"
+                    }
+                }
+                if (config.view && config.view.layout) {
+                    config.view.layout.bindings = options.bindings;
+                }
+            } else {
+                config.view = "bootstrap-create-horizontal";
             }
-        }
-        if (options.bindings) {
-            if (config.view && config.view.layout) {
-                config.view.layout.bindings = options.bindings;
-            }
-        }
+        }        
     }
     this.draw = function (elementSelector, config, options) {
         if (config) {
@@ -95,7 +100,7 @@ FORM_HELPER = new function (options) {
 
     this.setFormDetails = function (elementSelector, config, options) {
         //set options -> form buttons       
-        config.options.form = options.optionsOverride.form || {};                   
+        config.options.form = (options.optionsOverride && options.optionsOverride.form) ? options.optionsOverride.form : {};                   
         if (!config.options.form.buttons)
             config.options.form.buttons = {};
         if (!config.options.form.buttons.submit)

@@ -2,20 +2,26 @@
 <div class="collapse navbar-collapse navbar-toggleable-sm navbar-ex1-collapse">
     <ul class="nav navbar-nav side-nav list-group">
         {{#each loggedInUser.menu.SideMenu}}
-             <li class="list-group-item">
-                {{#if Menu}}
-                    <a id="amenu{{page}}" href="javascript:MENU_HELPER.menuClick('{{page}}');" data-toggle="collapse" data-target="#submenu{{page}}"><i class="fa fa-fw {{icon}}"></i> {{title}} <i class="fa fa-fw fa-caret-down"></i></a>
-                    <ul id="submenu{{page}}" class="list-group collapse">
-                        {{#each Menu}}
-                            <li class="list-group-item">
-                                <a id="amenu{{../page}}-{{page}}" href="javascript:MENU_HELPER.menuClick('{{page}}','{{../page}}');"><i class="fa fa-fw {{icon}}"></i> {{title}}</a>
-                            </li>
-                        {{/each}}
-                    </ul>                        
-                {{else}}
-                    <a id="amenu{{page}}" href="javascript:MENU_HELPER.menuClick('{{page}}');"><i class="fa fa-fw {{icon}}"></i> {{title}}</a>
-                {{/if}}                 
-            </li>
+            {{#unless hide}}
+                <li class="list-group-item">
+                    {{#if Menu}}
+                        <a id="amenu{{page}}" href="javascript:MENU_HELPER.menuClick('{{page}}');" data-toggle="collapse" data-target="#submenu{{page}}"><i class="fa fa-fw {{icon}}"></i> {{title}} <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="submenu{{page}}" class="list-group collapse">
+                            {{#each Menu}}
+                                {{#unless hide}}
+                                    <li class="list-group-item">
+                                        <a id="amenu{{../page}}-{{page}}" href="javascript:MENU_HELPER.menuClick('{{page}}','{{../page}}');"><i class="fa fa-fw {{icon}}"></i> {{title}}</a>
+                                    </li>
+                                {{/unless}}
+                            {{/each}}
+                        </ul>                        
+                    {{else}}
+                        {{#unless hide}}
+                            <a id="amenu{{page}}" href="javascript:MENU_HELPER.menuClick('{{page}}');"><i class="fa fa-fw {{icon}}"></i> {{title}}</a>
+                        {{/unless}}
+                    {{/if}}                 
+                </li>
+            {{/unless}}
         {{/each}}            
     </ul>
 </div>

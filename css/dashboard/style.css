@@ -371,10 +371,21 @@ ul.alert-dropdown {
 }
 /**bootstrap -override */
 .btn-primary,
+.btn-default {
+  background-color: #3b3736;
+  border-color: #3b3736;
+  color: white;
+  font-weight: 300;
+  font-size: 16px;
+}
 .btn-primary:hover,
 .btn-primary:active,
 .btn-primary:visited,
-.btn-primary:focus {
+.btn-primary:focus,
+.btn-default:hover,
+.btn-default:active,
+.btn-default:visited,
+.btn-default:focus {
   background-color: #fed136;
   border-color: #fed136;
 }

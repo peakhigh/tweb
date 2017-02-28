@@ -86,3 +86,11 @@ Handlebars.registerHelper('for', function(from, to, incr, block) {
     return accum;
 });
 
+Handlebars.registerHelper('ifArray', function(arr) {
+    if (!arr || !Array.isArray(arr) || arr.length == 0)
+    {
+        return false;
+    }
+    return true;
+});
+

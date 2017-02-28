@@ -127,18 +127,32 @@
                     </div>                                           
                 </div>  
             </div>
-            <div class="grid-row-title">Comments:</div>  
-             <div class="row">     
-                <div class="grid-row-tile col-sm-12">                
-                    <div>
-                        <span class="grid-row-tile-text">
-                            {{#each comments}}
-                                {{this}} <br/>
-                            {{/each}}
-                        </span>
-                    </div>                                           
-                </div>  
-            </div>
+            {{#if (ifArray comments)}}            
+                <div class="grid-row-title">Comments:</div>  
+                <div class="row">     
+                    <div class="grid-row-tile col-sm-12">                
+                        <div>
+                            <span class="grid-row-tile-text">
+                                {{#each comments}}
+                                    {{this}} <br/>
+                                {{/each}}
+                            </span>
+                        </div>                                           
+                    </div>  
+                </div>
+            {{/if}}
+            {{#if quotes}}
+                <div class="grid-row-title">Quote:</div> 
+                <div class="row">     
+                    <div class="grid-row-tile col-sm-12">                
+                        <div>
+                            <span class="grid-row-tile-text">
+                                {{quotes.cost}} 
+                            </span>
+                        </div>                                           
+                    </div>  
+                </div>
+            {{/if}}
         </div>     
     </div>
   </div>
@@ -197,6 +211,6 @@
 {{{{/raw-helper}}}}
 {{{{raw-helper}}}}
 <script type="text/javascript">
-    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();new GRID_HELPER.GRID(".manage-trips-content",{gridData:e,gridId:"gridManageTrips",rowConfig:{template:"grid-row-template-details",optionsTemplate:"grid-row-options-template",optionsEvent:"mouseover",optionsPostRender:function(e,t){console.log(t),$(e).find(".edit-trip").click(function(){MENU_HELPER.menuClick("addTrip","manageTrip",{extraHref:t._id})})}},sortConfig:{multiple:!1,options:[{title:"Pickup Date",key:"pickup.date",selected:!0,order:"desc"},{title:"Drop Date",key:"drop.date"},{title:"Material Value",key:"pickup.material.approximateCost"}]}})});
+    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();new GRID_HELPER.GRID(".manage-trips-content",{gridData:e,gridId:"gridManageTrips",rowConfig:{template:"grid-row-template-details",optionsTemplate:"grid-row-options-template",optionsEvent:"mouseover",optionsPostRender:function(e,t){console.log(t),$(e).find(".edit-trip").click(function(){MENU_HELPER.menuClick("addTrip","manageTrip",{extraHref:t._id})}),$(e).find(".quote-trip").click(function(){MENU_HELPER.menuClick("setQuote","manageTrip",{extraHref:t._id})})}},sortConfig:{multiple:!1,options:[{title:"Pickup Date",key:"pickup.date",selected:!0,order:"desc"},{title:"Drop Date",key:"drop.date"},{title:"Material Value",key:"pickup.material.approximateCost"}]}})});
 </script>
 {{{{/raw-helper}}}}
