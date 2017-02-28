@@ -18,6 +18,9 @@ $(document).ready(function () {
                 $(rowElement).find('.quote-trip').click(function() {
                     MENU_HELPER.menuClick('setQuote', 'manageTrip', {extraHref: record._id});
                 });
+                $(rowElement).find('.comments-trip').click(function() {
+                    MENU_HELPER.menuClick('addComments', 'manageTrip', {extraHref: record._id});
+                });
             }
             // click: function() {
             //     console.log(arguments);

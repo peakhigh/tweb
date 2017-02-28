@@ -133,12 +133,12 @@ FORM_HELPER = new function (options) {
                 if (!this.isValid(true)) {//if not valid
                     this.focus();//focus on first error element
                     return;
-                }            
-                if (options.callbacks && options.callbacks.beforeSubmit) {
-                    options.callbacks.beforeSubmit.apply(this, []);
-                }
+                }                            
                 var promise = this.ajaxSubmit({
                     preSubmit: function(ajaxConfig) {
+                        if (options.callbacks && options.callbacks.beforeSubmit) {
+                            options.callbacks.beforeSubmit.apply(this, [ajaxConfig]);
+                        }
                         if (options.type === 'modify' && config.data && config.data._id && ajaxConfig.data && !ajaxConfig.data._id) {
                             //on modify, set _id to all the post requests
                             ajaxConfig.data._id = config.data._id;

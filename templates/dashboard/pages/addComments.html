@@ -1,0 +1,12 @@
+{{{{raw-helper}}}}
+{{{{/raw-helper}}}}
+{{> header}}
+<div class='edit-trips'>
+    <div class='edit-trips-content'>
+    </div>
+</div> 
+{{{{raw-helper}}}}
+<script type="text/javascript">
+    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var t=UTILS.getCurrentTemplateData();FORM_HELPER.draw(".edit-trips-content",t,{postUrl:"trips/service/addComments",callbacks:{afterSubmit:function(){MENU_HELPER.menuClick("manageTrip","manageTrip")}}})});
+</script>
+{{{{/raw-helper}}}}
