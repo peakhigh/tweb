@@ -175,7 +175,7 @@
         <div class="col-sm-12 grid-row-container">
             <span class="grid-row-title">Pickup</span> at 
             {{#each pickup}}
-                {{address.city}} on {{date}}
+                {{address.street}}, {{address.city}} on {{date}}
                 {{{exceptOnFirst @index ','}}}
                 (<span class="grid-row-title">Contact:</span>             
                 {{#each contact}} 
