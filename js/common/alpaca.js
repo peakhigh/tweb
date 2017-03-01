@@ -30,7 +30,7 @@ FORM_HELPER = new function (options) {
             //  $(elementSelector).html('{{> loading }}');
             //  $(elementSelector).html(Handlebars.compile($(elementSelector).html())({}));
             if (config.data && !options.type) {
-                options.type = 'modify';
+                options.type = 'modify';                
             }
             if (!config.view) {
                 FORM_HELPER.setDefaultView(config, options);
@@ -63,11 +63,18 @@ FORM_HELPER = new function (options) {
                     (options.schemaOverride && options.schemaOverride.fields) ?  options.schemaOverride.fields : null);
 
                 FORM_HELPER.setFormDetails(elementSelector, config, options);
+                if (options.type === 'modify') {
+                    config.options.hideInitValidationError = false;
+                }
                 if (options.callbacks && options.callbacks.postRender) {
                     config.postRender = function(control) {
                         if (options.type === 'modify') {
                             //enable the submit button in edit mode
                             $('.alpaca-form-button-submit').removeProp('disabled');
+                            //  control.refreshValidationState(true);//refresh validation state on every submit
+                            //  if (!control.isValid(true)) {//if not valid
+                            //     control.focus();//focus on first error element                                
+                            // } 
                         }
                         options.callbacks.postRender.apply(this, [control]);   
                     }                    

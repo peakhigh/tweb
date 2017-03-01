@@ -1,3 +1,4 @@
 1) load sub-partials in each page(need to load from same directory)
 2) loading on menu-item-click (side menu)
 3) page navigation (back & front) - add entry into history when menuClick happened
+4) fix control.focus method in alpaca(to got first error element on the nested object)
