@@ -111,8 +111,12 @@
                 <div class="grid-row-tile col-sm-12">                
                     <div>
                         <span class="grid-row-tile-text">
-                            {{vehicleRequirements.vechicleType}} with capacity {{vehicleRequirements.requiredCapacity}} {{vehicleRequirements.capacityUnit}} 
-                            {{#if vehicleRequirements.minRating}} with rating {{vehicleRequirements.minRating}} {{/if}}
+                            {{#each vehicleRequirements}}
+                                <div>
+                                    {{vechicleType}} with capacity {{requiredCapacity}} {{capacityUnit}} 
+                                    {{#if minRating}} with rating {{minRating}} {{/if}}
+                                </div>
+                            {{/each}}
                         </span>
                     </div>                                           
                 </div>  

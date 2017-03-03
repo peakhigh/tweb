@@ -62,79 +62,6 @@ function initializeItemsToDropInEditMode(config) {
 
 $(document).ready(function () {
     var config = UTILS.getCurrentTemplateData();
-    // console.log(UTILS.getCurrentTemplateData());
-    // for validations
-    // field.validator = function(callback){returncallback({"status": false, "message": "You are too young to drink alcohol!" }); /  callback({"status": true}); }
-
-    // config.data = {
-    //     "pickup": [
-    //         {
-    //             "address": {
-    //                 "street": "Ameerpet",
-    //                 "state": "Andhra Pradesh",
-    //                 "city": "Hyderabad",
-    //                 "zip": "52001"
-    //             },
-    //             "contact": [
-    //                 {
-    //                     "mobile": "9849776999",
-    //                     "email": "kbkrishnacse@gmail.com",
-    //                     "lastName": "Krishna",
-    //                     "firstName": "Bhavani",
-    //                     "alternativePhone": ""
-    //                 }
-    //             ],
-    //             "material": [
-    //                 {
-    //                     "approximateCost": "50000",
-    //                     "weight": "10",
-    //                     "materialType": "Normal",
-    //                     "name": "Thread"
-    //                 }
-    //             ],
-    //             "formalities": {
-    //                 "docs": []
-    //             },
-    //             "date": "02/28/2017 04:00:00",
-    //         }
-    //     ],
-    //     "drop": [
-    //         {
-    //             "address": {
-    //                 "street": "Machavaram",
-    //                 "state": "Andhra Pradesh",
-    //                 "city": "Vijayawada",
-    //                 "zip": "52004"
-    //             },
-    //             "contact": [
-    //                 {
-    //                     "mobile": "9036865623",
-    //                     "email": "soori@gmail.com",
-    //                     "lastName": "Kumar",
-    //                     "firstName": "Soori",
-    //                     "alternativePhone": ""
-    //                 }
-    //             ],
-    //             "formalities": {
-    //                 "docs": []
-    //             },
-    //             "date": "03/02/2017 06:00:00",
-    //             "itemsToDrop": [
-    //                 "THREAD"
-    //             ]
-    //         }
-    //     ],
-    //     "vehicleRequirements": {
-    //         "vechicleType": "Open Body",
-    //         "minRating": "4",
-    //         "requiredCapacity": "10"
-    //     },
-    //     "comments": [
-    //         " Thread from Hyderabad to Vijayawada"
-    //     ],
-    //     "totalWeight": 10,
-    //     "totalWeightUnit": "Litres"
-    // };
     FORM_HELPER.draw(".new-trips-content", config, {
         // type: config.data ? 'edit' : 'create',
         bindings: {
@@ -212,10 +139,7 @@ $(document).ready(function () {
                     order: 3
                 },
                 comments: {
-                    order: 4,
-                    items: {
-                        type: 'textarea'
-                    }
+                    order: 4
                 },
                 totalWeight: {
                     order: 5
@@ -235,6 +159,9 @@ $(document).ready(function () {
             onSubmitError: function () { },//on submission if error occurs
             postRender: function () {
                 initializeItemsToDropInEditMode(config);
+                //TODO: validate pickup.date < drop.date (multiple pickup points & drop points will be there)
+                //all drop.date should be greater than the maximum of pickup.dates & vicevers
+
             }//custom design ur form accroding to the needs
         },
         postUrl: "trips/service/addTrip"

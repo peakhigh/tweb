@@ -1,22 +1,24 @@
 <div class="grid-container">
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="pull-left">
-                {{#if drawSort}}
-                    <div class="sort-container">
-                    </div>
-                {{/if}}
+    {{#if gridData.data}}
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="pull-left">
+                    {{#if drawSort}}
+                        <div class="sort-container">
+                        </div>
+                    {{/if}}
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="pull-right">
+                    {{#if drawPager}}
+                        <div class="pager-container">
+                        </div>
+                    {{/if}}
+                </div>
             </div>
         </div>
-        <div class="col-sm-6">
-            <div class="pull-right">
-                {{#if drawPager}}
-                    <div class="pager-container">
-                    </div>
-                {{/if}}
-            </div>
-        </div>
-    </div>
+    {{/if}}
     
     <div id="{{gridId}}" class="grid-data-container">
         {{> griddata}}

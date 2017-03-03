@@ -329,6 +329,11 @@ ul.alert-dropdown {
 .grid-row-options-default {
   display: none;
 }
+.grid-row-no-records {
+  text-align: center;
+  font-size: 36px;
+  padding: 100px 0px;
+}
 /** Pager */
 .pager {
   margin-bottom: 15px;

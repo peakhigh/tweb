@@ -1,6 +1,6 @@
 {{gridPreHook this}}  
-{{{compileTemplateByName headerTemplateId headerData}}}
 {{#if gridData.data}}
+    {{{compileTemplateByName headerTemplateId headerData}}}
     {{#each gridData.data}}
         <div class="grid-row-default" _id="{{_id}}">
             {{{compileTemplateByName ../rowConfig.template this ../rowConfig}}}
@@ -15,6 +15,6 @@
         </div>                
     {{/each}}
 {{else}}
-    No Records Found
+    <div class="row grid-row-no-records"><div class="col-sm-12">No Records Found</div></div>
 {{/if}}
 {{gridPostHook this (compileTemplateByHtml this.gridId this)}} 
