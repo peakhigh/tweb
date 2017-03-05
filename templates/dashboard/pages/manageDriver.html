@@ -4,13 +4,56 @@
 {{{{/raw-helper}}}}
 {{> header}}
 <div class='manage-driver'>
-    <div class='manage-driver-content'>
+    <div class='manage-drivers-content'>
     </div>
 </div> 
 {{{{raw-helper}}}}
+<script id="grid-row-template-details" type="text/x-handlebars-template">
+  <div class="container-fluid">
+    <div class="row grid-row">
+        <div class="col-sm-12 grid-row-container">
+			 <div class="panel panel-info">
+                            <!-- <div class="panel-heading">
+                              <h3 class="panel-title">Employee Details</h3>
+                            </div> -->
+                            <div class="panel-body">
+                              <div class="row">
+                                 <div class="col-md-3 col-lg-3 " align="center"> 
+                                  <img alt="User Pic" src="/img/default_image.png" class="img-circle img-responsive">
+                              </div> 
+                                         <div class="col-md-5 col-lg-5 "> 
+                                                  <table class="table table-user-information">
+                                                    <tbody>
+                                                      <tr>
+                                                        <td>Full Name:</td>
+                                                        <td>{{firstname}} {{lastname}}</td>
+                                                       </tr>
+                                                      <tr>
+                                                        <td>Mobile:</td>                                              
+                                                        <td>{{contact.mobile}}</td>
+                                                      </tr>
+                                                       <tr>
+                                                        <td>Email:</td>
+                                                        <td>{{contact.email}}</td>
+                                                      </tr>
+                                                      <tr>
+                                                        <td>Address:</td>
+                                                        <td>{{address.organisation}} {{address.street}}
+                                                        {{address.city}} {{address.state}}</td>
+                                                      </tr>
+                                                    </tbody>
+                                                  </table>
+                                        </div>
+                               </div>
+						</div>
+				</div>		
+        </div>
+    </div>
+  </div>
+</script>        
 {{{{/raw-helper}}}}
 {{{{raw-helper}}}}
 <script type="text/javascript">
-    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();console.log(e)});
+    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();new GRID_HELPER.GRID(".manage-drivers-content",{gridData:e,gridId:"gridManageDrivers",rowConfig:{template:"grid-row-template-details"}})});
 </script>
 {{{{/raw-helper}}}}
