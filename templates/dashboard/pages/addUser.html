@@ -1,0 +1,12 @@
+{{{{raw-helper}}}}
+{{{{/raw-helper}}}}
+{{> header}}
+<div class='new-user'>
+    <div class='new-users-content'>
+    </div>
+</div> 
+{{{{raw-helper}}}}
+<script type="text/javascript">
+    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();FORM_HELPER.draw(".new-users-content",e,{postUrl:"users/form",callbacks:{afterSubmit:function(){MENU_HELPER.menuClick("manageUser","manageUser")}}})});
+</script>
+{{{{/raw-helper}}}}
