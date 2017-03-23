@@ -2,7 +2,7 @@ Confused of all the latest front-end frameworks like Augular, React, VU etc
 
 Just a plain, simple & pluggable framework which delivers UI for all the platforms(web, mobile(android, iphone)).
 
-1) Works for (web, mobile(android, iphone))
+1) Develop a UI which works for (web, mobile(android, iphone)) (develop once and use everywhere)
 2) Can access mobile API calls like contacts etc in mobiles
 3) draws forms automatically
     complex/nested forms
