@@ -5,28 +5,53 @@ Just a plain, simple & pluggable framework which delivers UI for all the platfor
 1) Develop a UI which works for (web, mobile(android, iphone)) (develop once and use everywhere)
 2) Can access mobile API calls like contacts etc in mobiles
 3) draws forms automatically
+
     complex/nested forms
+    
     with validations
+    
     have different views for each role
+    
     handles submits automatically
+    
     hooks are provided at each step
+    
     100% liberal on views(how to display form fields)
+    
     Add/edit are supported in single form
+    
     secured
+    
     responsive
+    
+    
 4) draws grid automatically
+
     complex templates
+    
     with filters and integrated backend api
+    
     secured
+    
     pagination
+    
     role based
+    
     responsive
+    
+    
 5) draw menus automatically
+
     role based
+    
     sucured
+    
     responsive
+    
     nested menus
+    
     hidden menus
+    
    
    
 And coming more   
