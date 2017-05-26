@@ -2,10 +2,11 @@
 {{{{/raw-helper}}}}
 {{> header}}
 <div class='new-trucks'>
-    New Trucks
     <div class='new-trucks-content'>
-            New Trucks Content
     </div>
 </div> 
 {{{{raw-helper}}}}
+<script type="text/javascript">
+    console.log("truck template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var n=UTILS.getCurrentTemplateData();FORM_HELPER.draw(".new-trucks-content",n,{bindings:{plateNumber:"column-1",licenseNumber:"column-2",model:"column-1",engineNumber:"column-2",truckType:"column-1",description:"column-2",capacity:"column-1",capacityUnits:"column-2",insurance:"column-1",material:"column-2"},callbacks:{preRender:function(n){},beforeSubmit:function(){},afterSubmit:function(){MENU_HELPER.menuClick("manageTruck","manageTruck")},onSubmitError:function(){},postRender:function(){}},postUrl:"trucks/service/addTruck"})});
+</script>
 {{{{/raw-helper}}}}
