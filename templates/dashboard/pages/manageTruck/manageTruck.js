@@ -6,6 +6,7 @@ $(document).ready(function () {
         gridId: 'gridManageTrucks',
         rowConfig: {            
             template: 'grid-row-template-details',
+            optionsTemplate: 'grid-row-options-template',
          	optionsPostRender: function(rowElement, record) {
                 console.log(record);
                 $(rowElement).find('.edit-truck').click(function() {
