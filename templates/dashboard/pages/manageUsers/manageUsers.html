@@ -1,0 +1,64 @@
+{{{{raw-helper}}}}
+{{{{/raw-helper}}}}
+{{> header}}
+<div class='manage-users'>
+
+    <div class='manage-users-content'>
+            
+    </div>
+</div> 
+{{{{raw-helper}}}}
+<script id="grid-row-template-details" type="text/x-handlebars-template">
+  <div class="container-fluid">
+    <div class="row grid-row">
+
+
+         <div class="col-md-3 col-lg-3 " align="center"> 
+           <img alt="User Pic" height="150" width="150" src="/img/default_image.png" class="img-circle img-responsive">
+        </div> 
+        <div class="col-md-9">
+          
+             <div class="row">
+               <div class="col-md-5"><dt>Full name </dt></div> <div class="col-md-3">{{firstName}} {{lastName}}</div>
+             </div>
+
+             <div class="row">
+               <div class="col-md-5"><dt>Gender</dt></div> <div class="col-md-4">{{gender}}</div>
+             </div>
+
+             <div class="row">
+               <div class="col-md-5"><dt>Email </dt> </div> <div class="col-md-4">{{email}}</div>
+             </div>
+
+             <div class="row">
+               <div class="col-md-5"><dt>Mobile </dt> </div><div class="col-md-4">{{mobile}}</div>
+             </div>
+            
+             <div class="row">
+               <div class="col-md-5"><dt>UserType </dt> </div><div class="col-md-4">{{profile.userType}}</div>
+             </div>
+
+              <div class="row">
+               <div class="col-md-5 "><dt>Organisation</dt> </div><div class="col-md-4">{{organisationAddress.organisation}}</div>
+             </div>
+        </div>
+
+           		
+    </div>
+    
+  </div>
+</script>
+
+<script id="grid-row-options-template" type="text/x-handlebars-template">
+  <div class="container-fluid">
+    <div class="row grid-row">       
+        <div class="col-sm-12">
+            <div class="pull-right">
+                <button type="button" class="btn btn-default btn-primary edit-user" _id="{{_id}}">Edit</button>
+            </div>
+        </div>       
+    </div>
+  </div>
+</script>
+
+{{{{/raw-helper}}}}

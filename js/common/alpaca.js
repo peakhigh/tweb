@@ -319,11 +319,17 @@ FORM_HELPER = new function (options) {
                     }
 
                     if (schema[key].type === 'date') {
-                        options[key].picker = {
-                            defaultDate: new Date(),
-                            minDate: new Date()
-                        };//set also date format from constants here for all date time pickers  
-
+                        if(schema[key].setmin == false){
+                                options[key].picker = {
+                                    defaultDate: new Date()
+                                };
+                        }else{
+                                options[key].picker = {
+                                    defaultDate: new Date(),
+                                    minDate: new Date()
+                                };//set also date format from constants here for all date time pickers  
+                         }
+                        
                         if (!schema[key].format) {
                             schema[key].format = "date";
                         } else {

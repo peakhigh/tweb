@@ -7,7 +7,7 @@ $(document).ready(function () {
         postUrl: "users/form",
         callbacks: {
             afterSubmit: function () {
-                MENU_HELPER.menuClick('manageUser', 'manageUser');
+                MENU_HELPER.menuClick('manageUsers', 'manageUsers');
             }
         },
     });
