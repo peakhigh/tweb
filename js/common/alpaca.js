@@ -325,8 +325,8 @@ FORM_HELPER = new function (options) {
                                 };
                         }else{
                                 options[key].picker = {
-                                    defaultDate: new Date(),
-                                    minDate: new Date()
+                                    defaultDate: new Date()
+                                    // minDate: new Date()
                                 };//set also date format from constants here for all date time pickers  
                          }
                         
