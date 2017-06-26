@@ -6,15 +6,18 @@ $(document).ready(function () {
     FORM_HELPER.draw(".new-trucks-content", config, {
         bindings: {
             plateNumber: "column-1",
-            licenseNumber: "column-2",
-            model: "column-1",
-            engineNumber: "column-2",
+            model: "column-2",
             truckType: "column-1",
             description: "column-2",
             capacity: "column-1",
             capacityUnits: "column-2",
             insurance:"column-1",
-            material:"column-2"
+            material:"column-2",
+            currentPoint: "column-1",
+            status:"column-2",
+            currentPoint:"column-1",
+            nextAvailableAt:"column-2",
+            nextFreeDate:"column-1"
         },
         callbacks: {
             preRender: function (config) {//before drawing alpaca dom form - used to adjust the config 
