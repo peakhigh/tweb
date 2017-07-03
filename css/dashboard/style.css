@@ -351,6 +351,10 @@ ul.alert-dropdown {
 .pager-suffix {
   font-size: 10px;
 }
+.pager-recordinfo {
+  font-size: 14px;
+  text-align: center;
+}
 .pager-button {
   font-size: 30px;
   margin-top: 15px;

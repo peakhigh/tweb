@@ -176,7 +176,9 @@ GRID_HELPER = new function () {
         me.options = {
             current: 0,
             total: 0,
-            size: CONSTANTS.gridPageSize
+            size: CONSTANTS.gridPageSize,
+            displayStart: 1,
+            displayEnd: 0
         };
         jQuery.extend(true, me.options, options);
         //set defaults
@@ -187,11 +189,11 @@ GRID_HELPER = new function () {
             me.options.pageCount = 0;
             me.options.current = 0;
         } else {
-            me.options.pageCount = Math.ceil(parseInt(options.total) / me.options.size);
+            me.options.pageCount = Math.ceil(parseInt(options.total) / me.options.size);            
         }
         if (!me.options.current) {
             me.options.current = 1;
-        }
+        }        
         
         me.draw = function () {
             me.element = $(elementSelector);
@@ -257,6 +259,7 @@ GRID_HELPER = new function () {
                 }
                 if ((noRefresh === null || noRefresh === undefined || noRefresh === false) && me.options.callback)
                     me.options.callback(page, me.options.size);
+                me.setDisplayStartEnds();
             }
         }
         me.goToPrevious = function () {
@@ -282,6 +285,14 @@ GRID_HELPER = new function () {
             if (me.options.pageCount > 1) {
                 me.nextButton.removeAttr('disabled');
             }
+            me.setDisplayStartEnds();
+        }
+        me.setDisplayStartEnds = function() {
+            me.options.displayStart = (me.options.size * (me.options.current - 1)) || 1;
+            me.options.displayEnd = me.options.size * me.options.current;
+            if (me.options.displayEnd > me.options.total) {
+                me.options.displayEnd = me.options.total;
+            }
         }
         me.show = function () {
             me.element.removeClass('hideEle');
@@ -290,6 +301,7 @@ GRID_HELPER = new function () {
             me.element.addClass('hideEle');
         }
 
+        me.setDisplayStartEnds();
         me.draw();
         return me;
     }
