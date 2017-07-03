@@ -45,6 +45,7 @@ API_HELPER = new function() {
         return STORAGE.getItem('auth-token') ? true : false;
     }
     this.loadService = function(options, callback) {
+
         $.ajax({
             type: 'GET', 
             dataType: 'json',
@@ -53,6 +54,23 @@ API_HELPER = new function() {
             data: options.data || {},
             success: function (response) {  
                 callback(null, response);
+            },
+            error: function (e) {
+                callback(e, null);
+            }
+        });
+    }
+    this.uploadFiles = function(options,callback){
+
+        $.ajax({
+            url: CONSTANTS.apiServer + options.uri + "?"+ options.extraHref,
+            data: options.formData,
+            type: 'POST',       
+            cache: false,
+            contentType: false,
+            processData: false,     
+            success: function (response) {  
+                callback(null, response);                  
             },
             error: function (e) {
                 callback(e, null);
