@@ -1,0 +1,24 @@
+{{{{raw-helper}}}}
+{{{{/raw-helper}}}}
+{{> header}}
+<div class='upload-files'>
+    <div class='upload-files-content'>
+    </div>
+</div> 
+{{{{raw-helper}}}}
+<script id="grid-row-template-details" type="text/x-handlebars-template">
+  <div class="container-fluid">
+    <div class="row grid-row">
+    	 <form action="" id="myform">
+       			<input type="file" id="keyName" class="upload" name="photos" multiple/>
+       			<input type='submit' value='Upload' />
+   		</form>    
+    </div>
+ </div>
+</script>
+{{{{/raw-helper}}}}
+{{{{raw-helper}}}}
+<script type="text/javascript">
+    console.log("template data",UTILS.getCurrentTemplateData()),$(function(){$("#myform").on("submit",function(e){e.preventDefault();var o=new FormData(this);o.append("photo",o);var t={};t.formData=o,t.uri="files/service/fileupload",t.extraHref="id=dsfsdfdsfdsfdds",API_HELPER.uploadFiles(t,function(e,o){return e?void console.log("error",e):void console.log(o)})})}),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();console.log(e);new GRID_HELPER.GRID(".upload-files-content",{gridData:e,gridId:"gridUploadFiles",rowConfig:{template:"grid-row-template-details",optionsTemplate:"grid-row-options-template",optionsPostRender:function(e,o){}}})});
+</script>
+{{{{/raw-helper}}}}

@@ -26,19 +26,33 @@ $(function () {
 
 
 $(document).ready(function () {
-    var config = UTILS.getCurrentTemplateData();
 
+    var moduleData = UTILS.getCurrentTemplateData();
+    console.log(moduleData);
+    var grid = new GRID_HELPER.GRID('.upload-files-content', {
+        gridData: moduleData,
+        gridId: 'gridUploadFiles',
+        rowConfig: {            
+            template: 'grid-row-template-details',
+            optionsTemplate: 'grid-row-options-template',
+            optionsPostRender: function(rowElement, record) {
+               /* console.log(record);
+                $(rowElement).find('.edit-truck').click(function() {
+                    MENU_HELPER.menuClick('addTruck', 'manageTruck', {extraHref: record._id});
+                });*/
+            }
+         }
+    });
 
-  /*  console.log(config);
-    FORM_HELPER.draw(".upload-files-content", config, {
-        postUrl: "uploadfiles/service/uploadfiles",
+   /* FORM_HELPER.draw(".upload-files-content", config, {
+        postUrl: "files/service/fileupload",
         callbacks: {
             afterSubmit: function () {
                 
             }
         },
-    });
-*/
+    });*/
+
 
 /*$(".upload-files-content").alpaca({
   "options": {

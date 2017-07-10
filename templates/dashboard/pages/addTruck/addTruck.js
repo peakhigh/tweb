@@ -19,6 +19,32 @@ $(document).ready(function () {
             nextAvailableAt:"column-2",
             nextFreeDate:"column-1"
         },
+        schemaOverride: {
+             dependencies: {
+                currentPoint: ["status"],
+                nextAvailableAt: ["status"],
+                nextFreeDate: ["status"],
+            }
+        },
+        optionsOverride: {
+            fields: {
+                currentPoint :{
+                    dependencies: {
+                        status: "busy"
+                    }
+                },
+                nextAvailableAt :{
+                    dependencies: {
+                        status: "busy"
+                    }
+                },
+                nextFreeDate :{
+                    dependencies: {
+                        status: "busy"
+                    }
+                },
+            }
+        },
         callbacks: {
             preRender: function (config) {//before drawing alpaca dom form - used to adjust the config 
             },

@@ -1,9 +1,9 @@
 console.log('template data', UTILS.getCurrentTemplateData());
 $(document).ready(function () {
     var moduleData = UTILS.getCurrentTemplateData();
-    var grid = new GRID_HELPER.GRID('.manage-trips-content', {
+    var grid = new GRID_HELPER.GRID('.running-trips-content', {
         gridData: moduleData,
-        gridId: 'gridManageTrips',
+        gridId: 'gridRunningTrips',
         rowConfig: {            
             template: 'grid-row-template-details',
             // detailsTemplate: 'grid-row-template-details', 
@@ -11,15 +11,15 @@ $(document).ready(function () {
             optionsTemplate: 'grid-row-options-template',
             optionsEvent: 'mouseover',
             optionsPostRender: function(rowElement, record) {
-            //    console.log(record);
-                $(rowElement).find('.edit-trip').click(function() {
-                    MENU_HELPER.menuClick('addTrip', 'manageTrip', {extraHref: record._id});
-                });
-                $(rowElement).find('.quote-trip').click(function() {
-                    MENU_HELPER.menuClick('setQuote', 'manageTrip', {extraHref: record._id});
-                });
+                console.log(record);
                 $(rowElement).find('.comments-trip').click(function() {
                     MENU_HELPER.menuClick('addComments', 'manageTrip', {extraHref: record._id});
+                });
+                $(rowElement).find('.set-status-trip').click(function() {
+                    MENU_HELPER.menuClick('setStatus', 'manageTrip', {extraHref: record._id});
+                });
+                $(rowElement).find('.upload-doc-trip').click(function() {
+                    MENU_HELPER.menuClick('uploadfiles', 'manageTrip', {extraHref: record._id});
                 });
             }
             // click: function() {

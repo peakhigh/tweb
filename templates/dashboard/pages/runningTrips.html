@@ -1,6 +1,8 @@
+{{{{raw-helper}}}}
+{{{{/raw-helper}}}}
 {{> header}}
-<div class='manage-trips'>
-    <div class='manage-trips-content'>            
+<div class='running-trips'>
+    <div class='running-trips-content'>            
     </div>
 </div> 
 {{{{raw-helper}}}}
@@ -155,8 +157,7 @@
                     </div>  
                 </div>
             {{/if}}
-
-            <div class="grid-row-title">Status:</div> 
+             <div class="grid-row-title">Status:</div> 
              <div class="row">     
                 <div class="grid-row-tile col-sm-12">                
                     <div>
@@ -166,7 +167,6 @@
                     </div>                                           
                 </div>  
             </div>
-
         </div>     
     </div>
   </div>
@@ -177,9 +177,8 @@
         <div class="col-sm-12">
             <div class="pull-right">
                 <button type="button" class="btn btn-default btn-primary comments-trip" _id="{{_id}}">Add Comments</button>
-<!--                 <button type="button" class="btn btn-default btn-primary driver-details-trip" _id="{{_id}}">Set Driver Details</button> -->
-<!--                 <button type="button" class="btn btn-default btn-primary quote-trip" _id="{{_id}}">Set Quote</button> -->
-                <button type="button" class="btn btn-default btn-primary edit-trip" _id="{{_id}}">Edit</button>
+                <button type="button" class="btn btn-default btn-primary set-status-trip" _id="{{_id}}">Set Status</button>
+                <button type="button" class="btn btn-default btn-primary upload-doc-trip" _id="{{_id}}">Upload docs</button>
             </div>
         </div>       
     </div>
@@ -221,5 +220,10 @@
         </div>
     </div>
 </div>
+</script>
+{{{{/raw-helper}}}}
+{{{{raw-helper}}}}
+<script type="text/javascript">
+    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();new GRID_HELPER.GRID(".running-trips-content",{gridData:e,gridId:"gridRunningTrips",rowConfig:{template:"grid-row-template-details",optionsTemplate:"grid-row-options-template",optionsEvent:"mouseover",optionsPostRender:function(e,t){console.log(t),$(e).find(".comments-trip").click(function(){MENU_HELPER.menuClick("addComments","manageTrip",{extraHref:t._id})}),$(e).find(".set-status-trip").click(function(){MENU_HELPER.menuClick("setStatus","manageTrip",{extraHref:t._id})}),$(e).find(".upload-doc-trip").click(function(){MENU_HELPER.menuClick("uploadfiles","manageTrip",{extraHref:t._id})})}},sortConfig:{multiple:!1,options:[{title:"Pickup Date",key:"pickup.date",selected:!0,order:"desc"},{title:"Drop Date",key:"drop.date"},{title:"Material Value",key:"pickup.material.approximateCost"}]}})});
 </script>
 {{{{/raw-helper}}}}

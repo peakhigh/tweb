@@ -1,6 +1,6 @@
 {{> header}}
-<div class='manage-trips'>
-    <div class='manage-trips-content'>            
+<div class='pending-trips'>
+    <div class='pending-trips-content'>            
     </div>
 </div> 
 {{{{raw-helper}}}}
@@ -156,7 +156,7 @@
                 </div>
             {{/if}}
 
-            <div class="grid-row-title">Status:</div> 
+             <div class="grid-row-title">Status:</div> 
              <div class="row">     
                 <div class="grid-row-tile col-sm-12">                
                     <div>
@@ -166,7 +166,6 @@
                     </div>                                           
                 </div>  
             </div>
-
         </div>     
     </div>
   </div>
@@ -176,9 +175,9 @@
     <div class="row grid-row">       
         <div class="col-sm-12">
             <div class="pull-right">
-                <button type="button" class="btn btn-default btn-primary comments-trip" _id="{{_id}}">Add Comments</button>
-<!--                 <button type="button" class="btn btn-default btn-primary driver-details-trip" _id="{{_id}}">Set Driver Details</button> -->
-<!--                 <button type="button" class="btn btn-default btn-primary quote-trip" _id="{{_id}}">Set Quote</button> -->
+                <button type="button" class="btn btn-default btn-primary comments-trip" _id="{{_id}}">Comments</button>
+                 <button type="button" class="btn btn-default btn-primary cancel-trip" _id="{{_id}}">CancelTrip</button>
+                <button type="button" class="btn btn-default btn-primary quote-trip" _id="{{_id}}">Set Quote</button>
                 <button type="button" class="btn btn-default btn-primary edit-trip" _id="{{_id}}">Edit</button>
             </div>
         </div>       
