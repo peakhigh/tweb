@@ -3,7 +3,18 @@
     <div class='upload-files-content'>
 
 <!--   action = 'http://localhost:5000/api/uploadfiles/service/uploadfiles' -->
- 
+
+    <!--  <table class="table table-bordered table-hover">
+    <tbody class='upload-files-content'>
+    </tbody>
+       </table>  -->
+
+    </div>
+    <div>
+    	  <form action="" id="myform">
+       			<input type="file" id="keyName" class="file" name="photos" multiple/>
+       			<input type='submit' value='Upload' />
+   		</form>  
     </div>
 </div> 
 
@@ -12,11 +23,29 @@
   <div class="container-fluid">
     <div class="row grid-row">
 
-    	 <form action="" id="myform">
-       			<input type="file" id="keyName" class="upload" name="photos" multiple/>
-       			<input type='submit' value='Upload' />
-   		</form>    
-    </div>
+	    <div class="col-sm-12 grid-row-container">
+
+     
+        <div class="col-sm-2">
+           <span class="file-other-icon"><i class="fa fa-file-photo-o text-danger"></i></span>
+        </div>
+ 
+       <div class="col-sm-8">{{originalname}}
+            <br/>Aggrement<!-- {{typeofdocument}} -->
+       </div>
+       <div class="col-sm-2">
+          <button type="button" class="btn btn-default" aria-label="Left Align" id="actiondelete">
+           <span class="fa fa-trash-o fa-lg" aria-hidden="true"></span>
+       </button>
+     
+        <button type="button" class="btn btn-default" aria-label="Left Align" id="actiondownload">
+           <span class="fa fa-download fa-lg" aria-hidden="true"></span>
+       </button>
+       </div>
+
+      </div>
+   </div>
  </div>
 </script>
+
 {{{{/raw-helper}}}}

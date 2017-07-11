@@ -1,24 +1,49 @@
 {{{{raw-helper}}}}
+<style>
+.file_type{width:40px;height:40px;padding:5px;text-align:center}
+</style>
 {{{{/raw-helper}}}}
 {{> header}}
 <div class='upload-files'>
     <div class='upload-files-content'>
+    <!--  <table class="table table-bordered table-hover">
+    <tbody class='upload-files-content'>
+    </tbody>
+       </table>  -->
+    </div>
+    <div>
+    	  <form action="" id="myform">
+       			<input type="file" id="keyName" class="file" name="photos" multiple/>
+       			<input type='submit' value='Upload' />
+   		</form>  
     </div>
 </div> 
 {{{{raw-helper}}}}
 <script id="grid-row-template-details" type="text/x-handlebars-template">
   <div class="container-fluid">
     <div class="row grid-row">
-    	 <form action="" id="myform">
-       			<input type="file" id="keyName" class="upload" name="photos" multiple/>
-       			<input type='submit' value='Upload' />
-   		</form>    
-    </div>
+	    <div class="col-sm-12 grid-row-container">
+        <div class="col-sm-2">
+           <span class="file-other-icon"><i class="fa fa-file-photo-o text-danger"></i></span>
+        </div>
+       <div class="col-sm-8">{{originalname}}
+            <br/>Aggrement
+       </div>
+       <div class="col-sm-2">
+          <button type="button" class="btn btn-default" aria-label="Left Align" id="actiondelete">
+           <span class="fa fa-trash-o fa-lg" aria-hidden="true"></span>
+       </button>
+        <button type="button" class="btn btn-default" aria-label="Left Align" id="actiondownload">
+           <span class="fa fa-download fa-lg" aria-hidden="true"></span>
+       </button>
+       </div>
+      </div>
+   </div>
  </div>
 </script>
 {{{{/raw-helper}}}}
 {{{{raw-helper}}}}
 <script type="text/javascript">
-    console.log("template data",UTILS.getCurrentTemplateData()),$(function(){$("#myform").on("submit",function(e){e.preventDefault();var o=new FormData(this);o.append("photo",o);var t={};t.formData=o,t.uri="files/service/fileupload",t.extraHref="id=dsfsdfdsfdsfdds",API_HELPER.uploadFiles(t,function(e,o){return e?void console.log("error",e):void console.log(o)})})}),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();console.log(e);new GRID_HELPER.GRID(".upload-files-content",{gridData:e,gridId:"gridUploadFiles",rowConfig:{template:"grid-row-template-details",optionsTemplate:"grid-row-options-template",optionsPostRender:function(e,o){}}})});
+    console.log("template data",UTILS.getCurrentTemplateData()),$(function(){$("#myform").on("submit",function(e){e.preventDefault();var o=UTILS.getCurrentTemplateData(),t=new FormData(this);t.append("photo",t);var a={};a.formData=t,a.uri="files/service/fileupload",a.extraHref="id="+o.id,API_HELPER.uploadFiles(a,function(e,o){return e?void console.log("error",e):void console.log(o)})})}),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();console.log(e);new GRID_HELPER.GRID(".upload-files-content",{gridData:e,gridId:"gridUploadFiles",rowConfig:{template:"grid-row-template-details",optionsPostRender:function(e,o){},click:function(){"actiondelete"==arguments[0].target.id?console.log(arguments[1]):"actiondownload"==arguments[0].target.id&&console.log(arguments[1])}}})});
 </script>
 {{{{/raw-helper}}}}

@@ -6,12 +6,13 @@ console.log('template data', UTILS.getCurrentTemplateData());
 $(function () {
     $("#myform").on("submit", function (e) {
       e.preventDefault();
+      var moduleData = UTILS.getCurrentTemplateData();
       var formData = new FormData(this);
       formData.append('photo',formData);
       var options = {};
       options.formData = formData;
       options.uri = "files/service/fileupload";
-      options.extraHref = "id=dsfsdfdsfdsfdds";
+      options.extraHref = "id="+moduleData.id;
 
        API_HELPER.uploadFiles(options, function (error, response) {
              if (error) {
@@ -24,7 +25,6 @@ $(function () {
 });
 
 
-
 $(document).ready(function () {
 
     var moduleData = UTILS.getCurrentTemplateData();
@@ -34,14 +34,19 @@ $(document).ready(function () {
         gridId: 'gridUploadFiles',
         rowConfig: {            
             template: 'grid-row-template-details',
-            optionsTemplate: 'grid-row-options-template',
             optionsPostRender: function(rowElement, record) {
-               /* console.log(record);
-                $(rowElement).find('.edit-truck').click(function() {
-                    MENU_HELPER.menuClick('addTruck', 'manageTruck', {extraHref: record._id});
-                });*/
-            }
-         }
+               
+            },
+            click: function() {
+                  
+                if(arguments[0].target.id == 'actiondelete'){
+                  console.log(arguments[1]);
+                }else if(arguments[0].target.id == 'actiondownload'){
+                  console.log(arguments[1]);
+                }
+            }, 
+         },
+         
     });
 
    /* FORM_HELPER.draw(".upload-files-content", config, {
