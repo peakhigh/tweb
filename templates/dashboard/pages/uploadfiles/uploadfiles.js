@@ -2,7 +2,7 @@
 console.log('template data', UTILS.getCurrentTemplateData());
 
 
-
+//listener for the form
 $(function () {
     $("#myform").on("submit", function (e) {
       e.preventDefault();
@@ -13,13 +13,15 @@ $(function () {
       options.formData = formData;
       options.uri = "files/service/fileupload";
       options.extraHref = "id="+moduleData.id;
+      options.type = 'POST';
 
        API_HELPER.uploadFiles(options, function (error, response) {
              if (error) {
                         console.log('error', error);
                         return;
               }
-              console.log(response);
+              location.reload();  // need to change, reload only template
+              //console.log(response);
        });
     });
 });
@@ -38,9 +40,26 @@ $(document).ready(function () {
                
             },
             click: function() {
-                  
+                  console.log(arguments);
                 if(arguments[0].target.id == 'actiondelete'){
                   console.log(arguments[1]);
+                    var options = {};
+                    
+                    options.formData = JSON.stringify({ name : "AA" });
+                    options.uri = "files/service/fileupload";
+                    options.extraHref = "id="+arguments[1]._id;
+                    options.type = 'DELETE';
+                    console.log(options);
+                     API_HELPER.uploadFiles(options, function (error, response) {
+                           if (error) {
+                                      console.log('error', error);
+                                      return;
+                            }
+                            location.reload(); // need to change, reload only template
+                            //console.log(response);
+                     });
+
+
                 }else if(arguments[0].target.id == 'actiondownload'){
                   console.log(arguments[1]);
                 }

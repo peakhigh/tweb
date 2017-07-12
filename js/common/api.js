@@ -65,7 +65,7 @@ API_HELPER = new function() {
         $.ajax({
             url: CONSTANTS.apiServer + options.uri + "?"+ options.extraHref,
             data: options.formData,
-            type: 'POST',       
+            type: options.type,       
             cache: false,
             contentType: false,
             processData: false,     
