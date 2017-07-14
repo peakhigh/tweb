@@ -21,9 +21,6 @@ $(document).ready(function () {
                 $(rowElement).find('.comments-trip').click(function() {
                     MENU_HELPER.menuClick('addComments', 'manageTrip', {extraHref: record._id});
                 });
-                 $(rowElement).find('.cancel-trip').click(function() {
-                    //MENU_HELPER.menuClick('addComments', 'manageTrip', {extraHref: record._id});
-                });
             }
             // click: function() {
             //     console.log(arguments);
