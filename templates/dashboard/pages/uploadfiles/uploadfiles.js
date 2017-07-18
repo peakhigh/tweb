@@ -30,7 +30,7 @@ $(function () {
 $(document).ready(function () {
 
     var moduleData = UTILS.getCurrentTemplateData();
-    console.log(moduleData);
+    
     var grid = new GRID_HELPER.GRID('.upload-files-content', {
         gridData: moduleData,
         gridId: 'gridUploadFiles',
@@ -49,7 +49,7 @@ $(document).ready(function () {
                     options.uri = "files/service/fileupload";
                     options.extraHref = "id="+arguments[1]._id;
                     options.type = 'DELETE';
-                    console.log(options);
+                    
                      API_HELPER.uploadFiles(options, function (error, response) {
                            if (error) {
                                       console.log('error', error);

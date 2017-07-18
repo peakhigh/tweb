@@ -77,6 +77,25 @@ API_HELPER = new function() {
             }
         });
     }
+    this.postData = function(options,callback){
+
+        $.ajax({
+            url: CONSTANTS.apiServer + options.uri + "?"+ options.extraHref,
+            data: options.formData,
+            type: options.type,    
+            dataType: 'json',  
+            cache: false,
+            contentType: 'application/json',
+            processData: false,     
+            success: function (response) {  
+                callback(null, response);                  
+            },
+            error: function (e) {
+                callback(e, null);
+            }
+        });
+    }
+
     this.attachPreFiltersToAllAjaxRequests = function() {
         $.ajaxPrefilter( function(options) {
             // set tokens for all the api requests

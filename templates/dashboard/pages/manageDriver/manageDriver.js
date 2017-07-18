@@ -5,7 +5,19 @@ $(document).ready(function () {
         gridData: moduleData,
         gridId: 'gridManageDrivers',
         rowConfig: {            
-            template: 'grid-row-template-details'
+            template: 'grid-row-template-details',
+            optionsTemplate: 'grid-row-options-template',
+            optionsEvent: 'mouseover',
+            optionsPostRender: function(rowElement, record) {
+
+            	$(rowElement).find('.edit-driver').click(function() {
+                    MENU_HELPER.menuClick('addDriver', 'manageDriver', {extraHref: record._id});
+                });
+
+                $(rowElement).find('.upload-doc-driver').click(function() {
+                    MENU_HELPER.menuClick('uploadfiles', 'manageDriver', {extraHref: record._id});
+                });
+            }
          }
     });
 });

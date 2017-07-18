@@ -51,9 +51,21 @@
     </div>
   </div>
 </script>        
+<script id="grid-row-options-template" type="text/x-handlebars-template">
+  <div class="container-fluid">
+    <div class="row grid-row">       
+        <div class="col-sm-12">
+            <div class="pull-right">
+                <button type="button" class="btn btn-default btn-primary edit-driver" _id="{{_id}}">Edit</button>
+                <button type="button" class="btn btn-default btn-primary upload-doc-driver" _id="{{_id}}">Upload docs</button>
+            </div>
+        </div>       
+    </div>
+  </div>
+</script>
 {{{{/raw-helper}}}}
 {{{{raw-helper}}}}
 <script type="text/javascript">
-    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();new GRID_HELPER.GRID(".manage-drivers-content",{gridData:e,gridId:"gridManageDrivers",rowConfig:{template:"grid-row-template-details"}})});
+    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();new GRID_HELPER.GRID(".manage-drivers-content",{gridData:e,gridId:"gridManageDrivers",rowConfig:{template:"grid-row-template-details",optionsTemplate:"grid-row-options-template",optionsEvent:"mouseover",optionsPostRender:function(e,t){$(e).find(".edit-driver").click(function(){MENU_HELPER.menuClick("addDriver","manageDriver",{extraHref:t._id})}),$(e).find(".upload-doc-driver").click(function(){MENU_HELPER.menuClick("uploadfiles","manageDriver",{extraHref:t._id})})}}})});
 </script>
 {{{{/raw-helper}}}}

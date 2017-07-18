@@ -1,9 +1,9 @@
 console.log('template data', UTILS.getCurrentTemplateData());
 $(document).ready(function () {
     var moduleData = UTILS.getCurrentTemplateData();
-    var grid = new GRID_HELPER.GRID('.manage-trucks-content', {
+    var grid = new GRID_HELPER.GRID('.running-trucks-content', {
         gridData: moduleData,
-        gridId: 'gridManageTrucks',
+        gridId: 'gridRunningTrucks',
         rowConfig: {            
             template: 'grid-row-template-details',
             optionsTemplate: 'grid-row-options-template',
@@ -15,10 +15,6 @@ $(document).ready(function () {
 
                 $(rowElement).find('.upload-doc-truck').click(function() {
                     MENU_HELPER.menuClick('uploadfiles', 'manageTruck', {extraHref: record._id});
-                });
-
-                 $(rowElement).find('.assign-driver').click(function() {
-                    MENU_HELPER.menuClick('setDriver', 'manageTruck', {extraHref: record._id});
                 });
             }
          }

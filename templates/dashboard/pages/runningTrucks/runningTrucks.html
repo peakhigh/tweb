@@ -1,58 +1,94 @@
 {{{{raw-helper}}}}
-<style>
-dt{display:block;float:left;text-align:left}dt:after{content:':'}
-</style>
-{{{{/raw-helper}}}}
-{{{{raw-helper}}}}
 {{{{/raw-helper}}}}
 {{> header}}
-<div class='manage-trucks'>
-    <div class='manage-trucks-content'>
+<div class='running-trucks'>
+
+    <div class='running-trucks-content'>
+            
     </div>
 </div> 
 {{{{raw-helper}}}}
 <script id="grid-row-template-details" type="text/x-handlebars-template">
   <div class="container-fluid">
     <div class="row grid-row">
+
+
          <div class="col-md-3 col-lg-3 " align="center"> 
            <img alt="Truck Pic" height="150" width="150" src="/img/noimage.png" class="img-circle img-responsive">
         </div> 
         <div class="col-md-5">
+          
              <div class="row">
                <div class="col-md-5"><dt>Plate Number </dt></div> <div class="col-md-3">{{plateNumber}}</div>
              </div>
+
              <div class="row">
                <div class="col-md-5"><dt>Model  </dt></div> <div class="col-md-4">{{model}}</div>
              </div>
+
+
              <div class="row">
                <div class="col-md-5"><dt>TruckType </dt> </div><div class="col-md-4">{{truckType}}</div>
              </div>
+            
              <div class="row">
                <div class="col-md-5"><dt>Capacity </dt> </div><div class="col-md-4">{{capacity}} {{ capacityUnits}}</div>
              </div>
+
               <div class="row">
-               <div class="col-md-5 "><dt>Status </dt> </div><div class="col-md-4">{{status}}</div>
+               <div class="col-md-5"><dt>CurrentLocation </dt> </div><div class="col-md-4">{{currentPoint}}</div>
              </div>
+
+            <div class="row">
+               <div class="col-md-5"><dt>Carrying Material</dt> </div><div class="col-md-4">
+                    ----
+               </div>
+             </div>
+
+              <div class="row">
+               <div class="col-md-5"><dt>NextFreeDate </dt> </div><div class="col-md-4">{{nextFreeDate}}</div>
+             </div>
+
+              <div class="row">
+               <div class="col-md-5"><dt>NextFreeLocation </dt> </div><div class="col-md-4">{{nextAvailableAt}}</div>
+             </div>
+
+             <div class="row">
+               <div class="col-md-5"><dt>NextAssignedDate </dt> </div><div class="col-md-4">
+                          {{#if nextAssignedDate}} 
+                            {{nextAssignedDate}}
+                          {{else}}
+                              ---
+                           {{/if}} 
+               </div>
+             </div>
+            
+            <div class="row">
+               <div class="col-md-5"><dt>Driver Info</dt> </div><div class="col-md-4">
+                    ----
+               </div>
+             </div>
+         
         </div>
+
+           		
     </div>
+    
   </div>
 </script>
+
 <script id="grid-row-options-template" type="text/x-handlebars-template">
   <div class="container-fluid">
     <div class="row grid-row">       
         <div class="col-sm-12">
             <div class="pull-right">
                 <button type="button" class="btn btn-default btn-primary edit-truck" _id="{{_id}}">Edit</button>
+
                 <button type="button" class="btn btn-default btn-primary upload-doc-truck" _id="{{_id}}">Upload docs</button>
-                 <button type="button" class="btn btn-default btn-primary assign-driver" _id="{{_id}}">Assign Driver</button>
             </div>
         </div>       
     </div>
   </div>
 </script>
-{{{{/raw-helper}}}}
-{{{{raw-helper}}}}
-<script type="text/javascript">
-    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();new GRID_HELPER.GRID(".manage-trucks-content",{gridData:e,gridId:"gridManageTrucks",rowConfig:{template:"grid-row-template-details",optionsTemplate:"grid-row-options-template",optionsPostRender:function(e,t){console.log(t),$(e).find(".edit-truck").click(function(){MENU_HELPER.menuClick("addTruck","manageTruck",{extraHref:t._id})}),$(e).find(".upload-doc-truck").click(function(){MENU_HELPER.menuClick("uploadfiles","manageTruck",{extraHref:t._id})}),$(e).find(".assign-driver").click(function(){MENU_HELPER.menuClick("setDriver","manageTruck",{extraHref:t._id})})}}})});
-</script>
+
 {{{{/raw-helper}}}}

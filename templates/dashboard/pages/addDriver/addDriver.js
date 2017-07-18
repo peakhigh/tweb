@@ -7,7 +7,7 @@ $(document).ready(function () {
         postUrl: "drivers/service/addDriver",
         callbacks: {
             afterSubmit: function () {
-                MENU_HELPER.menuClick('addDriver', 'addDriver');
+                MENU_HELPER.menuClick('manageDriver', 'manageDriver');
             }
         },
     });
