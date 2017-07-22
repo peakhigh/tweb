@@ -178,6 +178,7 @@
             <div class="pull-right">
                 <button type="button" class="btn btn-default btn-primary comments-trip" _id="{{_id}}">Comments</button>
                 <button type="button" class="btn btn-default btn-primary quote-trip" _id="{{_id}}">Set Quote</button>
+                 <button type="button" class="btn btn-default btn-primary assign-truck" _id="{{_id}}">Assign Truck</button>
                 <button type="button" class="btn btn-default btn-primary edit-trip" _id="{{_id}}">Edit</button>
             </div>
         </div>       
@@ -221,9 +222,70 @@
     </div>
 </div>
 </script>
+<script id="grid-trucks-template" type="text/x-handlebars-template">
+    <div class="container-fluid">
+                    <div class="row grid-row">
+                         <div class="col-md-3 col-lg-3 " align="center"> 
+                           <img alt="Truck Pic" height="150" width="150" src="/img/noimage.png" class="img-circle img-responsive">
+                        </div> 
+                        <div class="col-md-5">
+                             <div class="row">
+                               <div class="col-md-5"><dt>Plate Number </dt></div> <div class="col-md-3">{{plateNumber}}</div>
+                             </div>
+                             <div class="row">
+                               <div class="col-md-5"><dt>Model  </dt></div> <div class="col-md-4">{{model}}</div>
+                             </div>
+                             <div class="row">
+                               <div class="col-md-5"><dt>TruckType </dt> </div><div class="col-md-4">{{truckType}}</div>
+                             </div>
+                             <div class="row">
+                               <div class="col-md-5"><dt>Capacity </dt> </div><div class="col-md-4">{{capacity}} {{ capacityUnits}}</div>
+                             </div>
+                              <div class="row">
+                               <div class="col-md-5 "><dt>Status </dt> </div><div class="col-md-4">{{status}}</div>
+                             </div>
+                        </div>
+                    </div>
+                  </div>
+</script>
+<script id="grid-choosetruck-options" type="text/x-handlebars-template">
+  <div class="container-fluid">
+    <div class="row grid-row">       
+        <div class="col-sm-12">
+            <div class="pull-right">
+                <button type="button" class="btn btn-default btn-primary select-truck" _id="{{_id}}">Select</button>
+            </div>
+        </div>       
+    </div>
+  </div>
+</script>
+<script id="myModal" type="text/x-handlebars-template"> 
+<div class="modal fade" id="myModalid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+         <div class="modal-dialog">
+             <div class="modal-content">
+               <div class="modal-header">
+                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                       &times;
+                   </button>
+                   <h4 class="modal-title" id="myModalLabel">Choose Truck</h4>
+               </div>
+               <div class="modal-body myModalclass">
+               </div>
+               <div class="modal-footer">
+                  <!--  <button type="submit" class="btn btn-primary" name="submit" value="submit">
+                      Save
+                  </button> -->
+                   <button name="cancel" value="cancel" class="btn btn-default" data-dismiss="modal">
+                       Cancel
+                   </button>
+               </div>
+               </div>
+               </div> 
+    </div>
+</script> 
 {{{{/raw-helper}}}}
 {{{{raw-helper}}}}
 <script type="text/javascript">
-    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();new GRID_HELPER.GRID(".pending-trips-content",{gridData:e,gridId:"gridPendingTrips",rowConfig:{template:"grid-row-template-details",optionsTemplate:"grid-row-options-template",optionsEvent:"mouseover",optionsPostRender:function(e,t){console.log(t),$(e).find(".edit-trip").click(function(){MENU_HELPER.menuClick("addTrip","manageTrip",{extraHref:t._id})}),$(e).find(".quote-trip").click(function(){MENU_HELPER.menuClick("setQuote","manageTrip",{extraHref:t._id})}),$(e).find(".comments-trip").click(function(){MENU_HELPER.menuClick("addComments","manageTrip",{extraHref:t._id})})}},sortConfig:{multiple:!1,options:[{title:"Pickup Date",key:"pickup.date",selected:!0,order:"desc"},{title:"Drop Date",key:"drop.date"},{title:"Material Value",key:"pickup.material.approximateCost"}]}})});
+    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();new GRID_HELPER.GRID(".pending-trips-content",{gridData:e,gridId:"gridPendingTrips",rowConfig:{template:"grid-row-template-details",optionsTemplate:"grid-row-options-template",optionsEvent:"mouseover",optionsPostRender:function(e,t){$(e).find(".edit-trip").click(function(){MENU_HELPER.menuClick("addTrip","manageTrip",{extraHref:t._id})}),$(e).find(".quote-trip").click(function(){MENU_HELPER.menuClick("setQuote","manageTrip",{extraHref:t._id})}),$(e).find(".comments-trip").click(function(){MENU_HELPER.menuClick("addComments","manageTrip",{extraHref:t._id})}),$(e).find(".assign-truck").click(function(){openModal(t)})}},sortConfig:{multiple:!1,options:[{title:"Pickup Date",key:"pickup.date",selected:!0,order:"desc"},{title:"Drop Date",key:"drop.date"},{title:"Material Value",key:"pickup.material.approximateCost"}]}});openModal=function(e){console.log("openModal...");var t=UTILS.getCurrentTemplateData("manageTruck"),o=$("#myModal").html(),i=Handlebars.compile(o);$("body").append(i()),$("#myModalid").modal({show:!0,background:!0});new GRID_HELPER.GRID(".myModalclass",{gridData:t,gridId:"gridManageTrucks",rowConfig:{template:"grid-trucks-template",optionsTemplate:"grid-choosetruck-options",optionsEvent:"mouseover",optionsPostRender:function(t,o){$(t).find(".select-truck").click(function(){console.log("select-truck "),console.log(e),console.log(o),$("#myModalid").modal("hide");var t={};t.formData=JSON.stringify({truckDetails:o}),t.uri="trips/service/assignTruck",t.extraHref="id="+e._id,t.type="POST",API_HELPER.postData(t,function(e,t){if(e)return void console.log("error",e)})})}}})}});
 </script>
 {{{{/raw-helper}}}}

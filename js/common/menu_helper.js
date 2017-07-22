@@ -1,8 +1,10 @@
 MENU_HELPER = new function () {
+
     this.menuClick = function (page, parentpage, extraOptions) {
         // console.log(page, parentpage, CURRENT_MODULE);
         // console.log(MODULE_DATA); 
-        $('#content-wrapper').html("{{> loading}}");
+        $("#content-wrapper").html(Handlebars.compile('{{> loading }}')); 
+
         CURRENT_PAGE = page;
         CURRENT_PARENT_PAGE = parentpage;
         $('.navbar-nav .list-group-item  a.active').removeClass('active');

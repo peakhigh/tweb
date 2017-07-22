@@ -177,6 +177,7 @@
             <div class="pull-right">
                 <button type="button" class="btn btn-default btn-primary comments-trip" _id="{{_id}}">Comments</button>
                 <button type="button" class="btn btn-default btn-primary quote-trip" _id="{{_id}}">Set Quote</button>
+                 <button type="button" class="btn btn-default btn-primary assign-truck" _id="{{_id}}">Assign Truck</button>
                 <button type="button" class="btn btn-default btn-primary edit-trip" _id="{{_id}}">Edit</button>
             </div>
         </div>       
@@ -220,4 +221,88 @@
     </div>
 </div>
 </script>
+
+
+ <!-- Modal related templates -->
+
+<script id="grid-trucks-template" type="text/x-handlebars-template">
+    
+    <div class="container-fluid">
+                    <div class="row grid-row">
+
+                         <div class="col-md-3 col-lg-3 " align="center"> 
+                           <img alt="Truck Pic" height="150" width="150" src="/img/noimage.png" class="img-circle img-responsive">
+                        </div> 
+                        <div class="col-md-5">
+                          
+                             <div class="row">
+                               <div class="col-md-5"><dt>Plate Number </dt></div> <div class="col-md-3">{{plateNumber}}</div>
+                             </div>
+
+                             <div class="row">
+                               <div class="col-md-5"><dt>Model  </dt></div> <div class="col-md-4">{{model}}</div>
+                             </div>
+
+
+                             <div class="row">
+                               <div class="col-md-5"><dt>TruckType </dt> </div><div class="col-md-4">{{truckType}}</div>
+                             </div>
+                            
+                             <div class="row">
+                               <div class="col-md-5"><dt>Capacity </dt> </div><div class="col-md-4">{{capacity}} {{ capacityUnits}}</div>
+                             </div>
+
+                              <div class="row">
+                               <div class="col-md-5 "><dt>Status </dt> </div><div class="col-md-4">{{status}}</div>
+                             </div>
+                        </div>
+
+                                
+                    </div>
+                    
+                  </div>
+
+</script>
+
+
+<script id="grid-choosetruck-options" type="text/x-handlebars-template">
+  <div class="container-fluid">
+    <div class="row grid-row">       
+        <div class="col-sm-12">
+            <div class="pull-right">
+                <button type="button" class="btn btn-default btn-primary select-truck" _id="{{_id}}">Select</button>
+            </div>
+        </div>       
+    </div>
+  </div>
+</script>
+
+<script id="myModal" type="text/x-handlebars-template"> 
+<div class="modal fade" id="myModalid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+         <div class="modal-dialog">
+             <div class="modal-content">
+               <div class="modal-header">
+                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                       &times;
+                   </button>
+                   <h4 class="modal-title" id="myModalLabel">Choose Truck</h4>
+               </div>
+               <div class="modal-body myModalclass">
+                         
+               </div>
+                   
+               <div class="modal-footer">
+                  <!--  <button type="submit" class="btn btn-primary" name="submit" value="submit">
+                      Save
+                  </button> -->
+                   <button name="cancel" value="cancel" class="btn btn-default" data-dismiss="modal">
+                       Cancel
+                   </button>
+               </div>
+               </div>
+               </div> 
+    </div>
+</script> 
+
+
 {{{{/raw-helper}}}}
