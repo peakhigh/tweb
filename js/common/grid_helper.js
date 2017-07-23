@@ -25,7 +25,8 @@ GRID_HELPER = new function () {
         me.dataTemplate = Handlebars.compile('{{> griddata }}');
         me.options = {
             drawPager: true,
-            drawSort: true
+            drawSort: true,
+            drawFilters: true
         };
         jQuery.extend(true, me.options, options);
         if (!me.options.gridId) {
@@ -94,6 +95,25 @@ GRID_HELPER = new function () {
                         me.redraw(response);
                     });                    
                 });
+            }
+            if (me.options.drawFilters) {  
+                if (!me.options.filtersConfig) {
+                    me.options.filtersConfig = {}
+                }                          
+                //deal the pager
+                if ($(elementSelector).find('.filters-container')) {
+                    me.filters = new GRID_HELPER.FILTERS($(elementSelector).find('.filters-container'), me.options.filtersConfig, function(query) {
+                         me.showLoading();
+                         MENU_HELPER.reloadData({
+                            data: {
+                                queryStr: query
+                            }
+                        }, function(response) {   
+                            me.hideLoading();                         
+                            me.redraw(response);
+                        });
+                    });
+                }
             }
         }
         me.attachRowHooks = function() {
@@ -348,6 +368,54 @@ GRID_HELPER = new function () {
             });
             $('#'+me.options.sortId).multiselect('rebuild');
             $(elementSelector).show();
+        }
+
+        me.draw();
+        return me;
+    }
+
+    this.FILTERS = function (elementSelector, options, callback) {
+        var me = this;
+        me.template = Handlebars.compile('{{> griddefaultfilters }}');
+        me.options = {
+            defaultFilters: true,
+            placeholder: 'Search'
+        };
+        jQuery.extend(true, me.options, options);
+        //set defaults
+        if (!me.options.filtersPanelId) {
+            me.options.filtersPanelId = 'filters_' + (new Date()).getTime();
+        }
+                      
+        me.draw = function () {
+            me.element = $(elementSelector);
+            me.previousQuery = '';
+            if (me.options.defaultFilters) { //deal with default filters
+                me.element.html(me.template(me.options));
+
+                //default search handler - so that we can call from multiple places
+                me.defaultSearchHandler = function() {
+                    me.currentQuery = me.element.find( ".search-control" ).val();;
+                    if (me.previousQuery !== me.currentQuery) {
+                        if (callback) {
+                            callback(me.currentQuery);
+                        }
+                        me.previousQuery = me.currentQuery;
+                    }                    
+                }
+
+                //attach search events - input enter event
+                me.element.find( ".search-control" ).keypress(function( event ) {
+                    if ( event.which == 13 ) {
+                        me.defaultSearchHandler();
+                    }                    
+                });
+
+                //attach search events -- search icon click
+                me.element.find( ".search-button" ).click(function() {
+                    me.defaultSearchHandler();
+                });
+            }             
         }
 
         me.draw();

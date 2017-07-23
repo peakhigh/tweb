@@ -50,6 +50,10 @@ $(document).ready(function () {
                     key: 'pickup.material.approximateCost'                  
                 }
             ]
-        }
+        },
+        filterConfig: {
+             defaultFilters: true,
+             advancedfilters: true        
+         }
     });
 });

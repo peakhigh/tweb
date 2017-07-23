@@ -371,12 +371,36 @@ ul.alert-dropdown {
   color: #999999;
   cursor: not-allowed;
 }
-.sorter {
-  margin-top: 15px;
-  margin-bottom: 15px;
-}
 .sorter .dropdown-menu {
   width: 250px;
+}
+.grid-default-filters {
+  max-width: 400px;
+}
+.grid-header-block {
+  display: table-cell;
+  vertical-align: middle;
+}
+.grid-icon {
+  font-size: 24px;
+  cursor: pointer;
+}
+.grid-container .multiselect {
+  background-color: white !important;
+  color: black;
+  border: none;
+  text-align: right;
+}
+.grid-container .multiselect:hover {
+  color: #fed136 !important;
+}
+.filters-advanced-icon {
+  text-align: right;
+  font-size: 14px;
+  margin-right: 8px;
+  text-decoration: underline;
+  color: #fed136;
+  cursor: pointer;
 }
 /**bootstrap -override */
 .btn-primary,
