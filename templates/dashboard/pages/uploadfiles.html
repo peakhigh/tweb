@@ -9,15 +9,21 @@
     </div>
     <div class="form-group">
     	  <form action="" id="myform">
-             <select class="form-control" id="typeofdocument">
-              <option>License</option>
-              <option>Photo</option>
-              <option>Load doc</option>
-              <option>Unload doc</option>
-              <option>Other doc</option>
-            </select>
-       			<input type="file" id="keyName" class="file" name="photos" multiple/>
-       			<input type='submit' value='Upload' />
+           <div class="row">
+               <div class="col-sm-3">
+                 <select class="form-control" id="typeofdocument">
+                  <option value="License">License</option>
+                  <option value="Photo">Photo</option>
+                  <option value="LoadDoc">Load doc</option>
+                  <option value="UnloadDoc">Unload doc</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="col-sm-9">
+           			<input type="file" id="keyName" class="file" name="photos" multiple/>
+           			<input type='submit' value='Upload' />
+              </div>
+            </div>
    		</form>  
     </div>
 </div> 
@@ -30,7 +36,7 @@
            <span class="file-other-icon"><i class="fa fa-file-photo-o text-danger"></i></span>
         </div>
        <div class="col-sm-8">{{originalname}}
-            <br/>Aggrement
+            <br/>{{typeofdocument}}
        </div>
        <div class="col-sm-2">
           <button type="button" class="btn btn-default" aria-label="Left Align" id="actiondelete">
@@ -47,6 +53,6 @@
 {{{{/raw-helper}}}}
 {{{{raw-helper}}}}
 <script type="text/javascript">
-    console.log("template data",UTILS.getCurrentTemplateData()),$(function(){$("#myform").on("submit",function(e){e.preventDefault();var o=UTILS.getCurrentTemplateData(),t=new FormData(this);t.append("photo",t);var a={};a.formData=t,a.uri="files/service/fileupload",a.extraHref="id="+o.id,a.type="POST",API_HELPER.uploadFiles(a,function(e,o){return e?void console.log("error",e):void location.reload()})})}),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();new GRID_HELPER.GRID(".upload-files-content",{gridData:e,gridId:"gridUploadFiles",rowConfig:{template:"grid-row-template-details",optionsPostRender:function(e,o){},click:function(){if(console.log(arguments),"actiondelete"==arguments[0].target.id){console.log(arguments[1]);var e={};e.formData=JSON.stringify({name:"AA"}),e.uri="files/service/fileupload",e.extraHref="id="+arguments[1]._id,e.type="DELETE",API_HELPER.uploadFiles(e,function(e,o){return e?void console.log("error",e):void location.reload()})}else"actiondownload"==arguments[0].target.id&&console.log(arguments[1])}}})});
+    console.log("template data",UTILS.getCurrentTemplateData()),$(function(){$("#myform").on("submit",function(e){e.preventDefault();var o=UTILS.getCurrentTemplateData(),t=new FormData(this);t.append("photo",t);var a={};a.formData=t,a.uri="files/service/fileupload",a.extraHref="id="+o.id+"&type="+$("#typeofdocument").val(),a.type="POST",API_HELPER.uploadFiles(a,function(e,o){return e?void console.log("error",e):void location.reload()})})}),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();new GRID_HELPER.GRID(".upload-files-content",{gridData:e,gridId:"gridUploadFiles",rowConfig:{template:"grid-row-template-details",optionsPostRender:function(e,o){},click:function(){if(console.log(arguments),"actiondelete"==arguments[0].target.id){console.log(arguments[1]);var e={};e.formData=JSON.stringify({name:"AA"}),e.uri="files/service/fileupload",e.extraHref="id="+arguments[1]._id,e.type="DELETE",API_HELPER.uploadFiles(e,function(e,o){return e?void console.log("error",e):void location.reload()})}else"actiondownload"==arguments[0].target.id&&console.log(arguments[1])}}})});
 </script>
 {{{{/raw-helper}}}}

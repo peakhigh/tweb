@@ -12,9 +12,8 @@ $(function () {
       var options = {};
       options.formData = formData;
       options.uri = "files/service/fileupload";
-      options.extraHref = "id="+moduleData.id;
+      options.extraHref = "id="+moduleData.id+"&type="+$('#typeofdocument').val();
       options.type = 'POST';
-
        API_HELPER.uploadFiles(options, function (error, response) {
              if (error) {
                         console.log('error', error);

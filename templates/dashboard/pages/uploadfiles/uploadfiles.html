@@ -8,16 +8,21 @@
     <div class="form-group">
     	  <form action="" id="myform">
         
-             <select class="form-control" id="typeofdocument">
-              <option>License</option>
-              <option>Photo</option>
-              <option>Load doc</option>
-              <option>Unload doc</option>
-              <option>Other doc</option>
-            </select>
-
-       			<input type="file" id="keyName" class="file" name="photos" multiple/>
-       			<input type='submit' value='Upload' />
+           <div class="row">
+               <div class="col-sm-3">
+                 <select class="form-control" id="typeofdocument">
+                  <option value="License">License</option>
+                  <option value="Photo">Photo</option>
+                  <option value="LoadDoc">Load doc</option>
+                  <option value="UnloadDoc">Unload doc</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="col-sm-9">
+           			<input type="file" id="keyName" class="file" name="photos" multiple/>
+           			<input type='submit' value='Upload' />
+              </div>
+            </div>
    		</form>  
     </div>
 </div> 
@@ -35,7 +40,7 @@
         </div>
  
        <div class="col-sm-8">{{originalname}}
-            <br/>Aggrement<!-- {{typeofdocument}} -->
+            <br/>{{typeofdocument}}
        </div>
        <div class="col-sm-2">
           <button type="button" class="btn btn-default" aria-label="Left Align" id="actiondelete">
