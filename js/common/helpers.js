@@ -8,6 +8,10 @@ Handlebars.registerHelper('raw-helper', function (options) {
     return options.fn();
 });
 
+Handlebars.registerHelper('getLoggedInUser', function () {
+    return API_HELPER.getLoggedInUser();
+});
+
 Handlebars.registerHelper('compileTemplateByName', function (templateId, record, config) {
     if (templateId) {
         var template = Handlebars.compile($('#' + templateId).html());
