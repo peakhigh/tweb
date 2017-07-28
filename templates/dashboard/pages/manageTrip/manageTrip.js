@@ -53,7 +53,7 @@ $(document).ready(function () {
         },
         filterConfig: {
              defaultFilters: true,
-             advancedfilters: true        
+             advancedFilters: true        
          }
     });
 });
