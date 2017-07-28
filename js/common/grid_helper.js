@@ -97,12 +97,12 @@ GRID_HELPER = new function () {
                 });
             }
             if (me.options.drawFilters) {  
-                if (!me.options.filtersConfig) {
-                    me.options.filtersConfig = {}
+                if (!me.options.filterConfig) {
+                    me.options.filterConfig = {}
                 }                          
-                //deal the pager
+                //deal the filters
                 if ($(elementSelector).find('.filters-container')) {
-                    me.filters = new GRID_HELPER.FILTERS($(elementSelector).find('.filters-container'), me.options.filtersConfig, function(query) {
+                    me.filters = new GRID_HELPER.FILTERS($(elementSelector).find('.filters-container'), me.options.filterConfig, function(query) {
                          me.showLoading();
                          MENU_HELPER.reloadData({
                             data: {
@@ -375,10 +375,9 @@ GRID_HELPER = new function () {
     }
 
     this.FILTERS = function (elementSelector, options, callback) {
-        var me = this;
-        me.template = Handlebars.compile('{{> griddefaultfilters }}');
+        var me = this;        
         me.options = {
-            defaultFilters: true,
+            type: 'default',
             placeholder: 'Search'
         };
         jQuery.extend(true, me.options, options);
@@ -390,7 +389,8 @@ GRID_HELPER = new function () {
         me.draw = function () {
             me.element = $(elementSelector);
             me.previousQuery = '';
-            if (me.options.defaultFilters) { //deal with default filters
+            if (me.options.type === 'default') { //deal with default filters
+                me.template = Handlebars.compile('{{> griddefaultfilters }}');
                 me.element.html(me.template(me.options));
 
                 //default search handler - so that we can call from multiple places

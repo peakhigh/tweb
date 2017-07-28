@@ -51,9 +51,9 @@ $(document).ready(function () {
                 }
             ]
         },
+        //drawFilters: true,
         filterConfig: {
-             defaultFilters: true,
-             advancedFilters: true        
-         }
+            type: 'none'//hybrid/
+        }        
     });
 });

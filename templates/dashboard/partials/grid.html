@@ -19,19 +19,19 @@
             </div>
             <div class="col-sm-6">
                 <div class="pull-right">
-                    {{#if drawSort}}                                                
-                        <div class="sort-container">
-                        </div>                      
+                    {{#if drawSort}}           
+                        <div class="sort-container" style="{{#unless drawFilters}}padding-top:25px;{{/unless}}">
+                        </div>                 
                     {{/if}}
                     {{#if drawFilters}}
                          <div class="filters-container grid-header-block">
                          </div>                        
-                    {{/if}}
-                    {{#if advancedFilters}}
-                        <div class="filters-advanced-icon">
-                             Advanced
-                        </div>
-                    {{/if}}                    
+                         {{#if advancedFilters}}
+                            <div class="filters-advanced-icon">
+                                Advanced
+                            </div>
+                        {{/if}}           
+                    {{/if}}                             
                 </div>
             </div>
         </div>    
