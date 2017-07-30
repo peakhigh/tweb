@@ -437,13 +437,28 @@ GRID_HELPER = new function () {
                         buttons: {
                             submit: {
                                 title: "Search",
-                                click: function() {
-                                    console.log(this.getValue(), '...');
+                                click: function() {                                   
                                     var query = {};
                                     var values = this.getValue();
-                                    values.forEach(function(element) {
-                                        console.log(element);
-                                    });
+                                    var filters = {};
+                                    //create filters by adjusting range filters etc
+                                    Object.keys(values).forEach(function(field) {
+                                        // console.log(field, values[field]);
+                                        if (field.endsWith('_start') || field.endsWith('_end')) {//indicates range filter
+                                            var fieldName = field.substring(0, field.length - (field.endsWith('_start') ? 6 : 4));
+                                            if (!filters[fieldName])
+                                                filters[fieldName] = {};                                            
+                                            if (field.endsWith('_start')) {
+                                                filters[fieldName]['$gte'] = values[field];
+                                            } else if (field.endsWith('_end')) {
+                                                filters[fieldName]['$lt'] = values[field];
+                                            }                                            
+                                        } else {
+                                            filters[field] = values[field];
+                                        }
+                                    }); 
+                                     console.log(filters);
+                                    return false;                                 
                                 }
                             },
                             reset: {}
