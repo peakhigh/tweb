@@ -53,7 +53,53 @@ $(document).ready(function () {
         },
         //drawFilters: true,
         filterConfig: {
-            type: 'none'//hybrid/
+            type: 'default',//hybrid/
+            order: [],
+            formOptions: {
+                bindings: {
+                    'pickup.date_start': "column-1",
+                    'pickup.date_end': "column-2",
+                    'drop.date_start': "column-1",
+                    'drop.date_end': "column-2",
+                    status: "column-1"
+                },
+                schemaOverride: {
+                    fields: {
+                        'pickup.date': {
+                            title: 'Pickup Date',
+                            format: 'date',
+                            rangeField: true
+                        },
+                        'drop.date': {
+                            title: 'Drop Date',
+                            format: 'date',
+                            rangeField: true
+                        },
+                        'status': {
+                            // default: 'None'                            
+                        }
+                    }                    
+                },
+                optionsOverride: {
+                    fields: {
+                        'pickup.date_start': {
+                            order: 1
+                        },
+                        'pickup.date_end': {
+                            order: 2
+                        },
+                        'drop.date_start': {
+                            order: 3
+                        },
+                        'drop.date_end': {
+                            order: 4
+                        },
+                        status: {
+                            order: 5
+                        }
+                    }                                
+                }                
+            }            
         }        
     });
 });

@@ -394,13 +394,24 @@ ul.alert-dropdown {
 .grid-container .multiselect:hover {
   color: #fed136 !important;
 }
-.filters-advanced-icon {
+.grid-more-filters-button {
   text-align: right;
   font-size: 14px;
-  margin-right: 8px;
   text-decoration: underline;
   color: #fed136;
   cursor: pointer;
+  min-height: 30px;
+  margin: 5px 0px;
+}
+.grid-more-filters-container {
+  display: none;
+  margin: 0px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #eceeef;
+}
+.grid-more-filters-container .alpaca-form-buttons-container {
+  margin-top: 0px;
 }
 /**bootstrap -override */
 .btn-primary,

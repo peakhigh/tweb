@@ -1,14 +1,6 @@
 <div class="grid-container">
     {{#if gridData.data}}
         <div class="row">
-            <!--<div class="col-sm-6">
-                <div class="pull-left">
-                    {{#if drawSort}}
-                        <div class="sort-container">
-                        </div>
-                    {{/if}}
-                </div>
-            </div>-->
             <div class="col-sm-6">
                 <div class="pull-left">
                     {{#if drawPager}}
@@ -25,21 +17,13 @@
                     {{/if}}
                     {{#if drawFilters}}
                          <div class="filters-container grid-header-block">
-                         </div>                        
-                         {{#if advancedFilters}}
-                            <div class="filters-advanced-icon">
-                                Advanced
-                            </div>
-                        {{/if}}           
+                         </div>                                                          
                     {{/if}}                             
                 </div>
             </div>
         </div>    
-        {{#if advancedfilters}}
-            <div class="row">
-                
-            </div> 
-        {{/if}}           
+        <div class="row grid-more-filters-container">
+        </div>          
     {{/if}}
     
     <div id="{{gridId}}" class="grid-data-container">

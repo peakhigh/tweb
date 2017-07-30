@@ -21,6 +21,7 @@ GRID_HELPER = new function () {
          * }      
          */
         var me = this;
+        me.element = $(elementSelector);
         me.template = Handlebars.compile('{{> grid }}');
         me.dataTemplate = Handlebars.compile('{{> griddata }}');
         me.options = {
@@ -102,12 +103,16 @@ GRID_HELPER = new function () {
                 }                          
                 //deal the filters
                 if ($(elementSelector).find('.filters-container')) {
-                    me.filters = new GRID_HELPER.FILTERS($(elementSelector).find('.filters-container'), me.options.filterConfig, function(query) {
+                    me.filters = new GRID_HELPER.FILTERS($(elementSelector).find('.filters-container'), me.options, me.element, function(query) {
                          me.showLoading();
+                         var data = {};
+                         if (typeof query === 'string') {
+                             data.queryStr = query;
+                         } else {
+                             data.query = query;
+                         }
                          MENU_HELPER.reloadData({
-                            data: {
-                                queryStr: query
-                            }
+                            data: data
                         }, function(response) {   
                             me.hideLoading();                         
                             me.redraw(response);
@@ -374,28 +379,96 @@ GRID_HELPER = new function () {
         return me;
     }
 
-    this.FILTERS = function (elementSelector, options, callback) {
+    this.FILTERS = function (elementSelector, options, gridElement, callback) {
         var me = this;        
         me.options = {
             type: 'default',
             placeholder: 'Search'
         };
-        jQuery.extend(true, me.options, options);
+        jQuery.extend(true, me.options, options.filterConfig);
         //set defaults
         if (!me.options.filtersPanelId) {
             me.options.filtersPanelId = 'filters_' + (new Date()).getTime();
         }
-                      
+
+        me.getFilterFields = function (schema, filterSchema, overrideConfig, keyPath) {
+            if (!keyPath) {
+                keyPath = '';
+            }
+            Object.keys(schema).forEach((key) => {
+                var tKey = (keyPath ? (keyPath+'.'+key) : key);
+                if (!schema[key].title && Array.isArray(schema[key])) {
+                    me.getFilterFields(schema[key][0], filterSchema, overrideConfig, tKey);
+                } else if (!schema[key].title && typeof schema[key] === 'object') {//object
+                    me.getFilterFields(schema[key], filterSchema, overrideConfig, tKey);
+                } else {
+                    if (schema[key].filterConfig) {   
+                        var fieldConfig = {};
+
+                        fieldConfig = schema[key].filterConfig;
+                        if (overrideConfig && overrideConfig[tKey]) {
+                            $.extend(true, fieldConfig, overrideConfig[tKey]);
+                        }
+                        if (fieldConfig.rangeField) {                
+                            filterSchema[tKey+'_start'] = {};
+                            $.extend(true, filterSchema[tKey+'_start'], fieldConfig);
+                            filterSchema[tKey+'_start'].title += ' Start';
+                            filterSchema[tKey+'_start'].rangeStart = true;
+                            filterSchema[tKey+'_end'] = {};   
+                            $.extend(true, filterSchema[tKey+'_end'], fieldConfig);
+                            filterSchema[tKey+'_end'].title += ' End';
+                            filterSchema[tKey+'_end'].rangeEnd = true;   
+                        } else {
+                            filterSchema[tKey] = fieldConfig;   
+                        }                                        
+                    }                    
+                }
+            });
+        }
+
         me.draw = function () {
-            me.element = $(elementSelector);
+            me.element = $(elementSelector);            
             me.previousQuery = '';
+            me.filterSchema =  {};
+            me.formOptions = {
+                optionsOverride: {
+                    focus: '',
+                    form: {
+                        buttons: {
+                            submit: {
+                                title: "Search",
+                                click: function() {
+                                    console.log(this.getValue(), '...');
+                                    var query = {};
+                                    var values = this.getValue();
+                                    values.forEach(function(element) {
+                                        console.log(element);
+                                    });
+                                }
+                            },
+                            reset: {}
+                        }
+                    }
+                }            
+            }
+            if (options.filterConfig.formOptions) {
+                $.extend(true, me.formOptions, options.filterConfig.formOptions);
+            }
+            // me.formOptions = options.filterConfig.formOptions || {};
+
+            me.getFilterFields(options.gridData.schema, me.filterSchema, (me.formOptions.schemaOverride && me.formOptions.schemaOverride.fields) ? me.formOptions.schemaOverride.fields : {});
+            delete me.formOptions.schemaOverride;
+            console.log(me.filterSchema);
+            if (Object.keys(me.filterSchema).length > 0) {
+                me.options.moreFilters = true;    
+            }
             if (me.options.type === 'default') { //deal with default filters
                 me.template = Handlebars.compile('{{> griddefaultfilters }}');
                 me.element.html(me.template(me.options));
 
                 //default search handler - so that we can call from multiple places
                 me.defaultSearchHandler = function() {
-                    me.currentQuery = me.element.find( ".search-control" ).val();;
+                    me.currentQuery = me.element.find( ".search-control" ).val();
                     if (me.previousQuery !== me.currentQuery) {
                         if (callback) {
                             callback(me.currentQuery);
@@ -415,7 +488,34 @@ GRID_HELPER = new function () {
                 me.element.find( ".search-button" ).click(function() {
                     me.defaultSearchHandler();
                 });
+
+                //attach more filters click
+                me.element.find( ".grid-more-filters-button" ).click(function() {
+                    if ($(this).text().trim() === "More Filters") {
+                        me.drawMoreFilters();
+                    } else {
+                        me.hideMoreFilters();
+                    }
+                });                                                
             }             
+        }
+
+        me.drawMoreFilters = function() {            
+            if (me.options.moreFilters) {
+                gridElement.find( ".grid-more-filters-container" ).show();
+                if (!me.options.moreFiltersDrawn) {
+                    FORM_HELPER.draw(gridElement.find( ".grid-more-filters-container" ), {
+                        schema: me.filterSchema
+                    }, me.formOptions);
+                    me.options.moreFiltersDrawn = true;
+                }                 
+                me.element.find( ".grid-more-filters-button" ).html('Hide Filters');       
+            }
+        }
+
+        me.hideMoreFilters = function() {  
+            gridElement.find( ".grid-more-filters-container" ).hide();
+            me.element.find( ".grid-more-filters-button" ).html('More Filters');  
         }
 
         me.draw();
