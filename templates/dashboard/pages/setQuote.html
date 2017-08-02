@@ -1,12 +1,12 @@
 {{{{raw-helper}}}}
 {{{{/raw-helper}}}}
 {{> header}}
-<div class='edit-trips'>
-    <div class='edit-trips-content'>
+<div class='quote-trips'>
+    <div class='quote-trips-content'>
     </div>
 </div> 
 {{{{raw-helper}}}}
 <script type="text/javascript">
-    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var t=UTILS.getCurrentTemplateData();FORM_HELPER.draw(".edit-trips-content",t,{postUrl:"trips/service/setQuote",callbacks:{afterSubmit:function(){MENU_HELPER.menuClick("manageTrip","manageTrip")}}})});
+    console.log("template data quote",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();FORM_HELPER.draw(".quote-trips-content",e,{postUrl:"requests/service/setQuote",callbacks:{beforeSubmit:function(e){console.log(e);var t={};t.message=e.data.message,t.priceQuote=e.data.priceQuote,t.type="Bid",t.status="New",t.itemId=e.data._id,e.data=t},afterSubmit:function(){MENU_HELPER.menuClick("manageTruck","manageTruck")}}})});
 </script>
 {{{{/raw-helper}}}}
