@@ -1,10 +1,7 @@
 {{{{raw-helper}}}}
 {{{{/raw-helper}}}}
 {{> header}}
-{{> cards (getDashBoardMenu)}}
+{{> cards (getLoggedInUser)}}
 {{> tile}}
 {{{{raw-helper}}}}
-<script type="text/javascript">
-    $(document).ready(function(){var e=API_HELPER.getLoggedInUser().menu.SideMenu[0];console.log("template data home",e)});
-</script>
 {{{{/raw-helper}}}}

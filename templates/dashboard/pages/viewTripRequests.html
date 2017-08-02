@@ -1,6 +1,8 @@
+{{{{raw-helper}}}}
+{{{{/raw-helper}}}}
 {{> header}}
-<div class='pending-trips'>
-    <div class='pending-trips-content'>            
+<div class='trip-requests'>
+    <div class='trip-requests-content'>            
     </div>
 </div> 
 {{{{raw-helper}}}}
@@ -9,7 +11,7 @@
     <div class="row grid-row">
         <div class="col-sm-4 grid-row-container">
             <div class="grid-row-title">Pickup point(s):</div>                      
-                {{#each pickup}}
+                {{#each trips.0.pickup}}
                     {{{exceptOnFirst @index '<hr/>'}}}
                     <div class="row">     
                         <div class="grid-row-tile col-sm-12">                
@@ -61,7 +63,7 @@
         </div>   
         <div class="col-sm-4 grid-row-container">
             <div class="grid-row-title">Drop point(s):</div>                      
-                {{#each drop}}
+                {{#each trips.0.drop}}
                     <div class="row">     
                         <div class="grid-row-tile col-sm-12">                
                             <div>
@@ -104,58 +106,38 @@
                 {{/each}}                                   
         </div>  
         <div class="col-sm-4 grid-row-container">
-            <div class="grid-row-title">Vehicle Requirements:</div> 
+            <div class="grid-row-title">Bid amount (in Rs):</div> 
             <div class="row">     
                 <div class="grid-row-tile col-sm-12">                
                     <div>
                         <span class="grid-row-tile-text">
-                            {{#each vehicleRequirements}}
-                                <div>
-                                    {{vechicleType}} with capacity {{requiredCapacity}} {{capacityUnit}} 
-                                    {{#if minRating}} with rating {{minRating}} {{/if}}
-                                </div>
-                            {{/each}}
+                                {{priceQuote}}
                         </span>
                     </div>                                           
                 </div>  
             </div>
-            <div class="grid-row-title">Total Weight:</div> 
+            <div class="grid-row-title">Bid by:</div> 
              <div class="row">     
                 <div class="grid-row-tile col-sm-12">                
                     <div>
                         <span class="grid-row-tile-text">
-                            {{totalWeight}} {{totalWeightUnit}}
+                            {{fromUser}}
                         </span>
                     </div>                                           
                 </div>  
             </div>
-            {{#if (ifArray comments)}}            
-                <div class="grid-row-title">Comments:</div>  
+            {{#if message}}
+                <div class="grid-row-title">Message:</div> 
                 <div class="row">     
                     <div class="grid-row-tile col-sm-12">                
                         <div>
                             <span class="grid-row-tile-text">
-                                {{#each comments}}
-                                    {{this}} <br/>
-                                {{/each}}
+                                {{message}} 
                             </span>
                         </div>                                           
                     </div>  
                 </div>
             {{/if}}
-            {{#if quotes}}
-                <div class="grid-row-title">Quote:</div> 
-                <div class="row">     
-                    <div class="grid-row-tile col-sm-12">                
-                        <div>
-                            <span class="grid-row-tile-text">
-                                {{quotes.cost}} 
-                            </span>
-                        </div>                                           
-                    </div>  
-                </div>
-            {{/if}}
-
              <div class="grid-row-title">Status:</div> 
              <div class="row">     
                 <div class="grid-row-tile col-sm-12">                
@@ -175,15 +157,12 @@
     <div class="row grid-row">       
         <div class="col-sm-12">
             <div class="pull-right">
-                <button type="button" class="btn btn-default btn-primary comments-trip" _id="{{_id}}">Comments</button>
-              <!--   <button type="button" class="btn btn-default btn-primary quote-trip" _id="{{_id}}">Set Quote</button> -->
-                 <button type="button" class="btn btn-default btn-primary assign-truck" _id="{{_id}}">Assign Truck</button>
-                <button type="button" class="btn btn-default btn-primary edit-trip" _id="{{_id}}">Edit</button>
+                <button type="button" class="btn btn-default btn-primary approve-bid" _id="{{_id}}">Approve</button>
             </div>
         </div>       
     </div>
   </div>
-</script>
+</script>   
 <script id="grid-row-template" type="text/x-handlebars-template">
   <div class="container-fluid">
     <div class="row grid-row">
@@ -221,88 +200,35 @@
     </div>
 </div>
 </script>
-
-
- <!-- Modal related templates -->
-
 <script id="grid-trucks-template" type="text/x-handlebars-template">
-    
     <div class="container-fluid">
                     <div class="row grid-row">
-
                          <div class="col-md-3 col-lg-3 " align="center"> 
                            <img alt="Truck Pic" height="150" width="150" src="/img/noimage.png" class="img-circle img-responsive">
                         </div> 
                         <div class="col-md-5">
-                          
                              <div class="row">
                                <div class="col-md-5"><dt>Plate Number </dt></div> <div class="col-md-3">{{plateNumber}}</div>
                              </div>
-
                              <div class="row">
                                <div class="col-md-5"><dt>Model  </dt></div> <div class="col-md-4">{{model}}</div>
                              </div>
-
-
                              <div class="row">
                                <div class="col-md-5"><dt>TruckType </dt> </div><div class="col-md-4">{{truckType}}</div>
                              </div>
-                            
                              <div class="row">
                                <div class="col-md-5"><dt>Capacity </dt> </div><div class="col-md-4">{{capacity}} {{ capacityUnits}}</div>
                              </div>
-
                               <div class="row">
                                <div class="col-md-5 "><dt>Status </dt> </div><div class="col-md-4">{{status}}</div>
                              </div>
                         </div>
-
-                                
                     </div>
-                    
                   </div>
-
 </script>
-
-
-<script id="grid-choosetruck-options" type="text/x-handlebars-template">
-  <div class="container-fluid">
-    <div class="row grid-row">       
-        <div class="col-sm-12">
-            <div class="pull-right">
-                <button type="button" class="btn btn-default btn-primary select-truck" _id="{{_id}}">Select</button>
-            </div>
-        </div>       
-    </div>
-  </div>
+{{{{/raw-helper}}}}
+{{{{raw-helper}}}}
+<script type="text/javascript">
+    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var t=UTILS.getCurrentTemplateData();new GRID_HELPER.GRID(".trip-requests-content",{gridData:t,gridId:"gridTripRequests",rowConfig:{template:"grid-row-template-details",optionsTemplate:"grid-row-options-template",optionsEvent:"mouseover",optionsPostRender:function(t,e){$(t).find(".approve-bid").click(function(){console.log(e);var t={};t.formData=JSON.stringify({truckDetails:e}),t.uri="requests/service/setStatus",t.extraHref="id="+e._id+"&status=Approved",t.type="POST",API_HELPER.postData(t,function(t,e){if(t)return void console.log("error",t)})})}},sortConfig:{multiple:!1,options:[{title:"Pickup Date",key:"pickup.date",selected:!0,order:"desc"},{title:"Drop Date",key:"drop.date"},{title:"Material Value",key:"pickup.material.approximateCost"}]}})});
 </script>
-
-<script id="myModal" type="text/x-handlebars-template"> 
-<div class="modal fade" id="myModalid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-         <div class="modal-dialog">
-             <div class="modal-content">
-               <div class="modal-header">
-                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                       &times;
-                   </button>
-                   <h4 class="modal-title" id="myModalLabel">Choose Truck</h4>
-               </div>
-               <div class="modal-body myModalclass">
-                         
-               </div>
-                   
-               <div class="modal-footer">
-                  <!--  <button type="submit" class="btn btn-primary" name="submit" value="submit">
-                      Save
-                  </button> -->
-                   <button name="cancel" value="cancel" class="btn btn-default" data-dismiss="modal">
-                       Cancel
-                   </button>
-               </div>
-               </div>
-               </div> 
-    </div>
-</script> 
-
-
 {{{{/raw-helper}}}}

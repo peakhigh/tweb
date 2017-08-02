@@ -15,9 +15,9 @@ $(document).ready(function () {
                 $(rowElement).find('.edit-trip').click(function() {
                     MENU_HELPER.menuClick('addTrip', 'manageTrip', {extraHref: record._id});
                 });
-                $(rowElement).find('.quote-trip').click(function() {
+               /*  $(rowElement).find('.quote-trip').click(function() {
                     MENU_HELPER.menuClick('setQuote', 'manageTrip', {extraHref: record._id});
-                });
+                }); */
                 $(rowElement).find('.comments-trip').click(function() {
                     MENU_HELPER.menuClick('addComments', 'manageTrip', {extraHref: record._id});
                 });
