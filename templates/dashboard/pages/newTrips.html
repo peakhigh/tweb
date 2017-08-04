@@ -1,3 +1,5 @@
+{{{{raw-helper}}}}
+{{{{/raw-helper}}}}
 {{> header}}
 <div class='manage-trips'>
     <div class='manage-trips-content'>            
@@ -157,7 +159,6 @@
                     </div>  
                 </div>
             {{/if}}
-
             <div class="grid-row-title">Status:</div> 
              <div class="row">     
                 <div class="grid-row-tile col-sm-12">                
@@ -168,7 +169,6 @@
                     </div>                                           
                 </div>  
             </div>
-
         </div>     
     </div>
   </div>
@@ -179,9 +179,9 @@
         <div class="col-sm-12">
             <div class="pull-right">
                 <button type="button" class="btn btn-default btn-primary comments-trip" _id="{{_id}}">Comments</button>
-                 <button type="button" class="btn btn-default btn-primary set-status-trip" _id="{{_id}}">Set Status</button>
-<!--                 <button type="button" class="btn btn-default btn-primary driver-details-trip" _id="{{_id}}">Set Driver Details</button> -->
-<!--                 <button type="button" class="btn btn-default btn-primary quote-trip" _id="{{_id}}">Set Quote</button> -->
+                <button type="button" class="btn btn-default btn-primary cancel-trip" _id="{{_id}}">Cancel</button>
+                <button type="button" class="btn btn-default btn-primary view-trip" _id="{{_id}}">View</button>
+                <button type="button" class="btn btn-default btn-primary upload-doc-trip" _id="{{_id}}">Upload docs</button>
                 <button type="button" class="btn btn-default btn-primary edit-trip" _id="{{_id}}">Edit</button>
             </div>
         </div>       
@@ -224,5 +224,10 @@
         </div>
     </div>
 </div>
+</script>
+{{{{/raw-helper}}}}
+{{{{raw-helper}}}}
+<script type="text/javascript">
+    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();new GRID_HELPER.GRID(".manage-trips-content",{gridData:e,gridId:"gridManageTrips",rowConfig:{template:"grid-row-template-details",optionsTemplate:"grid-row-options-template",optionsEvent:"mouseover",optionsPostRender:function(e,t){$(e).find(".edit-trip").click(function(){MENU_HELPER.menuClick("addTrip","manageTrip",{extraHref:t._id})}),$(e).find(".cancel-trip").click(function(){}),$(e).find(".comments-trip").click(function(){MENU_HELPER.menuClick("addComments","manageTrip",{extraHref:t._id})})}},sortConfig:{multiple:!1,options:[{title:"Pickup Date",key:"pickup.date",selected:!0,order:"desc"},{title:"Drop Date",key:"drop.date"},{title:"Material Value",key:"pickup.material.approximateCost"}]},filterConfig:{type:"default",order:[],formOptions:{bindings:{"pickup.date_start":"column-1","pickup.date_end":"column-2","drop.date_start":"column-1","drop.date_end":"column-2",status:"column-1"},schemaOverride:{fields:{"pickup.date":{title:"Pickup Date",format:"date",rangeField:!0},"drop.date":{title:"Drop Date",format:"date",rangeField:!0},status:{}}},optionsOverride:{fields:{"pickup.date_start":{order:1},"pickup.date_end":{order:2},"drop.date_start":{order:3},"drop.date_end":{order:4},status:{order:5}}}}}})});
 </script>
 {{{{/raw-helper}}}}

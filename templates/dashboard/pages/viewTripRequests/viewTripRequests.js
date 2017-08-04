@@ -28,6 +28,22 @@ $(document).ready(function () {
                                 }
                             });
                 });
+
+                  $(rowElement).find('.reject-bid').click(function() {
+                    console.log(record);
+                      var options = {};
+                        options.formData = JSON.stringify({ truckDetails : record});
+                        options.uri = "requests/service/setStatus";
+                        options.extraHref = "id="+record._id+"&status=Rejected";
+                        options.type = 'POST';
+                        
+                            API_HELPER.postData(options, function (error, response) {
+                                if (error) {
+                                            console.log('error', error);
+                                            return;
+                                }
+                            });
+                });
             }
             // click: function() {
             //     console.log(arguments);

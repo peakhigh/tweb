@@ -158,6 +158,7 @@
         <div class="col-sm-12">
             <div class="pull-right">
                 <button type="button" class="btn btn-default btn-primary approve-bid" _id="{{_id}}">Approve</button>
+                 <button type="button" class="btn btn-default btn-primary reject-bid" _id="{{_id}}">Reject</button>
             </div>
         </div>       
     </div>
@@ -229,6 +230,6 @@
 {{{{/raw-helper}}}}
 {{{{raw-helper}}}}
 <script type="text/javascript">
-    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var t=UTILS.getCurrentTemplateData();new GRID_HELPER.GRID(".trip-requests-content",{gridData:t,gridId:"gridTripRequests",rowConfig:{template:"grid-row-template-details",optionsTemplate:"grid-row-options-template",optionsEvent:"mouseover",optionsPostRender:function(t,e){$(t).find(".approve-bid").click(function(){console.log(e);var t={};t.formData=JSON.stringify({truckDetails:e}),t.uri="requests/service/setStatus",t.extraHref="id="+e._id+"&status=Approved",t.type="POST",API_HELPER.postData(t,function(t,e){if(t)return void console.log("error",t)})})}},sortConfig:{multiple:!1,options:[{title:"Pickup Date",key:"pickup.date",selected:!0,order:"desc"},{title:"Drop Date",key:"drop.date"},{title:"Material Value",key:"pickup.material.approximateCost"}]}})});
+    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var t=UTILS.getCurrentTemplateData();new GRID_HELPER.GRID(".trip-requests-content",{gridData:t,gridId:"gridTripRequests",rowConfig:{template:"grid-row-template-details",optionsTemplate:"grid-row-options-template",optionsEvent:"mouseover",optionsPostRender:function(t,e){$(t).find(".approve-bid").click(function(){console.log(e);var t={};t.formData=JSON.stringify({truckDetails:e}),t.uri="requests/service/setStatus",t.extraHref="id="+e._id+"&status=Approved",t.type="POST",API_HELPER.postData(t,function(t,e){if(t)return void console.log("error",t)})}),$(t).find(".reject-bid").click(function(){console.log(e);var t={};t.formData=JSON.stringify({truckDetails:e}),t.uri="requests/service/setStatus",t.extraHref="id="+e._id+"&status=Rejected",t.type="POST",API_HELPER.postData(t,function(t,e){if(t)return void console.log("error",t)})})}},sortConfig:{multiple:!1,options:[{title:"Pickup Date",key:"pickup.date",selected:!0,order:"desc"},{title:"Drop Date",key:"drop.date"},{title:"Material Value",key:"pickup.material.approximateCost"}]}})});
 </script>
 {{{{/raw-helper}}}}

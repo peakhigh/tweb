@@ -1,7 +1,4 @@
 {{{{raw-helper}}}}
-<style>
-.file_type{width:40px;height:40px;padding:5px;text-align:center}
-</style>
 {{{{/raw-helper}}}}
 {{> header}}
 <div class='upload-files'>
@@ -43,7 +40,7 @@
            <span class="fa fa-trash-o fa-lg" aria-hidden="true" id="actiondelete"></span>
        </button>
         <button type="button" class="btn btn-default" aria-label="Left Align" id="actiondownload">
-           <span class="fa fa-download fa-lg" aria-hidden="true" id="actiondelete"></span>
+           <span class="fa fa-download fa-lg" aria-hidden="true" id="actiondownload"></span>
        </button>
        </div>
       </div>
@@ -53,6 +50,6 @@
 {{{{/raw-helper}}}}
 {{{{raw-helper}}}}
 <script type="text/javascript">
-    console.log("template data",UTILS.getCurrentTemplateData()),$(function(){$("#myform").on("submit",function(e){e.preventDefault();var o=UTILS.getCurrentTemplateData(),t=new FormData(this);t.append("photo",t);var a={};a.formData=t,a.uri="files/service/fileupload",a.extraHref="id="+o.id+"&type="+$("#typeofdocument").val(),a.type="POST",API_HELPER.uploadFiles(a,function(e,o){return e?void console.log("error",e):void location.reload()})})}),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();new GRID_HELPER.GRID(".upload-files-content",{gridData:e,gridId:"gridUploadFiles",rowConfig:{template:"grid-row-template-details",optionsPostRender:function(e,o){},click:function(){if(console.log(arguments),"actiondelete"==arguments[0].target.id){console.log(arguments[1]);var e={};e.formData=JSON.stringify({name:"AA"}),e.uri="files/service/fileupload",e.extraHref="id="+arguments[1]._id,e.type="DELETE",API_HELPER.uploadFiles(e,function(e,o){return e?void console.log("error",e):void location.reload()})}else"actiondownload"==arguments[0].target.id&&console.log(arguments[1])}}})});
+    console.log("template data",UTILS.getCurrentTemplateData()),$(function(){$("#myform").on("submit",function(e){e.preventDefault();var o=UTILS.getCurrentTemplateData(),t=new FormData(this);t.append("photo",t);var i={};i.formData=t,i.uri="files/service/fileupload",i.extraHref="id="+o.id+"&type="+$("#typeofdocument").val(),i.type="POST",API_HELPER.uploadFiles(i,function(e,o){return e?void console.log("error",e):void location.reload()})})}),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();console.log("uploadfiles"),console.log(e);new GRID_HELPER.GRID(".upload-files-content",{gridData:e,gridId:"gridUploadFiles",rowConfig:{template:"grid-row-template-details",optionsPostRender:function(e,o){},click:function(){if("actiondelete"==arguments[0].target.id){var e={};e.formData=JSON.stringify({name:"AA"}),e.uri="files/service/fileupload",e.extraHref="id="+arguments[1]._id,e.type="DELETE",API_HELPER.uploadFiles(e,function(e,o){return e?void console.log("error",e):void location.reload()})}else if("actiondownload"==arguments[0].target.id){console.log(arguments[1]);var e={};e.uri="files/service/filedownload",e.extraHref="id="+arguments[1]._id,API_HELPER.downloadFile(e,function(e,o){})}}}})});
 </script>
 {{{{/raw-helper}}}}

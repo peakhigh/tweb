@@ -77,6 +77,15 @@ API_HELPER = new function() {
             }
         });
     }
+    this.downloadFile = function(options, callback){
+         /*    $.ajax({
+                 url: CONSTANTS.apiServer + options.uri + "?"+ options.extraHref,
+                success: function (data) {
+                   // console.log(data);
+                callback(null,data);
+            }
+         });  */
+    }
     this.postData = function(options,callback){
 
         $.ajax({

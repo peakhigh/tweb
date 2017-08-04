@@ -15,8 +15,8 @@ $(document).ready(function () {
                     MENU_HELPER.menuClick('addTrip', 'manageTrip', {extraHref: record._id});
                 });
 
-                $(rowElement).find('.set-status-trip').click(function() {
-                    MENU_HELPER.menuClick('setStatus', 'manageTrip', {extraHref: record._id});
+                $(rowElement).find('.cancel-trip').click(function() {
+                    //MENU_HELPER.menuClick('setStatus', 'manageTrip', {extraHref: record._id});
                 });
                 $(rowElement).find('.comments-trip').click(function() {
                     MENU_HELPER.menuClick('addComments', 'manageTrip', {extraHref: record._id});

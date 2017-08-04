@@ -29,7 +29,8 @@ $(function () {
 $(document).ready(function () {
 
     var moduleData = UTILS.getCurrentTemplateData();
-    
+    console.log("uploadfiles");
+    console.log(moduleData);
     var grid = new GRID_HELPER.GRID('.upload-files-content', {
         gridData: moduleData,
         gridId: 'gridUploadFiles',
@@ -39,9 +40,8 @@ $(document).ready(function () {
                
             },
             click: function() {
-                  console.log(arguments);
+                  
                 if(arguments[0].target.id == 'actiondelete'){
-                  console.log(arguments[1]);
                     var options = {};
                     
                     options.formData = JSON.stringify({ name : "AA" });
@@ -57,10 +57,26 @@ $(document).ready(function () {
                             location.reload(); // need to change, reload only template
                             //console.log(response);
                      });
-
-
                 }else if(arguments[0].target.id == 'actiondownload'){
                   console.log(arguments[1]);
+                    var options = {};
+                    options.uri = "files/service/filedownload";
+                    options.extraHref = "id="+arguments[1]._id;
+                    //options.type = 'POST';
+
+                    
+
+               //   window.location.href =  CONSTANTS.apiServer+"files/service/filedownload?id="+arguments[1]._id;
+                     API_HELPER.downloadFile(options, function (error, response) {
+
+                      //      console.log(arguments[1]);
+                         /*   var blob=new Blob([response]);
+                          var link=document.createElement('a');
+                          link.href=window.URL.createObjectURL(blob);
+                          link.download="test.pdf";
+                          link.click(); */
+                     });
+                      
                 }
             }, 
          },

@@ -31,8 +31,6 @@ MENU_HELPER = new function () {
             helperData.pageHeading = currentPageDetails.title;
             helperData.pageSubHeading = currentPageDetails.title;
             helperData.pageIcon = currentPageDetails.icon;
-            console.log("fuc,");
-            console.log(currentPageDetails);
             currentPageDetails.extraOptions = extraOptions;
             if (currentPageDetails.service) {//first load the service, get the service data & render the template 
                 if (extraOptions && extraOptions.data) {
