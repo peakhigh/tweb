@@ -1,0 +1,76 @@
+{{{{raw-helper}}}}
+{{{{/raw-helper}}}}
+{{> header}}
+<div class='view-profile'>
+       <div class='view-profile-content'>
+    </div>
+</div> 
+{{{{raw-helper}}}}
+<script id="viewprofile" type="text/x-handlebars-template">
+ <div class="container-fluid">
+      <div class="row">
+     <!--  <div class="col-md-5  toppad  pull-right col-md-offset-3 ">
+           <A href="edit.html" >Edit Profile |</A>
+          <A href="edit.html" >Logout</A>
+       <br>
+        <p class=" text-info">May 05,2014,03:00 pm </p>
+      </div> -->
+       {{#with data}}
+        <div class="col-sm-12" >
+              <div class="row">
+                <div class="col-sm-3" align="center"> <img alt="User Pic" src="http://babyinfoforyou.com/wp-content/uploads/2014/10/avatar-300x300.png" class="img-circle img-responsive"> </div>
+                <div class="col-sm-9 col-sm-9 "> 
+                  <table class="table table-user-information">
+                    <tbody>
+                      <tr>
+                        <td>Name:</td>
+                        <td>{{firstName}} {{lastName}}</td>
+                      </tr>
+                         <tr>
+                        <tr>
+                        <td>Gender:</td>
+                        <td>{{gender}}</td>
+                         </tr>
+                         <tr>
+                        <td>UserType:</td>
+                        <td>{{profile.userType}}</td>
+                         </tr>
+                        <tr>
+                        <td>Organisation Address:</td>
+                        <td>
+                            {{#if organisationAddress}}
+                                    {{#if organisationAddress.organisation}}
+                                        {{organisationAddress.organisation}}
+                                    {{/if}}
+                                    {{#if organisationAddress.address}}
+                                        {{organisationAddress.address}}
+                                    {{/if}}
+                                    {{#if organisationAddress.location}}
+                                        {{organisationAddress.location}}
+                                    {{/if}}
+                            {{/if}}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Email:</td>
+                        <td><a href="">{{email}}</a></td>
+                      </tr>
+                        <td>mobile:</td>
+                        <td>{{mobile}}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+        </div>
+            {{/with}}
+      </div>
+    </div>
+</script>
+{{{{/raw-helper}}}}
+{{{{raw-helper}}}}
+<script type="text/javascript">
+    console.log("123template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();FORM_HELPER.draw(".view-profile-content",e,{bindings:{firstName:"column-1",lastName:"column-2",gender:"column-1",email:"column-1",mobile:"column-1",alternativePhone:"column-2",organisationAddress:"column-2",profilePic:"column-2",security:"column-1"},schemaOverride:{},optionsOverride:{form:{buttons:{submit:{title:"Edit",click:function(){MENU_HELPER.menuClick("updateProfile","viewProfile")}},logout:{title:"Log out",click:function(){API_HELPER.logout()}}}}},callbacks:{preRender:function(e){},beforeSubmit:function(){},afterSubmit:function(){},onSubmitError:function(){},postRender:function(){}},view:{globalTemplate:"#viewprofile"}})});
+</script>
+{{{{/raw-helper}}}}

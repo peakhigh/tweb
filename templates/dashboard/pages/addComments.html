@@ -1,12 +1,38 @@
 {{{{raw-helper}}}}
+<style>
+.comment-box{margin-top:30px!important}.comment-box img{width:50px;height:50px}.comment-box .media-left{padding-right:10px;width:65px}.comment-box .media-body p{border:1px solid #ddd;padding:10px}.comment-box .media-body .media p{margin-bottom:0}.comment-box .media-heading{background-color:#f5f5f5;border:1px solid #ddd;padding:7px 10px;position:relative;margin-bottom:-1px}.comment-box .media-heading:before{content:"";width:12px;height:12px;background-color:#f5f5f5;border:1px solid #ddd;border-width:1px 0 0 1px;-webkit-transform:rotate(-45deg);transform:rotate(-45deg);position:absolute;top:10px;left:-6px}
+</style>
 {{{{/raw-helper}}}}
 {{> header}}
-<div class='edit-trips'>
-    <div class='edit-trips-content'>
+<div class='add-comments'>
+    <div class='add-comments-content'>
+    </div>
+    <div class='list-comments-content'>
     </div>
 </div> 
 {{{{raw-helper}}}}
+<script id="grid-row-template-details" type="text/x-handlebars-template">
+<div class="container">
+	<div class="row">
+		 <div class="media comment-box">
+            <div class="media-left">
+                <a href="#">
+                    <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                </a>
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading"> <i class="fa fa-user"></i> {{commentedby}} <br>
+                     <i class="fa fa-clock-o"></i>  {{date}} 
+                </h4>
+                <p>{{comment}}.</p>
+            </div>
+        </div>
+	</div>
+</div>
+</script>
+{{{{/raw-helper}}}}
+{{{{raw-helper}}}}
 <script type="text/javascript">
-    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var t=UTILS.getCurrentTemplateData();FORM_HELPER.draw(".edit-trips-content",t,{postUrl:"trips/service/addComments",callbacks:{afterSubmit:function(){MENU_HELPER.menuClick("manageTrip","manageTrip")}}})});
+    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var t=UTILS.getCurrentTemplateData(),e=t;e.data.comments=[{}],FORM_HELPER.draw(".add-comments-content",e,{schemaOverride:{fields:{comments:{maxItems:1,minItems:1,title:"Comment",items:{properties:{comment:{title:""}}}}}},optionsOverride:{fields:{comments:{toolbarSticky:!1,items:{fields:{comment:{type:"textarea"},date:{hidden:!0},commentedby:{hidden:!0}}}}},form:{buttons:{submit:{title:"Post"}}}},postUrl:"trips/service/addComments",callbacks:{beforeSubmit:function(t){},afterSubmit:function(){MENU_HELPER.menuClick("manageTrip","manageTrip")}}});var t=UTILS.getCurrentTemplateData(),a={data:t.data.comments,total:t.data.comments.length};new GRID_HELPER.GRID(".list-comments-content",{gridData:a,gridId:"gridComments",drawSort:!1,drawFilters:!1,drawPager:!0,rowConfig:{template:"grid-row-template-details"}})});
 </script>
 {{{{/raw-helper}}}}

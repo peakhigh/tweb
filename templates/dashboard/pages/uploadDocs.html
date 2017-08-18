@@ -1,0 +1,89 @@
+{{{{raw-helper}}}}
+<style>
+.upload-files-content{margin-top:30px;margin-right:auto;margin-left:auto}.btn-glyphicon{padding:6px;background:#fff}.uploadform{margin-bottom:25px}.hidden{display:none!important;visibility:hidden!important}.show{display:block!important}.mydiv{position:absolute;top:50%;left:50%;margin-top:-50px;margin-left:-50px;width:100px;height:100px}
+</style>
+{{{{/raw-helper}}}}
+{{> header}}
+<div class='upload-files'>
+     <div class="col-sm-12">
+     <div class="uploadform">
+        <form id="myform" class="form-inline" role="form" data-toggle="validator">
+            <div class="form-group">
+              <label for="typeofdocument">Doc Type:</label>
+              <select class="form-control" id="typeofdocument">
+                  <option value="License">License</option>
+                  <option value="Photo">Photo</option>
+                  <option value="LoadDoc">Load doc</option>
+                  <option value="UnloadDoc">Unload doc</option>
+                  <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="form-group hidden" id="otherinputdiv">
+              <label for="otherinput"></label>
+              <input type="text" class="form-control" id="otherinput">
+            </div>
+            <div class="form-group">
+                <label for="keyName"></label>
+                <input type="file" id="keyName" class="file" name="photos"/>
+            </div>
+            <button type="submit" class="btn btn-default">Upload</button>
+          </form> 
+     </div>
+     </div>
+     <div class="row">
+      <div class='upload-files-content'>
+          <div class="col-sm-12">
+              <div class="pull-right">
+                      <div class="pager-container">
+                      </div>
+              </div>
+          </div>
+          <div class="datarea">
+          </div>
+      </div>
+     </div>
+</div> 
+{{{{raw-helper}}}}
+<script id="grid-row-template-details" type="text/x-handlebars-template">
+  <div class="container-fluid">
+    <div class="row">
+        {{#if data}}
+	    <div class="col-sm-10">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Filetype</th>
+                  <th>Filename</th>
+                  <th>Type of Document</th>
+                  <th>Uploadedby</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each data}}
+                <tr>
+                  <td><i class="fa {{getIcon mimetype}} fa-2x" aria-hidden="true"></i></td>
+                  <td>{{originalname}}</td>
+                  <td>{{typeofdocument}}</td>
+                  <td>{{createdby}}</td>
+                  <td>
+                    <a href="#" class="btn-glyphicon" _id="{{_id}}"><span class="glyphicon glyphicon-save"></span></a>
+                    <a href="#" class="btn-glyphicon" _id="{{_id}}"><span class="glyphicon glyphicon-trash"></span></a>
+                  </td>
+                </tr>
+                {{/each}}
+              </tbody>
+          </table>
+      </div>
+      {{else}}
+      <div class="row grid-row-no-records"><div class="col-sm-12">No Records Found</div></div>
+      {{/if}}
+   </div>
+ </div>
+</script>
+{{{{/raw-helper}}}}
+{{{{raw-helper}}}}
+<script type="text/javascript">
+    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();$("#typeofdocument").on("change",function(){"Other"===this.value?$("#otherinputdiv").removeClass("hidden"):$("#otherinputdiv").addClass("hidden")}),$("#myform").on("submit",function(e){e.preventDefault();var t=UTILS.getCurrentTemplateData(),a=new FormData(this);a.append("photo",a);var o="Other"===$("#typeofdocument").val()?$("#otherinput").val():$("#typeofdocument").val(),n={};n.formData=a,n.uri="files/service/fileupload",n.extraHref="id="+t.id+"&type="+o,n.type="POST",API_HELPER.uploadFiles(n,function(e,t){return e?void console.log("error",e):void location.reload()})});var t=$("#grid-row-template-details").html(),a=Handlebars.compile(t);if($(".datarea").append(a(e)),$(".upload-files-content").find(".pager-container")){var o={};o.total=e.total,o.size=5;new GRID_HELPER.PAGER($(".upload-files-content").find(".pager-container"),o,function(e,t){MENU_HELPER.reloadData({data:{skip:(e-1)*t,limit:t}},function(e){console.log(e),$(".datarea").html(""),$(".datarea").html(a(e))})})}});
+</script>
+{{{{/raw-helper}}}}

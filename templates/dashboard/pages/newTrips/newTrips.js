@@ -12,14 +12,19 @@ $(document).ready(function () {
             optionsEvent: 'mouseover',
             optionsPostRender: function(rowElement, record) {
                 $(rowElement).find('.edit-trip').click(function() {
-                    MENU_HELPER.menuClick('addTrip', 'manageTrip', {extraHref: record._id});
+                    MENU_HELPER.menuClick('addTripMin', 'manageTrip', {extraHref: record._id});
                 });
 
                 $(rowElement).find('.cancel-trip').click(function() {
-                    //MENU_HELPER.menuClick('setStatus', 'manageTrip', {extraHref: record._id});
+                    MENU_HELPER.menuClick('cancelTrip', 'manageTrip', {extraHref: record._id});
                 });
+
                 $(rowElement).find('.comments-trip').click(function() {
                     MENU_HELPER.menuClick('addComments', 'manageTrip', {extraHref: record._id});
+                });
+
+                $(rowElement).find('.docs-trip').click(function() {
+                    MENU_HELPER.menuClick('uploadDocs', 'manageTrip', {extraHref: record._id});
                 });
             }
             // click: function() {
@@ -37,14 +42,6 @@ $(document).ready(function () {
                     key: 'pickup.date',
                     selected: true,
                     order: 'desc'                 
-                },
-                {
-                    title: 'Drop Date',
-                    key: 'drop.date'             
-                },
-                {
-                    title: 'Material Value',
-                    key: 'pickup.material.approximateCost'                  
                 }
             ]
         },

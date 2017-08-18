@@ -1,7 +1,8 @@
+{{{{raw-helper}}}}
+{{{{/raw-helper}}}}
 {{> header currentpage='manageTrips'}}
-<div class='manage-trips'>
-    
-     <div class='manage-trips-content'>            
+<div class='trips-quotes'>
+     <div class='trip-quotes-content'>            
     </div>
 </div> 
 {{{{raw-helper}}}}
@@ -149,33 +150,19 @@
                 </div>  
             </div>
             {{/if}}
-           <!--  {{#if (ifArray comments)}}            
-                <div class="grid-row-title">Comments:</div>  
-                <div class="row">     
-                    <div class="grid-row-tile col-sm-12">                
-                        <div>
-                            <span class="grid-row-tile-text">
-                                {{#each comments}}
-                                    {{this}} <br/>
-                                {{/each}}
-                            </span>
-                        </div>                                           
-                    </div>  
-                </div>
-            {{/if}} -->
             {{#if quotes}}
                 <div class="grid-row-title">Quote:</div> 
                 <div class="row">     
                     <div class="grid-row-tile col-sm-12">                
                         <div>
                             <span class="grid-row-tile-text">
-                                {{quotes.cost}} 
+                                {{quotes.cost}} Rs(&#8377;)
+                                {{quotes.comment}}
                             </span>
                         </div>                                           
                     </div>  
                 </div>
             {{/if}}
-
             <div class="grid-row-title">Status:</div> 
              <div class="row">     
                 <div class="grid-row-tile col-sm-12">                
@@ -186,7 +173,6 @@
                     </div>                                           
                 </div>  
             </div>
-
         </div>     
     </div>
   </div>
@@ -196,9 +182,12 @@
     <div class="row grid-row">       
         <div class="col-sm-12">
             <div class="pull-right">
+                <button type="button" class="btn btn-default btn-primary edit-trip" _id="{{_id}}">Edit</button>
                 <button type="button" class="btn btn-default btn-primary comments-trip" _id="{{_id}}">Comments</button>
-                  <!-- <button type="button" class="btn btn-default btn-primary set-status-trip" _id="{{_id}}">Set Status</button>  -->
-                <!-- <button type="button" class="btn btn-default btn-primary edit-trip" _id="{{_id}}">Edit</button> -->
+                <!-- <button type="button" class="btn btn-default btn-primary docs-trip" _id="{{_id}}">Documents</button> -->
+                <button type="button" class="btn btn-default btn-primary approve-quote" _id="{{_id}}">Approve</button>
+                <button type="button" class="btn btn-default btn-primary reject-quote" _id="{{_id}}">Reject</button>
+                <button type="button" class="btn btn-default btn-primary cancel-trip" _id="{{_id}}">Cancel Trip</button>
             </div>
         </div>       
     </div>
@@ -240,5 +229,35 @@
         </div>
     </div>
 </div>
+</script>
+<script id="myModal" type="text/x-handlebars-template"> 
+    <div class="modal fade" id="myModalid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+             <div class="modal-dialog">
+                 <div class="modal-content">
+                   <div class="modal-header">
+                       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                           &times;
+                       </button>
+                       <h4 class="modal-title" id="myModalLabel">Are you sure?</h4>
+                   </div>
+                   <div class="modal-body myModalclass">
+                        If approved, payment is mandatory and once payment is received suitable truck & driver will be assigned to your trip.
+                   </div>
+                   <div class="modal-footer">
+                        <button type="submit" id="yes" class="btn btn-primary" name="submit" value="submit">
+                          Yes
+                      </button> 
+                       <button name="cancel" value="cancel" class="btn btn-default" data-dismiss="modal">
+                           Cancel
+                       </button>
+                   </div>
+                   </div>
+                   </div> 
+        </div>
+    </script> 
+{{{{/raw-helper}}}}
+{{{{raw-helper}}}}
+<script type="text/javascript">
+    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();new GRID_HELPER.GRID(".trip-quotes-content",{gridData:e,gridId:"gridTripQuotes",rowConfig:{template:"grid-row-template-details",optionsTemplate:"grid-row-options-template",optionsEvent:"mouseover",optionsPostRender:function(e,t){$(e).find(".docs-trip").click(function(){MENU_HELPER.menuClick("uploadDocs","manageTrip",{extraHref:t._id})}),$(e).find(".cancel-trip").click(function(){MENU_HELPER.menuClick("cancelTrip","manageTrip",{extraHref:t._id})}),$(e).find(".approve-quote").click(function(){console.log(t),openModal(t)}),$(e).find(".reject-bid").click(function(){console.log(t);var e={};e.formData=JSON.stringify({truckDetails:t}),e.uri="requests/service/setStatus",e.extraHref="id="+t._id+"&status=Rejected",e.type="POST",API_HELPER.postData(e,function(e,t){if(e)return void console.log("error",e)})})}},sortConfig:{multiple:!1,options:[{title:"Pickup Date",key:"pickup.date",selected:!0,order:"desc"},{title:"Drop Date",key:"drop.date"},{title:"Material Value",key:"pickup.material.approximateCost"}]}});openModal=function(e){console.log("openModal...");var t=(UTILS.getCurrentTemplateData("manageTruck"),$("#myModal").html()),o=Handlebars.compile(t);$("body").append(o()),$("#myModalid").modal({show:!0,background:!0}),$("#yes").click(function(){var t={};t.formData=JSON.stringify({tripDetails:e}),t.uri="trips/service/setStatus",t.extraHref="id="+e._id+"&status=Paymentpending",t.type="POST",API_HELPER.postData(t,function(t,o){return t?void console.log("error",t):void MENU_HELPER.menuClick("paymentPending","manageTrip",{extraHref:e._id})}),$("#myModalid").modal("hide")})}});
 </script>
 {{{{/raw-helper}}}}

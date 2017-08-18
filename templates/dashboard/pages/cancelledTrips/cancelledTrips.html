@@ -1,7 +1,6 @@
 {{> header currentpage='manageTrips'}}
-<div class='manage-trips'>
-    
-     <div class='manage-trips-content'>            
+<div class='cancelled-trips'>
+    <div class='cancelled-trips-content'>            
     </div>
 </div> 
 {{{{raw-helper}}}}
@@ -119,52 +118,34 @@
                 {{/with}}                                   
         </div>  
         <div class="col-sm-4 grid-row-container">
-            <div class="grid-row-title">Vehicle Requirements:</div> 
-            <div class="row">     
-                <div class="grid-row-tile col-sm-12">                
-                    <div>
-                        <span class="grid-row-tile-text">
-                            {{#with vehicleRequirements}}
-                                <div>
-                                    {{vehicleType}}
-                                    {{#if requiredCapacity}}
-                                         with capacity {{requiredCapacity}} {{capacityUnit}} 
-                                    {{/if}}
-                                    {{#if minRating}} with rating {{minRating}} {{/if}}
-                                </div>
-                            {{/with}}
-                        </span>
-                    </div>                                           
-                </div>  
-            </div>
-            {{#if totalWeight}}
-            <div class="grid-row-title">Total Weight:</div> 
-             <div class="row">     
-                <div class="grid-row-tile col-sm-12">                
-                    <div>
-                        <span class="grid-row-tile-text">  
-                            {{totalWeight}} {{totalWeightUnit}}
-                        </span>
-                    </div>                                           
-                </div>  
-            </div>
-            {{/if}}
-           <!--  {{#if (ifArray comments)}}            
-                <div class="grid-row-title">Comments:</div>  
+          {{#if truckdetails}}            
+                <div class="grid-row-title">Truckdetails:</div>  
                 <div class="row">     
                     <div class="grid-row-tile col-sm-12">                
                         <div>
                             <span class="grid-row-tile-text">
-                                {{#each comments}}
-                                    {{this}} <br/>
-                                {{/each}}
+                               {{plateNumber}} {{truckType}}
                             </span>
                         </div>                                           
                     </div>  
                 </div>
-            {{/if}} -->
-            {{#if quotes}}
-                <div class="grid-row-title">Quote:</div> 
+            {{/if}} 
+
+            {{#if currentPoint}}            
+            <div class="grid-row-title">Current location:</div>  
+            <div class="row">     
+                <div class="grid-row-tile col-sm-12">                
+                    <div>
+                        <span class="grid-row-tile-text">
+                           {{currentPoint}}
+                        </span>
+                    </div>                                           
+                </div>  
+            </div>
+        {{/if}} 
+
+                {{#if quotes}}
+                <div class="grid-row-title">TripCost:</div> 
                 <div class="row">     
                     <div class="grid-row-tile col-sm-12">                
                         <div>
@@ -196,9 +177,8 @@
     <div class="row grid-row">       
         <div class="col-sm-12">
             <div class="pull-right">
-                <button type="button" class="btn btn-default btn-primary comments-trip" _id="{{_id}}">Comments</button>
-                  <!-- <button type="button" class="btn btn-default btn-primary set-status-trip" _id="{{_id}}">Set Status</button>  -->
-                <!-- <button type="button" class="btn btn-default btn-primary edit-trip" _id="{{_id}}">Edit</button> -->
+                <!-- <button type="button" class="btn btn-default btn-primary comments-trip" _id="{{_id}}">Comments</button>
+                <button type="button" class="btn btn-default btn-primary docs-trip" _id="{{_id}}">Documents</button> -->
             </div>
         </div>       
     </div>

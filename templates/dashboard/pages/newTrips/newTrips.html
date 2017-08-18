@@ -1,4 +1,4 @@
-{{> header}}
+{{> header currentpage='manageTrips'}}
 <div class='manage-trips'>
     <div class='manage-trips-content'>            
     </div>
@@ -8,8 +8,8 @@
   <div class="container-fluid">
     <div class="row grid-row">
         <div class="col-sm-4 grid-row-container">
-            <div class="grid-row-title">Pickup point(s):</div>                      
-                {{#each pickup}}
+            <div class="grid-row-title">Pickup point:</div>                      
+                {{#with pickup}}
                     {{{exceptOnFirst @index '<hr/>'}}}
                     <div class="row">     
                         <div class="grid-row-tile col-sm-12">                
@@ -21,12 +21,14 @@
                                 <span class="grid-row-tile-label">Address</span>
                                 <span class="grid-row-tile-text">
                                     {{#if address.organisation}} {{address.organisation}}, {{/if}}
-                                    {{#if address.address}} {{address.address}}, {{/if}}
-                                    {{address.location}}, {{address.zip}}.
+                                    {{#if address.city}} {{address.city}}, {{/if}}
+                                    {{#if address.location}}
+                                    {{address.location}}, {{/if}} {{#if address.zip}}{{address.zip}}.{{/if}}
                                 </span>                    
                             </div>                            
                         </div>  
                     </div>
+                    {{#if contact}}
                     <div class="row"> 
                          <div class="grid-row-tile col-sm-12">
                             <span class="grid-row-tile-label">Contact(s)</span>
@@ -41,11 +43,12 @@
                             </div>
                         </div> 
                     </div> 
+                    {{/if}}
                     <div class="row"> 
                          <div class="grid-row-tile col-sm-12">
                             <span class="grid-row-tile-label">Material(s)</span>
                             <div>        
-                                {{#each material}} 
+                                {{#with material}} 
                                     <div>                                        
                                          <span class="grid-row-tile-text">
                                             {{name}} 
@@ -54,31 +57,35 @@
                                             {{#if approximateCost}} - valued at {{currency approximateCost}} {{/if}}
                                         </span>                   
                                     </div>                                                                             
-                                {{/each}}
+                                {{/with}}
                             </div>
                         </div> 
                     </div>                    
-                {{/each}}                                   
+                {{/with}}                                   
         </div>   
         <div class="col-sm-4 grid-row-container">
-            <div class="grid-row-title">Drop point(s):</div>                      
-                {{#each drop}}
+            <div class="grid-row-title">Drop point:</div>                      
+                {{#with drop}}
                     <div class="row">     
                         <div class="grid-row-tile col-sm-12">                
+                            {{#if date}}
                             <div>
                                 <span class="grid-row-tile-label">Date & time</span>
                                 <span class="grid-row-tile-text">{{date}}</span>
                             </div>
+                            {{/if}}
                             <div>
                                 <span class="grid-row-tile-label">Address</span>
                                 <span class="grid-row-tile-text">
                                     {{#if address.organisation}} {{address.organisation}}, {{/if}}
-                                    {{#if address.address}} {{address.address}}, {{/if}}
-                                    {{address.location}}, {{address.zip}}.
+                                    {{#if address.city}} {{address.city}}, {{/if}}
+                                    {{#if address.location}}
+                                    {{address.location}}, {{/if}} {{#if address.zip}}{{address.zip}}.{{/if}}
                                 </span>                    
                             </div>                            
                         </div>  
                     </div>
+                    {{#if contact}}
                     <div class="row"> 
                          <div class="grid-row-tile col-sm-12">
                             <span class="grid-row-tile-label">Contact(s)</span>
@@ -93,17 +100,22 @@
                             </div>
                         </div> 
                     </div> 
+                    {{/if}}
+                    {{#if itemsToDrop}}
                     <div class="row"> 
                          <div class="grid-row-tile col-sm-12">
                             <div>        
                                 <span class="grid-row-tile-label">Items to drop</span>
                                 <span class="grid-row-tile-text">
+                                    {{#if itemsToDrop}}
                                     {{commaSeperatedArray itemsToDrop}}                                    
+                                    {{/if}}
                                 </span>
                             </div>
                         </div> 
-                    </div>                                     
-                {{/each}}                                   
+                    </div>           
+                    {{/if}}                          
+                {{/with}}                                   
         </div>  
         <div class="col-sm-4 grid-row-container">
             <div class="grid-row-title">Vehicle Requirements:</div> 
@@ -111,27 +123,32 @@
                 <div class="grid-row-tile col-sm-12">                
                     <div>
                         <span class="grid-row-tile-text">
-                            {{#each vehicleRequirements}}
+                            {{#with vehicleRequirements}}
                                 <div>
-                                    {{vechicleType}} with capacity {{requiredCapacity}} {{capacityUnit}} 
+                                    {{vehicleType}} 
+                                    {{#if requiredCapacity}}
+                                        with capacity {{requiredCapacity}} {{capacityUnit}} 
+                                    {{/if}}
                                     {{#if minRating}} with rating {{minRating}} {{/if}}
                                 </div>
-                            {{/each}}
+                            {{/with}}
                         </span>
                     </div>                                           
                 </div>  
             </div>
+            {{#if totalWeight}}
             <div class="grid-row-title">Total Weight:</div> 
              <div class="row">     
                 <div class="grid-row-tile col-sm-12">                
                     <div>
-                        <span class="grid-row-tile-text">
+                        <span class="grid-row-tile-text">  
                             {{totalWeight}} {{totalWeightUnit}}
                         </span>
                     </div>                                           
                 </div>  
             </div>
-            {{#if (ifArray comments)}}            
+            {{/if}}
+            <!-- {{#if (ifArray comments)}}            
                 <div class="grid-row-title">Comments:</div>  
                 <div class="row">     
                     <div class="grid-row-tile col-sm-12">                
@@ -144,7 +161,7 @@
                         </div>                                           
                     </div>  
                 </div>
-            {{/if}}
+            {{/if}} -->
             {{#if quotes}}
                 <div class="grid-row-title">Quote:</div> 
                 <div class="row">     
@@ -178,11 +195,11 @@
     <div class="row grid-row">       
         <div class="col-sm-12">
             <div class="pull-right">
-                <button type="button" class="btn btn-default btn-primary comments-trip" _id="{{_id}}">Comments</button>
-                <button type="button" class="btn btn-default btn-primary cancel-trip" _id="{{_id}}">Cancel</button>
-                <button type="button" class="btn btn-default btn-primary view-trip" _id="{{_id}}">View</button>
-                <button type="button" class="btn btn-default btn-primary upload-doc-trip" _id="{{_id}}">Upload docs</button>
                 <button type="button" class="btn btn-default btn-primary edit-trip" _id="{{_id}}">Edit</button>
+                <button type="button" class="btn btn-default btn-primary comments-trip" _id="{{_id}}">Comments</button>
+                <button type="button" class="btn btn-default btn-primary docs-trip" _id="{{_id}}">Documents</button>
+                 <button type="button" class="btn btn-default btn-primary cancel-trip" _id="{{_id}}">Cancel Trip</button>
+                
             </div>
         </div>       
     </div>
@@ -193,7 +210,7 @@
     <div class="row grid-row">
         <div class="col-sm-12 grid-row-container">
             <span class="grid-row-title">Pickup</span> at 
-            {{#each pickup}}
+            {{#with pickup}}
                 {{address.street}}, {{address.city}} on {{date}}
                 {{{exceptOnFirst @index ','}}}
                 (<span class="grid-row-title">Contact:</span>             
@@ -202,14 +219,14 @@
                     {{{exceptOnFirst @index ','}}}
                 {{/each}})
                 (<span class="grid-row-title">Material:</span> 
-                {{#each material}} 
+                {{#if material}} 
                     {{name}} - {{materialType}}
                     {{{exceptOnFirst @index ','}}}
-                {{/each}})
-            {{/each}}            
+                {{/if}})
+            {{/with}}            
             <br/>
             <span class="grid-row-title">Drop</span> at 
-            {{#each drop}}
+            {{#with drop}}
                 {{address.city}} on {{date}}
                 {{{exceptOnFirst @index ','}}}
                 (<span class="grid-row-title">Contact:</span> 
@@ -220,7 +237,7 @@
                 (<span class="grid-row-title">Items:</span> 
                 {{itemsToDrop}}
                 )
-            {{/each}}                       
+            {{/with}}                       
         </div>
     </div>
 </div>

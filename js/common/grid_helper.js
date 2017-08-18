@@ -48,6 +48,7 @@ GRID_HELPER = new function () {
                 if (!me.options.pagerConfig.total) {
                     me.options.pagerConfig.total = me.options.gridData.total || 0;
                 }
+                
                 //deal the pager
                 if ($(elementSelector).find('.pager-container')) {
                     me.pager = new GRID_HELPER.PAGER($(elementSelector).find('.pager-container'), me.options.pagerConfig, function(page, size) {
@@ -395,6 +396,9 @@ GRID_HELPER = new function () {
             if (!keyPath) {
                 keyPath = '';
             }
+            if(!schema){
+                schema='';
+            }
             Object.keys(schema).forEach((key) => {
                 var tKey = (keyPath ? (keyPath+'.'+key) : key);
                 if (!schema[key].title && Array.isArray(schema[key])) {
@@ -458,6 +462,10 @@ GRID_HELPER = new function () {
                                         }
                                     }); 
                                      console.log(filters);
+                                     if(me.formOptions.onSubmit){
+                                         console.log('sending event');
+                                        me.formOptions.onSubmit(filters);
+                                     }
                                     return false;                                 
                                 }
                             },

@@ -1,5 +1,34 @@
 {{> header}}
-<div class='edit-trips'>
-    <div class='edit-trips-content'>
+<div class='add-comments'>
+
+    <div class='add-comments-content'>
+    </div>
+
+    <div class='list-comments-content'>
     </div>
 </div> 
+
+{{{{raw-helper}}}}
+
+<script id="grid-row-template-details" type="text/x-handlebars-template">
+<div class="container">
+	<div class="row">
+		 <div class="media comment-box">
+            <div class="media-left">
+                <a href="#">
+                    <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                </a>
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading"> <i class="fa fa-user"></i> {{commentedby}} <br>
+                     <i class="fa fa-clock-o"></i>  {{date}} 
+                </h4>
+                <p>{{comment}}.</p>
+                
+            </div>
+        </div>
+	</div>
+</div>
+</script>
+{{{{/raw-helper}}}}
+

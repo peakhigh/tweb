@@ -12,7 +12,7 @@ $(document).ready(function () {
             optionsEvent: 'mouseover',
             optionsPostRender: function(rowElement, record) {
                 $(rowElement).find('.edit-trip').click(function() {
-                    MENU_HELPER.menuClick('addTrip', 'manageTrip', {extraHref: record._id});
+                    MENU_HELPER.menuClick('addTripMin', 'manageTrip', {extraHref: record._id});
                 });
 
                 $(rowElement).find('.set-status-trip').click(function() {
@@ -94,8 +94,41 @@ $(document).ready(function () {
                         status: {
                             order: 5
                         }
-                    }                                
-                }                
+                    }                               
+                },
+                onSubmit: function(filters){
+                    var pageName = 'manageTrip';
+                    switch(filters.status){
+                        case 'New':
+                            pageName = 'newTrips';
+                        break;
+                        case 'Quoted':
+                            pageName = 'viewQuotes';
+                        break;
+                        case 'Paymentpending':
+                            pageName = 'pendingTrips';
+                        break;
+                        case 'Paymentmade':
+                            pageName = 'pendingTrips';
+                        break;
+                        case 'Waitingforassignment':
+                            pageName = 'pendingTrips';
+                        break;
+                         case 'Running':
+                            pageName = 'runningTrips';
+                        break;
+                         case 'Cancelled':
+                            pageName = 'pendingTrips';
+                        break;
+                         case 'Successful':
+                            pageName = 'pendingTrips';
+                        break;
+                         case 'Assigned':
+                            pageName = 'assignedTrips';
+                        break;
+                    }
+                    MENU_HELPER.menuClick(pageName, 'manageTrip');
+                }               
             }            
         }        
     });

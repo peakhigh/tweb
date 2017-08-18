@@ -4,11 +4,35 @@
         <!--<h1 class="page-header">
             {{pageHeading}}
         </h1>-->
-        <ol class="breadcrumb" style="margin-top: 10px;">
-            <li class="active">
-                <i class="fa {{pageIcon}}"></i> {{pageSubHeading}}
-            </li>
-        </ol>
+        
+            <ol class="breadcrumb" style="margin-top: 10px;">
+                <li class="active">
+                    
+                    {{#ifEquals currentpage "manageTrips"}}
+                        <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa {{pageIcon}}"></i> {{pageSubHeading}}
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="javascript:MENU_HELPER.menuClick('newTrips', 'manageTrip');">New Trips</a>
+                        <a class="dropdown-item" href="javascript:MENU_HELPER.menuClick('viewQuotes', 'manageTrip');">Quoted</a>
+                        <a class="dropdown-item" href="javascript:MENU_HELPER.menuClick('paymentPending', 'manageTrip');">Payment Pending</a>
+                        <!-- <a class="dropdown-item" href="javascript:MENU_HELPER.menuClick('viewQuotes', 'manageTrip');">Payment Made</a>
+                        <a class="dropdown-item" href="javascript:MENU_HELPER.menuClick('viewQuotes', 'manageTrip');">Waitingforassignment</a> -->
+                        <a class="dropdown-item" href="javascript:MENU_HELPER.menuClick('runningTrips', 'manageTrip');">Running</a>
+                        <a class="dropdown-item" href="javascript:MENU_HELPER.menuClick('assignedTrips', 'manageTrip');">Assigned</a>
+                        <a class="dropdown-item" href="javascript:MENU_HELPER.menuClick('successfulTrips', 'manageTrip');">Successful</a>
+                        <a class="dropdown-item" href="javascript:MENU_HELPER.menuClick('cancelledTrips', 'manageTrip');">Cancelled</a>
+                        
+                    </div>
+                    </div>
+                    {{else}}
+                     <i class="fa {{pageIcon}}"></i> {{pageSubHeading}}
+                    {{/ifEquals}}
+                </li>
+            </ol>
+        
+        
     </div>
 </div>
 <!-- /.row -->

@@ -18,8 +18,8 @@ $(document).ready(function () {
                 $(rowElement).find('.set-status-trip').click(function() {
                     MENU_HELPER.menuClick('setStatus', 'manageTrip', {extraHref: record._id});
                 });
-                $(rowElement).find('.upload-doc-trip').click(function() {
-                    MENU_HELPER.menuClick('uploadfiles', 'manageTrip', {extraHref: record._id});
+                $(rowElement).find('.docs-trip').click(function() {
+                    MENU_HELPER.menuClick('uploadDocs', 'manageTrip', {extraHref: record._id});
                 });
             }
             // click: function() {

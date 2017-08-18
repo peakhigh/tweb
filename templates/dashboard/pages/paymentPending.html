@@ -1,7 +1,8 @@
+{{{{raw-helper}}}}
+{{{{/raw-helper}}}}
 {{> header currentpage='manageTrips'}}
-<div class='manage-trips'>
-    
-     <div class='manage-trips-content'>            
+<div class='paymentPending-trips'>
+    <div class='paymentPending-trips-content'>            
     </div>
 </div> 
 {{{{raw-helper}}}}
@@ -128,8 +129,8 @@
                                 <div>
                                     {{vehicleType}}
                                     {{#if requiredCapacity}}
-                                         with capacity {{requiredCapacity}} {{capacityUnit}} 
-                                    {{/if}}
+                                     with capacity {{requiredCapacity}} {{capacityUnit}} 
+                                     {{/if}}
                                     {{#if minRating}} with rating {{minRating}} {{/if}}
                                 </div>
                             {{/with}}
@@ -149,22 +150,20 @@
                 </div>  
             </div>
             {{/if}}
-           <!--  {{#if (ifArray comments)}}            
-                <div class="grid-row-title">Comments:</div>  
+            {{#if truckdetails}}            
+                <div class="grid-row-title">Truckdetails:</div>  
                 <div class="row">     
                     <div class="grid-row-tile col-sm-12">                
                         <div>
                             <span class="grid-row-tile-text">
-                                {{#each comments}}
-                                    {{this}} <br/>
-                                {{/each}}
+                            {{plateNumber}} {{truckType}}
                             </span>
                         </div>                                           
                     </div>  
                 </div>
-            {{/if}} -->
+             {{/if}} 
             {{#if quotes}}
-                <div class="grid-row-title">Quote:</div> 
+                <div class="grid-row-title">TripCost:</div> 
                 <div class="row">     
                     <div class="grid-row-tile col-sm-12">                
                         <div>
@@ -175,7 +174,6 @@
                     </div>  
                 </div>
             {{/if}}
-
             <div class="grid-row-title">Status:</div> 
              <div class="row">     
                 <div class="grid-row-tile col-sm-12">                
@@ -186,7 +184,6 @@
                     </div>                                           
                 </div>  
             </div>
-
         </div>     
     </div>
   </div>
@@ -196,9 +193,10 @@
     <div class="row grid-row">       
         <div class="col-sm-12">
             <div class="pull-right">
-                <button type="button" class="btn btn-default btn-primary comments-trip" _id="{{_id}}">Comments</button>
-                  <!-- <button type="button" class="btn btn-default btn-primary set-status-trip" _id="{{_id}}">Set Status</button>  -->
-                <!-- <button type="button" class="btn btn-default btn-primary edit-trip" _id="{{_id}}">Edit</button> -->
+                <button type="button" class="btn btn-default btn-primary comments-trip" _id="{{_id}}">Comments</button>             
+                <button type="button" class="btn btn-default btn-primary docs-trip" _id="{{_id}}">Documents</button>
+                <button type="button" class="btn btn-default btn-primary view-details" _id="{{_id}}">View Details</button>
+                <button type="button" class="btn btn-default btn-primary payment" _id="{{_id}}">Payment</button>
             </div>
         </div>       
     </div>
@@ -240,5 +238,10 @@
         </div>
     </div>
 </div>
+</script>
+{{{{/raw-helper}}}}
+{{{{raw-helper}}}}
+<script type="text/javascript">
+    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();new GRID_HELPER.GRID(".paymentPending-trips-content",{gridData:e,gridId:"gridPaymentPendingTrips",rowConfig:{template:"grid-row-template-details",optionsTemplate:"grid-row-options-template",optionsEvent:"mouseover",optionsPostRender:function(e,t){$(e).find(".comments-trip").click(function(){MENU_HELPER.menuClick("addComments","manageTrip",{extraHref:t._id})}),$(e).find(".docs-trip").click(function(){MENU_HELPER.menuClick("uploadDocs","manageTrip",{extraHref:t._id})})}},sortConfig:{multiple:!1,options:[{title:"Pickup Date",key:"pickup.date",selected:!0,order:"desc"},{title:"Drop Date",key:"drop.date"},{title:"Material Value",key:"pickup.material.approximateCost"}]},filterConfig:{type:"default",order:[],formOptions:{bindings:{"pickup.date_start":"column-1","pickup.date_end":"column-2","drop.date_start":"column-1","drop.date_end":"column-2",status:"column-1"},schemaOverride:{fields:{"pickup.date":{title:"Pickup Date",format:"date",rangeField:!0},"drop.date":{title:"Drop Date",format:"date",rangeField:!0},status:{}}},optionsOverride:{fields:{"pickup.date_start":{order:1},"pickup.date_end":{order:2},"drop.date_start":{order:3},"drop.date_end":{order:4},status:{order:5}}}}}})});
 </script>
 {{{{/raw-helper}}}}

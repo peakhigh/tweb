@@ -1,9 +1,9 @@
 console.log('template data', UTILS.getCurrentTemplateData());
 $(document).ready(function () {
     var moduleData = UTILS.getCurrentTemplateData();
-    var grid = new GRID_HELPER.GRID('.assigned-trips-content', {
+    var grid = new GRID_HELPER.GRID('.paymentPending-trips-content', {
         gridData: moduleData,
-        gridId: 'gridAssignedTrips',
+        gridId: 'gridPaymentPendingTrips',
         rowConfig: {            
             template: 'grid-row-template-details',
             // detailsTemplate: 'grid-row-template-details', 

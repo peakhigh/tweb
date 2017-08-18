@@ -1,8 +1,8 @@
 {{{{raw-helper}}}}
 {{{{/raw-helper}}}}
-{{> header}}
-<div class='manage-trips'>
-    <div class='manage-trips-content'>            
+{{> header currentpage='manageTrips'}}
+<div class='assigned-trips'>
+    <div class='assigned-trips-content'>            
     </div>
 </div> 
 {{{{raw-helper}}}}
@@ -10,8 +10,8 @@
   <div class="container-fluid">
     <div class="row grid-row">
         <div class="col-sm-4 grid-row-container">
-            <div class="grid-row-title">Pickup point(s):</div>                      
-                {{#each pickup}}
+            <div class="grid-row-title">Pickup point:</div>                      
+                {{#with pickup}}
                     {{{exceptOnFirst @index '<hr/>'}}}
                     <div class="row">     
                         <div class="grid-row-tile col-sm-12">                
@@ -23,12 +23,14 @@
                                 <span class="grid-row-tile-label">Address</span>
                                 <span class="grid-row-tile-text">
                                     {{#if address.organisation}} {{address.organisation}}, {{/if}}
-                                    {{#if address.address}} {{address.address}}, {{/if}}
-                                    {{address.location}}, {{address.zip}}.
+                                    {{#if address.city}} {{address.city}}, {{/if}}
+                                    {{#if address.location}}
+                                    {{address.location}}, {{/if}} {{#if address.zip}}{{address.zip}}.{{/if}}
                                 </span>                    
                             </div>                            
                         </div>  
                     </div>
+                    {{#if contact}}
                     <div class="row"> 
                          <div class="grid-row-tile col-sm-12">
                             <span class="grid-row-tile-label">Contact(s)</span>
@@ -43,11 +45,12 @@
                             </div>
                         </div> 
                     </div> 
+                    {{/if}}
                     <div class="row"> 
                          <div class="grid-row-tile col-sm-12">
                             <span class="grid-row-tile-label">Material(s)</span>
                             <div>        
-                                {{#each material}} 
+                                {{#with material}} 
                                     <div>                                        
                                          <span class="grid-row-tile-text">
                                             {{name}} 
@@ -56,31 +59,35 @@
                                             {{#if approximateCost}} - valued at {{currency approximateCost}} {{/if}}
                                         </span>                   
                                     </div>                                                                             
-                                {{/each}}
+                                {{/with}}
                             </div>
                         </div> 
                     </div>                    
-                {{/each}}                                   
+                {{/with}}                                   
         </div>   
         <div class="col-sm-4 grid-row-container">
-            <div class="grid-row-title">Drop point(s):</div>                      
-                {{#each drop}}
+            <div class="grid-row-title">Drop point:</div>                      
+                {{#with drop}}
                     <div class="row">     
                         <div class="grid-row-tile col-sm-12">                
+                            {{#if date}}
                             <div>
                                 <span class="grid-row-tile-label">Date & time</span>
                                 <span class="grid-row-tile-text">{{date}}</span>
                             </div>
+                            {{/if}}
                             <div>
                                 <span class="grid-row-tile-label">Address</span>
                                 <span class="grid-row-tile-text">
                                     {{#if address.organisation}} {{address.organisation}}, {{/if}}
-                                    {{#if address.address}} {{address.address}}, {{/if}}
-                                    {{address.location}}, {{address.zip}}.
+                                    {{#if address.city}} {{address.city}}, {{/if}}
+                                    {{#if address.location}}
+                                    {{address.location}}, {{/if}} {{#if address.zip}}{{address.zip}}.{{/if}}
                                 </span>                    
                             </div>                            
                         </div>  
                     </div>
+                    {{#if contact}}
                     <div class="row"> 
                          <div class="grid-row-tile col-sm-12">
                             <span class="grid-row-tile-label">Contact(s)</span>
@@ -95,17 +102,22 @@
                             </div>
                         </div> 
                     </div> 
+                    {{/if}}
+                    {{#if itemsToDrop}}
                     <div class="row"> 
                          <div class="grid-row-tile col-sm-12">
                             <div>        
                                 <span class="grid-row-tile-label">Items to drop</span>
                                 <span class="grid-row-tile-text">
+                                    {{#if itemsToDrop}}
                                     {{commaSeperatedArray itemsToDrop}}                                    
+                                    {{/if}}
                                 </span>
                             </div>
                         </div> 
-                    </div>                                     
-                {{/each}}                                   
+                    </div>           
+                    {{/if}}                          
+                {{/with}}                                   
         </div>  
         <div class="col-sm-4 grid-row-container">
             <div class="grid-row-title">Vehicle Requirements:</div> 
@@ -113,42 +125,45 @@
                 <div class="grid-row-tile col-sm-12">                
                     <div>
                         <span class="grid-row-tile-text">
-                            {{#each vehicleRequirements}}
+                            {{#with vehicleRequirements}}
                                 <div>
-                                    {{vechicleType}} with capacity {{requiredCapacity}} {{capacityUnit}} 
+                                    {{vehicleType}}
+                                    {{#if requiredCapacity}}
+                                     with capacity {{requiredCapacity}} {{capacityUnit}} 
+                                     {{/if}}
                                     {{#if minRating}} with rating {{minRating}} {{/if}}
                                 </div>
-                            {{/each}}
+                            {{/with}}
                         </span>
                     </div>                                           
                 </div>  
             </div>
+            {{#if totalWeight}}
             <div class="grid-row-title">Total Weight:</div> 
              <div class="row">     
                 <div class="grid-row-tile col-sm-12">                
                     <div>
-                        <span class="grid-row-tile-text">
+                        <span class="grid-row-tile-text">  
                             {{totalWeight}} {{totalWeightUnit}}
                         </span>
                     </div>                                           
                 </div>  
             </div>
-            {{#if (ifArray comments)}}            
-                <div class="grid-row-title">Comments:</div>  
+            {{/if}}
+            {{#if truckdetails}}            
+                <div class="grid-row-title">Truckdetails:</div>  
                 <div class="row">     
                     <div class="grid-row-tile col-sm-12">                
                         <div>
                             <span class="grid-row-tile-text">
-                                {{#each comments}}
-                                    {{this}} <br/>
-                                {{/each}}
+                            {{plateNumber}} {{truckType}}
                             </span>
                         </div>                                           
                     </div>  
                 </div>
-            {{/if}}
+             {{/if}} 
             {{#if quotes}}
-                <div class="grid-row-title">Quote:</div> 
+                <div class="grid-row-title">TripCost:</div> 
                 <div class="row">     
                     <div class="grid-row-tile col-sm-12">                
                         <div>
@@ -178,11 +193,9 @@
     <div class="row grid-row">       
         <div class="col-sm-12">
             <div class="pull-right">
-                <button type="button" class="btn btn-default btn-primary comments-trip" _id="{{_id}}">Add Comments</button>
-                 <button type="button" class="btn btn-default btn-primary set-status-trip" _id="{{_id}}">Set Status</button>
-<!--                 <button type="button" class="btn btn-default btn-primary driver-details-trip" _id="{{_id}}">Set Driver Details</button> -->
-<!--                 <button type="button" class="btn btn-default btn-primary quote-trip" _id="{{_id}}">Set Quote</button> -->
-                <button type="button" class="btn btn-default btn-primary edit-trip" _id="{{_id}}">Edit</button>
+                <button type="button" class="btn btn-default btn-primary comments-trip" _id="{{_id}}">Comments</button>             
+                <button type="button" class="btn btn-default btn-primary docs-trip" _id="{{_id}}">Documents</button>
+                <button type="button" class="btn btn-default btn-primary docs-trip" _id="{{_id}}">View Details</button>
             </div>
         </div>       
     </div>
@@ -193,7 +206,7 @@
     <div class="row grid-row">
         <div class="col-sm-12 grid-row-container">
             <span class="grid-row-title">Pickup</span> at 
-            {{#each pickup}}
+            {{#with pickup}}
                 {{address.street}}, {{address.city}} on {{date}}
                 {{{exceptOnFirst @index ','}}}
                 (<span class="grid-row-title">Contact:</span>             
@@ -202,14 +215,14 @@
                     {{{exceptOnFirst @index ','}}}
                 {{/each}})
                 (<span class="grid-row-title">Material:</span> 
-                {{#each material}} 
+                {{#if material}} 
                     {{name}} - {{materialType}}
                     {{{exceptOnFirst @index ','}}}
-                {{/each}})
-            {{/each}}            
+                {{/if}})
+            {{/with}}            
             <br/>
             <span class="grid-row-title">Drop</span> at 
-            {{#each drop}}
+            {{#with drop}}
                 {{address.city}} on {{date}}
                 {{{exceptOnFirst @index ','}}}
                 (<span class="grid-row-title">Contact:</span> 
@@ -220,7 +233,7 @@
                 (<span class="grid-row-title">Items:</span> 
                 {{itemsToDrop}}
                 )
-            {{/each}}                       
+            {{/with}}                       
         </div>
     </div>
 </div>
@@ -228,6 +241,6 @@
 {{{{/raw-helper}}}}
 {{{{raw-helper}}}}
 <script type="text/javascript">
-    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();new GRID_HELPER.GRID(".manage-trips-content",{gridData:e,gridId:"gridManageTrips",rowConfig:{template:"grid-row-template-details",optionsTemplate:"grid-row-options-template",optionsEvent:"mouseover",optionsPostRender:function(e,t){$(e).find(".edit-trip").click(function(){MENU_HELPER.menuClick("addTrip","manageTrip",{extraHref:t._id})}),$(e).find(".set-status-trip").click(function(){MENU_HELPER.menuClick("setStatus","manageTrip",{extraHref:t._id})}),$(e).find(".comments-trip").click(function(){MENU_HELPER.menuClick("addComments","manageTrip",{extraHref:t._id})})}},sortConfig:{multiple:!1,options:[{title:"Pickup Date",key:"pickup.date",selected:!0,order:"desc"},{title:"Drop Date",key:"drop.date"},{title:"Material Value",key:"pickup.material.approximateCost"}]},filterConfig:{type:"default",order:[],formOptions:{bindings:{"pickup.date_start":"column-1","pickup.date_end":"column-2","drop.date_start":"column-1","drop.date_end":"column-2",status:"column-1"},schemaOverride:{fields:{"pickup.date":{title:"Pickup Date",format:"date",rangeField:!0},"drop.date":{title:"Drop Date",format:"date",rangeField:!0},status:{}}},optionsOverride:{fields:{"pickup.date_start":{order:1},"pickup.date_end":{order:2},"drop.date_start":{order:3},"drop.date_end":{order:4},status:{order:5}}}}}})});
+    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();new GRID_HELPER.GRID(".assigned-trips-content",{gridData:e,gridId:"gridAssignedTrips",rowConfig:{template:"grid-row-template-details",optionsTemplate:"grid-row-options-template",optionsEvent:"mouseover",optionsPostRender:function(e,t){$(e).find(".comments-trip").click(function(){MENU_HELPER.menuClick("addComments","manageTrip",{extraHref:t._id})}),$(e).find(".docs-trip").click(function(){MENU_HELPER.menuClick("uploadDocs","manageTrip",{extraHref:t._id})})}},sortConfig:{multiple:!1,options:[{title:"Pickup Date",key:"pickup.date",selected:!0,order:"desc"},{title:"Drop Date",key:"drop.date"},{title:"Material Value",key:"pickup.material.approximateCost"}]},filterConfig:{type:"default",order:[],formOptions:{bindings:{"pickup.date_start":"column-1","pickup.date_end":"column-2","drop.date_start":"column-1","drop.date_end":"column-2",status:"column-1"},schemaOverride:{fields:{"pickup.date":{title:"Pickup Date",format:"date",rangeField:!0},"drop.date":{title:"Drop Date",format:"date",rangeField:!0},status:{}}},optionsOverride:{fields:{"pickup.date_start":{order:1},"pickup.date_end":{order:2},"drop.date_start":{order:3},"drop.date_end":{order:4},status:{order:5}}}}}})});
 </script>
 {{{{/raw-helper}}}}

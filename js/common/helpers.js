@@ -98,3 +98,21 @@ Handlebars.registerHelper('ifArray', function(arr) {
     return true;
 });
 
+Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
+    return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+});
+
+
+Handlebars.registerHelper('getIcon', function(mimetype) {
+    var icon = 'fa-file';
+    switch (mimetype){
+        case 'image/jpeg':
+        case 'image/png':
+        icon = 'fa-picture-o';
+        break;
+        case  'application/pdf':
+            icon = 'fa-file-pdf-o';
+        break;
+    }
+    return icon;
+});

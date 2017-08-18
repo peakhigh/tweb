@@ -1,0 +1,12 @@
+{{{{raw-helper}}}}
+{{{{/raw-helper}}}}
+{{> header}}
+<div class='cancel-trip'>
+    <div class='cancel-trip-content'>
+    </div>
+</div> 
+{{{{raw-helper}}}}
+<script type="text/javascript">
+    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();e.data.status="Cancelled",FORM_HELPER.draw(".cancel-trip-content",e,{bindings:{status:"column-1",comments:"column-1"},schemaOverride:{fields:{comments:{title:"Reason:",items:{properties:{}}}}},optionsOverride:{fields:{comments:{type:"textarea"},status:{"default":"Cancelled",disabled:!0}}},postUrl:"trips/service/cancelTrip",callbacks:{beforeSubmit:function(e){console.log(e)},afterSubmit:function(){MENU_HELPER.menuClick("manageTrip","manageTrip")}}})});
+</script>
+{{{{/raw-helper}}}}

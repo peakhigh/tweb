@@ -1,0 +1,12 @@
+{{{{raw-helper}}}}
+{{{{/raw-helper}}}}
+{{> header}}
+<div class='update-profile'>
+    <div class='update-profile-content'>
+    </div>
+</div> 
+{{{{raw-helper}}}}
+<script type="text/javascript">
+    console.log("123template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();FORM_HELPER.draw(".update-profile-content",e,{bindings:{firstName:"column-1",lastName:"column-2",gender:"column-1",email:"column-1",mobile:"column-1",alternativePhone:"column-2",organisationAddress:"column-2",profilePic:"column-2",security:"column-1"},schemaOverride:{},optionsOverride:{fields:{profilePic:{type:"file"}}},callbacks:{preRender:function(e){},beforeSubmit:function(){},afterSubmit:function(){MENU_HELPER.menuClick("viewProfile","updateProfile")},onSubmitError:function(){},postRender:function(){}},postUrl:"users/service/updateProfile"})});
+</script>
+{{{{/raw-helper}}}}

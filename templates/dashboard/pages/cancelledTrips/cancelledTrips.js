@@ -1,9 +1,9 @@
 console.log('template data', UTILS.getCurrentTemplateData());
 $(document).ready(function () {
     var moduleData = UTILS.getCurrentTemplateData();
-    var grid = new GRID_HELPER.GRID('.assigned-trips-content', {
+    var grid = new GRID_HELPER.GRID('.cancelled-trips-content', {
         gridData: moduleData,
-        gridId: 'gridAssignedTrips',
+        gridId: 'gridCancelledTrips',
         rowConfig: {            
             template: 'grid-row-template-details',
             // detailsTemplate: 'grid-row-template-details', 
@@ -11,13 +11,8 @@ $(document).ready(function () {
             optionsTemplate: 'grid-row-options-template',
             optionsEvent: 'mouseover',
             optionsPostRender: function(rowElement, record) {
-
-                $(rowElement).find('.comments-trip').click(function() {
-                    MENU_HELPER.menuClick('addComments', 'manageTrip', {extraHref: record._id});
-                });
-
-                $(rowElement).find('.docs-trip').click(function() {
-                    MENU_HELPER.menuClick('uploadDocs', 'manageTrip', {extraHref: record._id});
+                $(rowElement).find('.reopen').click(function() {
+                   // MENU_HELPER.menuClick('addTrip', 'manageTrip', {extraHref: record._id});
                 });
             }
             // click: function() {
