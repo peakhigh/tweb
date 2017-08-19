@@ -396,9 +396,9 @@ GRID_HELPER = new function () {
             if (!keyPath) {
                 keyPath = '';
             }
-            if(!schema){
+            /* if(!schema){
                 schema='';
-            }
+            } */
             Object.keys(schema).forEach((key) => {
                 var tKey = (keyPath ? (keyPath+'.'+key) : key);
                 if (!schema[key].title && Array.isArray(schema[key])) {
@@ -461,11 +461,10 @@ GRID_HELPER = new function () {
                                             filters[field] = values[field];
                                         }
                                     }); 
-                                     console.log(filters);
-                                     if(me.formOptions.onSubmit){
-                                         console.log('sending event');
-                                        me.formOptions.onSubmit(filters);
-                                     }
+                                      console.log(filters);
+                                      if (callback) {
+                                        callback(filters);
+                                    }
                                     return false;                                 
                                 }
                             },

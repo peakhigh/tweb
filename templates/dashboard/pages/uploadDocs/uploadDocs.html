@@ -1,30 +1,31 @@
 {{> header}}
 <div class='upload-files'>
      <div class="col-sm-12">
-     <div class="uploadform">
-        <form id="myform" class="form-inline" role="form" data-toggle="validator">
-            <div class="form-group">
-              <label for="typeofdocument">Doc Type:</label>
-              <select class="form-control" id="typeofdocument">
-                  <option value="License">License</option>
-                  <option value="Photo">Photo</option>
-                  <option value="LoadDoc">Load doc</option>
-                  <option value="UnloadDoc">Unload doc</option>
-                  <option value="Other">Other</option>
-                </select>
-            </div>
-            <div class="form-group hidden" id="otherinputdiv">
-              <label for="otherinput"></label>
-              <input type="text" class="form-control" id="otherinput">
-            </div>
-            <div class="form-group">
-                <label for="keyName"></label>
-                <input type="file" id="keyName" class="file" name="photos"/>
-            </div>
-            <button type="submit" class="btn btn-default">Upload</button>
-          </form> 
+         <div>
+                <form id="myform" class="form-inline" role="form" data-toggle="validator">
+                        <div class="form-group">
+                          <label for="typeofdocument">Doc Type:</label>
+                          <select class="form-control" id="typeofdocument">
+                              <option value="License">License</option>
+                              <option value="Photo">Photo</option>
+                              <option value="LoadDoc">Load doc</option>
+                              <option value="UnloadDoc">Unload doc</option>
+                              <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group hidden" id="otherinputdiv">
+                          <label for="otherinput"></label>
+                          <input type="text" class="form-control" id="otherinput">
+                        </div>
+                        <div class="form-group" id="uploadform">
+                            <label for="keyName"></label>
+                            <input type="file" name="upload" id="upload" value="Upload" />
+                            <!-- <input type="file" id="keyName" class="file" name="photos"/> -->
+                        </div>
+                        <button type="submit" class="btn btn-default">Upload</button>
+                      </form>  
+         </div> 
 
-     </div>
      </div>
      <div class="row">
        
@@ -45,6 +46,8 @@
       </div>
      </div>
 </div> 
+
+
 
 {{{{raw-helper}}}}
 <script id="grid-row-template-details" type="text/x-handlebars-template">
@@ -72,8 +75,10 @@
                   <td>{{typeofdocument}}</td>
                   <td>{{createdby}}</td>
                   <td>
-                    <a href="#" class="btn-glyphicon" _id="{{_id}}"><span class="glyphicon glyphicon-save"></span></a>
-                    <a href="#" class="btn-glyphicon" _id="{{_id}}"><span class="glyphicon glyphicon-trash"></span></a>
+                    <div class="actions">
+                    <button class="btn btn-glyphicon" role="button"><span  _id="{{_id}}" id="download" class="glyphicon glyphicon-save"></span></button>
+                    <button class="btn btn-glyphicon"  role="button"><span _id="{{_id}}" id="delete" class="glyphicon glyphicon-trash"></span></button>
+                    </div>
                   </td>
                 </tr>
                 {{/each}}

@@ -73,6 +73,7 @@ $(document).ready(function () {
                             rangeField: true
                         },
                         'status': {
+                            default: 'Running'
                             // default: 'None'                            
                         }
                     }                    
@@ -95,40 +96,7 @@ $(document).ready(function () {
                             order: 5
                         }
                     }                               
-                },
-                onSubmit: function(filters){
-                    var pageName = 'manageTrip';
-                    switch(filters.status){
-                        case 'New':
-                            pageName = 'newTrips';
-                        break;
-                        case 'Quoted':
-                            pageName = 'viewQuotes';
-                        break;
-                        case 'Paymentpending':
-                            pageName = 'pendingTrips';
-                        break;
-                        case 'Paymentmade':
-                            pageName = 'pendingTrips';
-                        break;
-                        case 'Waitingforassignment':
-                            pageName = 'pendingTrips';
-                        break;
-                         case 'Running':
-                            pageName = 'runningTrips';
-                        break;
-                         case 'Cancelled':
-                            pageName = 'pendingTrips';
-                        break;
-                         case 'Successful':
-                            pageName = 'pendingTrips';
-                        break;
-                         case 'Assigned':
-                            pageName = 'assignedTrips';
-                        break;
-                    }
-                    MENU_HELPER.menuClick(pageName, 'manageTrip');
-                }               
+                }           
             }            
         }        
     });

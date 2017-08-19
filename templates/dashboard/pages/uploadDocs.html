@@ -6,29 +6,30 @@
 {{> header}}
 <div class='upload-files'>
      <div class="col-sm-12">
-     <div class="uploadform">
-        <form id="myform" class="form-inline" role="form" data-toggle="validator">
-            <div class="form-group">
-              <label for="typeofdocument">Doc Type:</label>
-              <select class="form-control" id="typeofdocument">
-                  <option value="License">License</option>
-                  <option value="Photo">Photo</option>
-                  <option value="LoadDoc">Load doc</option>
-                  <option value="UnloadDoc">Unload doc</option>
-                  <option value="Other">Other</option>
-                </select>
-            </div>
-            <div class="form-group hidden" id="otherinputdiv">
-              <label for="otherinput"></label>
-              <input type="text" class="form-control" id="otherinput">
-            </div>
-            <div class="form-group">
-                <label for="keyName"></label>
-                <input type="file" id="keyName" class="file" name="photos"/>
-            </div>
-            <button type="submit" class="btn btn-default">Upload</button>
-          </form> 
-     </div>
+         <div>
+                <form id="myform" class="form-inline" role="form" data-toggle="validator">
+                        <div class="form-group">
+                          <label for="typeofdocument">Doc Type:</label>
+                          <select class="form-control" id="typeofdocument">
+                              <option value="License">License</option>
+                              <option value="Photo">Photo</option>
+                              <option value="LoadDoc">Load doc</option>
+                              <option value="UnloadDoc">Unload doc</option>
+                              <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group hidden" id="otherinputdiv">
+                          <label for="otherinput"></label>
+                          <input type="text" class="form-control" id="otherinput">
+                        </div>
+                        <div class="form-group" id="uploadform">
+                            <label for="keyName"></label>
+                            <input type="file" name="upload" id="upload" value="Upload" />
+                            <!-- <input type="file" id="keyName" class="file" name="photos"/> -->
+                        </div>
+                        <button type="submit" class="btn btn-default">Upload</button>
+                      </form>  
+         </div> 
      </div>
      <div class="row">
       <div class='upload-files-content'>
@@ -67,8 +68,10 @@
                   <td>{{typeofdocument}}</td>
                   <td>{{createdby}}</td>
                   <td>
-                    <a href="#" class="btn-glyphicon" _id="{{_id}}"><span class="glyphicon glyphicon-save"></span></a>
-                    <a href="#" class="btn-glyphicon" _id="{{_id}}"><span class="glyphicon glyphicon-trash"></span></a>
+                    <div class="actions">
+                    <button class="btn btn-glyphicon" role="button"><span  _id="{{_id}}" id="download" class="glyphicon glyphicon-save"></span></button>
+                    <button class="btn btn-glyphicon"  role="button"><span _id="{{_id}}" id="delete" class="glyphicon glyphicon-trash"></span></button>
+                    </div>
                   </td>
                 </tr>
                 {{/each}}
@@ -84,6 +87,6 @@
 {{{{/raw-helper}}}}
 {{{{raw-helper}}}}
 <script type="text/javascript">
-    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();$("#typeofdocument").on("change",function(){"Other"===this.value?$("#otherinputdiv").removeClass("hidden"):$("#otherinputdiv").addClass("hidden")}),$("#myform").on("submit",function(e){e.preventDefault();var t=UTILS.getCurrentTemplateData(),a=new FormData(this);a.append("photo",a);var o="Other"===$("#typeofdocument").val()?$("#otherinput").val():$("#typeofdocument").val(),n={};n.formData=a,n.uri="files/service/fileupload",n.extraHref="id="+t.id+"&type="+o,n.type="POST",API_HELPER.uploadFiles(n,function(e,t){return e?void console.log("error",e):void location.reload()})});var t=$("#grid-row-template-details").html(),a=Handlebars.compile(t);if($(".datarea").append(a(e)),$(".upload-files-content").find(".pager-container")){var o={};o.total=e.total,o.size=5;new GRID_HELPER.PAGER($(".upload-files-content").find(".pager-container"),o,function(e,t){MENU_HELPER.reloadData({data:{skip:(e-1)*t,limit:t}},function(e){console.log(e),$(".datarea").html(""),$(".datarea").html(a(e))})})}});
+    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData(),t=new qq.FineUploaderBasic({request:{endpoint:CONSTANTS.apiServer+"files/service/fileupload",customHeaders:{Authorization:"Bearer "+API_HELPER.getToken()},params:{id:e.id,type:"unknown"},paramsInBody:!1},validation:{allowedExtensions:["jpeg","jpg","txt","png","pdf"],itemLimit:1,sizeLimit:5e6},callbacks:{onSubmit:function(e,t){console.log("submit")}},button:document.getElementById("uploadform"),autoUpload:!1,multiple:!1,debug:!0});$("#typeofdocument").on("change",function(){"Other"===this.value?$("#otherinputdiv").removeClass("hidden"):$("#otherinputdiv").addClass("hidden")}),$("#myform").on("submit",function(e){e.preventDefault();var a=UTILS.getCurrentTemplateData(),o=new FormData(this);o.append("photo",o);var n="Other"===$("#typeofdocument").val()?$("#otherinput").val():$("#typeofdocument").val();t.setParams({id:a.id,type:n}),t.uploadStoredFiles()});var a=$("#grid-row-template-details").html(),o=Handlebars.compile(a);if($(".datarea").append(o(e)),$(".upload-files-content").find(".pager-container")){var n={};n.total=e.total,n.size=5;new GRID_HELPER.PAGER($(".upload-files-content").find(".pager-container"),n,function(e,t){MENU_HELPER.reloadData({data:{skip:(e-1)*t,limit:t}},function(e){console.log(e),$(".datarea").html(""),$(".datarea").html(o(e))})})}$(".actions").on("click","button",function(e){if("download"===e.target.id)console.log("download");else if("delete"===e.target.id){var t={};t.formData=JSON.stringify({name:"AA"}),t.uri="files/service/fileupload",t.extraHref="id="+$(e.target).attr("_id"),t.type="DELETE",API_HELPER.uploadFiles(t,function(e,t){return e?void console.log("error",e):void location.reload()})}})});
 </script>
 {{{{/raw-helper}}}}
