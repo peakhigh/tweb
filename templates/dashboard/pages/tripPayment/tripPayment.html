@@ -1,0 +1,39 @@
+{{> header}}
+<div class='trip-payment'>
+
+                       <div class="col-sm-10">
+                        <div class='trip-payment-content'>
+                         </div>
+                       </div>
+      
+</div> 
+
+{{{{raw-helper}}}}
+<script id="cost" type="text/x-handlebars-template">
+    <div>
+    <p class="h5">Total cost of the trip is <mark>{{data}}</mark> Rs, this 
+        can be paid in parts (advance or full).<p>
+
+  Account No:  XXXXXXXXX787,<br>
+  Bank Name:   State Bank of India,<br>
+  Branch:      Vijayawada.<br>
+  IFSC:        SBI004562 <br>
+        </div>
+</script>
+<script id="tripPayment" type="text/x-handlebars-template">
+
+ <div class="container-fluid">
+      <div class="row">
+       {{#with data}}
+        <div class="col-sm-12" >
+              <div class="row">
+                   
+                          
+              </div>
+            </div>
+        </div>
+            {{/with}}
+    </div>
+ </div> 
+</script>
+{{{{/raw-helper}}}}

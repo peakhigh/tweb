@@ -1,4 +1,29 @@
-{{> header currentpage='manageTrips'}}
+<div class="row">
+        <div class="col-lg-12">
+                <ol class="breadcrumb" style="margin-top: 10px;">
+                    <li class="active">
+                            <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa {{pageIcon}}"></i>  <BtnCaption>{{pageSubHeading}}</BtnCaption>  
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="javascript:statusChanged('New');">New Trips</a>
+                            <a class="dropdown-item" href="javascript:statusChanged('Quoted');">Quoted</a>
+                            <a class="dropdown-item" href="javascript:statusChanged('Paymentpending');">Payment Pending</a>
+                            <a class="dropdown-item" href="javascript:statusChanged('Running');">Running</a>
+                            <a class="dropdown-item" href="javascript:statusChanged('Assigned');">Assigned</a>
+                            <a class="dropdown-item" href="javascript:statusChanged('Successful');">Successful</a>
+                            <a class="dropdown-item" href="javascript:statusChanged('Cancelled');">Cancelled</a>
+                            
+                        </div>
+                        </div>
+    
+                    </li>
+                </ol>
+            
+        </div>
+    </div>
+    
 <div class='manage-trips'>
     
      <div class='manage-trips-content'>            
@@ -149,20 +174,6 @@
                 </div>  
             </div>
             {{/if}}
-           <!--  {{#if (ifArray comments)}}            
-                <div class="grid-row-title">Comments:</div>  
-                <div class="row">     
-                    <div class="grid-row-tile col-sm-12">                
-                        <div>
-                            <span class="grid-row-tile-text">
-                                {{#each comments}}
-                                    {{this}} <br/>
-                                {{/each}}
-                            </span>
-                        </div>                                           
-                    </div>  
-                </div>
-            {{/if}} -->
             {{#if quotes}}
                 <div class="grid-row-title">Quote:</div> 
                 <div class="row">     
@@ -196,49 +207,12 @@
     <div class="row grid-row">       
         <div class="col-sm-12">
             <div class="pull-right">
-                <button type="button" class="btn btn-default btn-primary comments-trip" _id="{{_id}}">Comments</button>
-                  <!-- <button type="button" class="btn btn-default btn-primary set-status-trip" _id="{{_id}}">Set Status</button>  -->
-                <!-- <button type="button" class="btn btn-default btn-primary edit-trip" _id="{{_id}}">Edit</button> -->
+                {{#each (getGridOptions status _id)}}     
+                <button type="button" class="btn btn-default btn-primary {{id}}" _id="{{_id}}">{{option}}</button>
+                {{/each}}
             </div>
         </div>       
     </div>
   </div>
-</script>
-<script id="grid-row-template" type="text/x-handlebars-template">
-  <div class="container-fluid">
-    <div class="row grid-row">
-        <div class="col-sm-12 grid-row-container">
-            <span class="grid-row-title">Pickup</span> at 
-            {{#with pickup}}
-                {{address.street}}, {{address.city}} on {{date}}
-                {{{exceptOnFirst @index ','}}}
-                (<span class="grid-row-title">Contact:</span>             
-                {{#each contact}} 
-                    {{mobile}}
-                    {{{exceptOnFirst @index ','}}}
-                {{/each}})
-                (<span class="grid-row-title">Material:</span> 
-                {{#if material}} 
-                    {{name}} - {{materialType}}
-                    {{{exceptOnFirst @index ','}}}
-                {{/if}})
-            {{/with}}            
-            <br/>
-            <span class="grid-row-title">Drop</span> at 
-            {{#with drop}}
-                {{address.city}} on {{date}}
-                {{{exceptOnFirst @index ','}}}
-                (<span class="grid-row-title">Contact:</span> 
-                 {{#each contact}}                  
-                    {{mobile}}
-                    {{{exceptOnFirst @index ','}}}
-                {{/each}})
-                (<span class="grid-row-title">Items:</span> 
-                {{itemsToDrop}}
-                )
-            {{/with}}                       
-        </div>
-    </div>
-</div>
 </script>
 {{{{/raw-helper}}}}

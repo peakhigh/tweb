@@ -18,6 +18,7 @@ MENU_HELPER = new function () {
             currentPageDetails = MENU_HELPER.getMenuItem(MODULE_DATA.loggedInUser.menu.SideMenu, page, parentpage);
         }
         if (currentPageDetails) {
+            console.log(currentPageDetails);
             CURRENT_PAGE_CONFIG = currentPageDetails;
             /** TODO: how to get partials list in a template ? change lib ? set in api level ?*/
             $.handlebars({

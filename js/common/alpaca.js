@@ -191,14 +191,14 @@ FORM_HELPER = new function (options) {
                     $.extend(true, schema[key], overrideFieldSchema[key]);
                 }
                 //set data of the field  
-                if (!extraOptions.type || extraOptions.type === 'create') {//set default data in create mode to display controls by default
+          //      if (!extraOptions.type || extraOptions.type === 'create') {//set default data in create mode to display controls by default
                     if (!data) {
                         data = {}
                     }
                     if (!data[key]) {
                         data[key] = [{}];
                     }
-                }
+              //  }
                 //set options of the field                                
                 if (!options[key]) {
                     options[key] = {
@@ -223,7 +223,6 @@ FORM_HELPER = new function (options) {
                 if (overrideFieldOptions && overrideFieldOptions[key]) { //override options from UI pespective
                     $.extend(true, options[key], overrideFieldOptions[key]);
                 }
-
                 //go for child items                    
                 FORM_HELPER.formatFieldConfig(schema[key].items.properties, options[key].items.fields, data[key][0],
                     (overrideFieldSchema && overrideFieldSchema[key] && overrideFieldSchema[key].items && overrideFieldSchema[key].items.fields) ? overrideFieldSchema[key].items.fields : null,
@@ -241,13 +240,13 @@ FORM_HELPER = new function (options) {
                 }
 
                 //set data of the field
-                if (!extraOptions.type || extraOptions.type === 'create') {
+             //   if (!extraOptions.type || extraOptions.type === 'create') {
                     if (!data) {
                         data = {}
                     }
                     if (!data[key])
                         data[key] = {};
-                }
+              //  }
                 //set options of the field
                 if (!options[key]) {
                     options[key] = { fields: {} };
@@ -256,7 +255,6 @@ FORM_HELPER = new function (options) {
                 if (overrideFieldOptions && overrideFieldOptions[key]) {//override options from UI pespective
                     $.extend(true, options[key], overrideFieldOptions[key]);
                 }
-
                 FORM_HELPER.formatFieldConfig(schema[key].properties, options[key].fields, data[key],
                     ((overrideFieldSchema && overrideFieldSchema[key] && overrideFieldSchema[key].fields) ? overrideFieldSchema[key].fields : null),
                     ((overrideFieldOptions && overrideFieldOptions[key] && overrideFieldOptions[key].fields) ? overrideFieldOptions[key].fields : null), extraOptions);

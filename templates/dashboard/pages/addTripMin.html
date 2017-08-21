@@ -1,4 +1,7 @@
 {{{{raw-helper}}}}
+<style>
+.alpaca-field-object{border:0 solid #eee;border-radius:0;padding:10px}
+</style>
 {{{{/raw-helper}}}}
 {{> header}}
 <div class='new-trips'>
@@ -69,9 +72,20 @@
       </div>
     </div>
 </script>
+<script id="alpacaContainerObjectTemplate" type="text/x-handlebars-template">
+  <ul>
+  </ul>
+</script>
+<script id="alpacaControlTemplate" type="text/x-handlebars-template">
+  <li >
+  </li>
+</script>
+<script id="alpacaControlTextTemplate" type="text/x-handlebars-template">
+      <input type="text" id="{{id}}" {{#if options.placeholder}}placeholder="{{options.placeholder}}"{{/if}} {{#if options.size}}size="{{options.size}}"{{/if}} {{#if options.readonly}}readonly="readonly"{{/if}} {{#if name}}name="{{name}}"{{/if}} {{#each options.data}}data-{{@key}}="{{this}}"{{/each}}/>
+  </script>
 {{{{/raw-helper}}}}
 {{{{raw-helper}}}}
 <script type="text/javascript">
-    function setItemsToDrop(){var e=!1,t=this.getValue().toUpperCase();if($(".itemsToDropGroup select option").each(function(i,o){o.text.toUpperCase()===t&&(e=!0)}),!e){var i="";$(".materialNameGroup input").each(function(){$(this).val()&&(i+='<option value="'+$(this).val().toUpperCase()+'">'+$(this).val().toUpperCase()+"</option>")}),$(".itemsToDropGroup select").each(function(){var e=$(this).val();$(this).html(i),$(this).multiselect("rebuild"),e&&e.length>0&&$(this).multiselect("select",e),$(this).val()&&0!==$(this).val().length||$(this).multiselect("select",[t])})}}function initializeItemsToDropInEditMode(e){if(e.data&&e.data.pickup&&e.data.pickup.length>0){var t=[];if(e.data.pickup.forEach(function(e){e.material&&e.material.length>0&&e.material.forEach(function(e){e.name&&t.indexOf(e.name)<0&&t.push(e.name.toUpperCase())})}),t.length>0){var i="";t.forEach(function(e){i+='<option value="'+e+'">'+e+"</option>"}),$(".itemsToDropGroup select").each(function(t,o){$(o).val();$(o).html(i),$(o).multiselect("rebuild"),e.data.drop&&e.data.drop.length>t&&e.data.drop[t].itemsToDrop&&$(o).multiselect("select",e.data.drop[t].itemsToDrop)})}}}console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();FORM_HELPER.draw(".new-trips-content",e,{bindings:{pickup:"column-1",drop:"column-2",vehicleRequirements:"column-2"},schemaOverride:{fields:{pickup:{title:"Pickup point"},drop:{title:"Drop point"},vehicleRequirements:{properties:{vehicleCount:{"default":1,minimum:1}}}}},optionsOverride:{focus:"pickup/date",fields:{pickup:{order:1,items:{fields:{material:{items:{fields:{name:{fieldClass:"materialNameGroup",events:{blur:function(){setItemsToDrop.apply(this,[])}}}}}}}}},drop:{order:2},vehicleRequirements:{order:3}}},callbacks:{preRender:function(e){},beforeSubmit:function(){},afterSubmit:function(){MENU_HELPER.menuClick("manageTrip","manageTrip")},onSubmitError:function(){},postRender:function(){initializeItemsToDropInEditMode(e)}},postUrl:"trips/service/addTripMin"})});
+    function setItemsToDrop(){var e=!1,t=this.getValue().toUpperCase();if($(".itemsToDropGroup select option").each(function(i,a){a.text.toUpperCase()===t&&(e=!0)}),!e){var i="";$(".materialNameGroup input").each(function(){$(this).val()&&(i+='<option value="'+$(this).val().toUpperCase()+'">'+$(this).val().toUpperCase()+"</option>")}),$(".itemsToDropGroup select").each(function(){var e=$(this).val();$(this).html(i),$(this).multiselect("rebuild"),e&&e.length>0&&$(this).multiselect("select",e),$(this).val()&&0!==$(this).val().length||$(this).multiselect("select",[t])})}}function initializeItemsToDropInEditMode(e){if(e.data&&e.data.pickup&&e.data.pickup.length>0){var t=[];if(e.data.pickup.forEach(function(e){e.material&&e.material.length>0&&e.material.forEach(function(e){e.name&&t.indexOf(e.name)<0&&t.push(e.name.toUpperCase())})}),t.length>0){var i="";t.forEach(function(e){i+='<option value="'+e+'">'+e+"</option>"}),$(".itemsToDropGroup select").each(function(t,a){$(a).val();$(a).html(i),$(a).multiselect("rebuild"),e.data.drop&&e.data.drop.length>t&&e.data.drop[t].itemsToDrop&&$(a).multiselect("select",e.data.drop[t].itemsToDrop)})}}}console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();FORM_HELPER.draw(".new-trips-content",e,{bindings:{pickup:"column-1",drop:"column-2",vehicleRequirements:"column-2"},schemaOverride:{fields:{pickup:{title:"Pickup point",fields:{address:{title:""}}},drop:{title:"Drop point",fields:{address:{title:""}}},vehicleRequirements:{properties:{vehicleCount:{"default":1,minimum:1}}}}},optionsOverride:{focus:"pickup/date",fields:{pickup:{order:1,items:{fields:{material:{items:{fields:{name:{fieldClass:"materialNameGroup",events:{blur:function(){setItemsToDrop.apply(this,[])}}}}}}}}},drop:{order:2},vehicleRequirements:{order:3}}},callbacks:{preRender:function(e){},beforeSubmit:function(){},afterSubmit:function(){MENU_HELPER.menuClick("manageTrip","manageTrip")},onSubmitError:function(){},postRender:function(){initializeItemsToDropInEditMode(e)}},postUrl:"trips/service/addTripMin"})});
 </script>
 {{{{/raw-helper}}}}

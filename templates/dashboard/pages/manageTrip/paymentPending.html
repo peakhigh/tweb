@@ -1,6 +1,6 @@
-{{> header currentpage='manageTrips'}}
-<div class='manage-trips'>
-    <div class='manage-trips-content'>            
+<!-- {{> header currentpage='manageTrips'}}
+<div class='paymentPending-trips'>
+    <div class='paymentPending-trips-content'>            
     </div>
 </div> 
 {{{{raw-helper}}}}
@@ -125,10 +125,10 @@
                         <span class="grid-row-tile-text">
                             {{#with vehicleRequirements}}
                                 <div>
-                                    {{vehicleType}} 
+                                    {{vehicleType}}
                                     {{#if requiredCapacity}}
-                                        with capacity {{requiredCapacity}} {{capacityUnit}} 
-                                    {{/if}}
+                                     with capacity {{requiredCapacity}} {{capacityUnit}} 
+                                     {{/if}}
                                     {{#if minRating}} with rating {{minRating}} {{/if}}
                                 </div>
                             {{/with}}
@@ -148,22 +148,20 @@
                 </div>  
             </div>
             {{/if}}
-            <!-- {{#if (ifArray comments)}}            
-                <div class="grid-row-title">Comments:</div>  
+            {{#if truckdetails}}            
+                <div class="grid-row-title">Truckdetails:</div>  
                 <div class="row">     
                     <div class="grid-row-tile col-sm-12">                
                         <div>
                             <span class="grid-row-tile-text">
-                                {{#each comments}}
-                                    {{this}} <br/>
-                                {{/each}}
+                            {{plateNumber}} {{truckType}}
                             </span>
                         </div>                                           
                     </div>  
                 </div>
-            {{/if}} -->
+             {{/if}} 
             {{#if quotes}}
-                <div class="grid-row-title">Quote:</div> 
+                <div class="grid-row-title">TripCost:</div> 
                 <div class="row">     
                     <div class="grid-row-tile col-sm-12">                
                         <div>
@@ -195,11 +193,10 @@
     <div class="row grid-row">       
         <div class="col-sm-12">
             <div class="pull-right">
-                <button type="button" class="btn btn-default btn-primary edit-trip" _id="{{_id}}">Edit</button>
-                <button type="button" class="btn btn-default btn-primary comments-trip" _id="{{_id}}">Comments</button>
+                <button type="button" class="btn btn-default btn-primary comments-trip" _id="{{_id}}">Comments</button>             
                 <button type="button" class="btn btn-default btn-primary docs-trip" _id="{{_id}}">Documents</button>
-                 <button type="button" class="btn btn-default btn-primary cancel-trip" _id="{{_id}}">Cancel Trip</button>
-                
+                <button type="button" class="btn btn-default btn-primary view-details" _id="{{_id}}">View Details</button>
+                <button type="button" class="btn btn-default btn-primary payment" _id="{{_id}}">Payment</button>
             </div>
         </div>       
     </div>
@@ -242,4 +239,4 @@
     </div>
 </div>
 </script>
-{{{{/raw-helper}}}}
+{{{{/raw-helper}}}} -->

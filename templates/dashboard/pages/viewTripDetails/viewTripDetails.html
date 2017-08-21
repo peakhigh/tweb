@@ -1,0 +1,178 @@
+{{> header}}
+<div class='view-trip-details'>
+    <div class='view-trip-content'>
+    </div>
+</div> 
+{{{{raw-helper}}}}
+<script id="viewTripDetails" type="text/x-handlebars-template">
+    <div class="container-fluid">
+        <div class="row grid-row">
+            <div class="col-sm-4 grid-row-container">
+                <div class="grid-row-title">Pickup point:</div>                      
+                    {{#with data.pickup}}
+                        <div class="row">     
+                            <div class="grid-row-tile col-sm-12">                
+                                <div>
+                                    <span class="grid-row-tile-label">Date & time</span>
+                                    <span class="grid-row-tile-text">{{date}}</span>
+                                </div>
+                                <div>
+                                    <span class="grid-row-tile-label">Address</span>
+                                    <span class="grid-row-tile-text">
+                                        {{#if address.organisation}} {{address.organisation}}, {{/if}}
+                                        {{#if address.city}} {{address.city}}, {{/if}}
+                                        {{#if address.location}}
+                                        {{address.location}}, {{/if}} {{#if address.zip}}{{address.zip}}.{{/if}}
+                                    </span>                    
+                                </div>                            
+                            </div>  
+                        </div>
+                        {{#if contact}}
+                        <div class="row"> 
+                             <div class="grid-row-tile col-sm-12">
+                                <span class="grid-row-tile-label">Contact(s)</span>
+                                <div>        
+                                    {{#each contact}} 
+                                        <div>                                        
+                                             <span class="grid-row-tile-text">
+                                                {{#if firstName}} {{firstName}} {{lastName}} - {{/if}} {{mobile}} {{#if email}} - {{email}} {{/if}} 
+                                            </span>                   
+                                        </div>                                                                             
+                                    {{/each}}
+                                </div>
+                            </div> 
+                        </div> 
+                        {{/if}}
+                        <div class="row">   
+                             <div class="grid-row-tile col-sm-12">
+                                <span class="grid-row-tile-label">Material</span>
+                                <div>        
+                                    {{#with material}} 
+                                        <div>                                        
+                                             <span class="grid-row-tile-text">
+                                                {{name}} 
+                                                {{#if weight}} ({{weight}} {{weightUnit}}) {{/if}}
+                                                {{#if materialType}} - {{materialType}} {{/if}}
+                                                {{#if approximateCost}} - valued at {{currency approximateCost}} {{/if}}
+                                            </span>                   
+                                        </div>                                                                             
+                                    {{/with}}
+                                </div>
+                            </div> 
+                        </div>                    
+                    {{/with}}                                   
+            </div>   
+            <div class="col-sm-4 grid-row-container">
+                <div class="grid-row-title">Drop point:</div>                      
+                    {{#with data.drop}}
+                        <div class="row">     
+                            <div class="grid-row-tile col-sm-12">                
+                                {{#if date}}
+                                <div>
+                                    <span class="grid-row-tile-label">Date & time</span>
+                                    <span class="grid-row-tile-text">{{date}}</span>
+                                </div>
+                                {{/if}}
+                                <div>
+                                    <span class="grid-row-tile-label">Address</span>
+                                    <span class="grid-row-tile-text">
+                                        {{#if address.organisation}} {{address.organisation}}, {{/if}}
+                                        {{#if address.city}} {{address.city}}, {{/if}}
+                                        {{#if address.location}}
+                                        {{address.location}}, {{/if}} {{#if address.zip}}{{address.zip}}.{{/if}}
+                                    </span>                    
+                                </div>                            
+                            </div>  
+                        </div>
+                        {{#if contact}}
+                        <div class="row"> 
+                             <div class="grid-row-tile col-sm-12">
+                                <span class="grid-row-tile-label">Contact(s)</span>
+                                <div>        
+                                    {{#each contact}} 
+                                        <div>                                        
+                                             <span class="grid-row-tile-text">
+                                                {{#if firstName}} {{firstName}} {{lastName}} - {{/if}} {{mobile}} {{#if email}} - {{email}} {{/if}} 
+                                            </span>                   
+                                        </div>                                                                             
+                                    {{/each}}
+                                </div>
+                            </div> 
+                        </div> 
+                        {{/if}}
+                        {{#if itemsToDrop}}
+                        <div class="row"> 
+                             <div class="grid-row-tile col-sm-12">
+                                <div>        
+                                    <span class="grid-row-tile-label">Items to drop</span>
+                                    <span class="grid-row-tile-text">
+                                        {{#if itemsToDrop}}
+                                        {{commaSeperatedArray itemsToDrop}}                                    
+                                        {{/if}}
+                                    </span>
+                                </div>
+                            </div> 
+                        </div>           
+                        {{/if}}                          
+                    {{/with}}                                   
+            </div>  
+            <div class="col-sm-4 grid-row-container">
+                <div class="grid-row-title">Vehicle Requirements:</div> 
+                <div class="row">     
+                    <div class="grid-row-tile col-sm-12">                
+                        <div>
+                            <span class="grid-row-tile-text">
+                                {{#with data.vehicleRequirements}}
+                                    <div>
+                                        {{vehicleType}}
+                                        {{#if requiredCapacity}}
+                                             with capacity {{requiredCapacity}} {{capacityUnit}} 
+                                        {{/if}}
+                                        {{#if minRating}} with rating {{minRating}} {{/if}}
+                                    </div>
+                                {{/with}}
+                            </span>
+                        </div>                                           
+                    </div>  
+                </div>
+                {{#if data.totalWeight}}
+                <div class="grid-row-title">Total Weight:</div> 
+                 <div class="row">     
+                    <div class="grid-row-tile col-sm-12">                
+                        <div>
+                            <span class="grid-row-tile-text">  
+                                {{totalWeight}} {{totalWeightUnit}}
+                            </span>
+                        </div>                                           
+                    </div>  
+                </div>
+                {{/if}}
+                {{#if data.quotes}}
+                    <div class="grid-row-title">Quote:</div> 
+                    <div class="row">     
+                        <div class="grid-row-tile col-sm-12">                
+                            <div>
+                                <span class="grid-row-tile-text">
+                                    {{quotes.cost}} 
+                                </span>
+                            </div>                                           
+                        </div>  
+                    </div>
+                {{/if}}
+    
+                <div class="grid-row-title">Status:</div> 
+                 <div class="row">     
+                    <div class="grid-row-tile col-sm-12">                
+                        <div>
+                            <span class="grid-row-tile-text">
+                                {{data.status}} 
+                            </span>
+                        </div>                                           
+                    </div>  
+                </div>
+    
+            </div>     
+        </div>
+      </div>
+</script>
+{{{{/raw-helper}}}}

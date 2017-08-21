@@ -192,10 +192,21 @@ GRID_HELPER = new function () {
             $('#' + me.options.gridId).html(me.dataTemplate(me.options));
             me.attachRowHooks();
         }
+        me.reload = function(options){
+            var me = this;
+            me.showLoading();
+            MENU_HELPER.reloadData({
+               data: options
+           }, function(response) {   
+               me.hideLoading();                         
+               me.redraw(response);
+           });
+        }
+        
         me.draw();
         return me;
     }
-
+   
     this.PAGER = function (elementSelector, options, callback) {
         var me = this;
         me.template = Handlebars.compile('{{> pager }}');

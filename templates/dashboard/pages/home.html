@@ -4,4 +4,7 @@
 {{> cards (getLoggedInUser)}}
 {{> tile}}
 {{{{raw-helper}}}}
+<script type="text/javascript">
+    $(document).ready(function(){navigateToPage=function(a){var n;switch(a){case"Quoted":case"Paymentpending":case"Running":case"Assigned":n={data:{status:a}},a="manageTrip"}MENU_HELPER.menuClick(a,a,n)}});
+</script>
 {{{{/raw-helper}}}}

@@ -64,18 +64,28 @@ $(document).ready(function () {
     var config = UTILS.getCurrentTemplateData();
     FORM_HELPER.draw(".new-trips-content", config, {
         // type: config.data ? 'edit' : 'create',
-        bindings: {
+         bindings: {
             pickup: "column-1",
             drop: "column-2",
             vehicleRequirements: "column-2"
-        },
+        }, 
         schemaOverride: {
             fields: {
                 pickup: {
-                    title: "Pickup point"
+                    title: "Pickup point",
+                    fields: {
+                        address: {
+                            title: ""
+                        }
+                    }
                 },
                 drop: {
-                    title: "Drop point"
+                    title: "Drop point",
+                    fields: {
+                        address: {
+                            title: ""
+                        }
+                    }
                 },
                 vehicleRequirements: {
                     properties: {
@@ -134,6 +144,29 @@ $(document).ready(function () {
 
             }//custom design ur form accroding to the needs
         },
-        postUrl: "trips/service/addTripMin"
+        postUrl: "trips/service/addTripMin",
+       /*  view: {
+            "id": "save-clone-form-display-template",
+            "parent": "bootstrap-edit",
+            "layout": {
+                 "bindings": {
+                    "pickup": ".alpaca-column-left",
+                    "drop": ".alpaca-column-center",
+                    "vehicleRequirements": ".alpaca-column-right"
+                }, 
+                "template": "formloadertemplate"
+            },
+            "templates": {
+                "formloadertemplate": " \
+                        <div> \
+                            <div class=\"row\"> \
+                                <div class=\"col-md-3 alpaca-container alpaca-column-left\"></div> \
+                                <div class=\"col-md-3 alpaca-container alpaca-column-center\"></div> \
+                                <div class=\"col-md-3 alpaca-container alpaca-column-right\"></div> \
+                            </div> \
+                        </div> \
+                    "
+            }   
+        } */
     });
 });

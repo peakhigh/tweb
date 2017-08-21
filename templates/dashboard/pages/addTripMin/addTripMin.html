@@ -77,4 +77,20 @@
       </div>
     </div>
 </script>
+    
+<script id="alpacaContainerObjectTemplate" type="text/x-handlebars-template">
+  <ul>
+  </ul>
+</script>
+
+<script id="alpacaControlTemplate" type="text/x-handlebars-template">
+  <li >
+  </li>
+</script>
+
+<script id="alpacaControlTextTemplate" type="text/x-handlebars-template">
+  
+      <input type="text" id="{{id}}" {{#if options.placeholder}}placeholder="{{options.placeholder}}"{{/if}} {{#if options.size}}size="{{options.size}}"{{/if}} {{#if options.readonly}}readonly="readonly"{{/if}} {{#if name}}name="{{name}}"{{/if}} {{#each options.data}}data-{{@key}}="{{this}}"{{/each}}/>
+  
+  </script>
 {{{{/raw-helper}}}}
