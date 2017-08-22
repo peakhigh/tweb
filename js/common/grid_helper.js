@@ -407,9 +407,9 @@ GRID_HELPER = new function () {
             if (!keyPath) {
                 keyPath = '';
             }
-            /* if(!schema){
+             if(!schema){
                 schema='';
-            } */
+            } 
             Object.keys(schema).forEach((key) => {
                 var tKey = (keyPath ? (keyPath+'.'+key) : key);
                 if (!schema[key].title && Array.isArray(schema[key])) {

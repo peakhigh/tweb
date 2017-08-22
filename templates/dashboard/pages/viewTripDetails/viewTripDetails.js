@@ -26,19 +26,6 @@ $(document).ready(function () {
             }
         },
         callbacks: {
-            preRender: function (config) {//before drawing alpaca dom form - used to adjust the config 
-            },
-            beforeSubmit: function () { },//here in all callbacks, this stands for alpaca object
-            afterSubmit: function () {
-                MENU_HELPER.menuClick('manageTrip', 'manageTrip');
-            },
-            onSubmitError: function () { },//on submission if error occurs
-            postRender: function () {
-          //      initializeItemsToDropInEditMode(config);
-                //TODO: validate pickup.date < drop.date (multiple pickup points & drop points will be there)
-                //all drop.date should be greater than the maximum of pickup.dates & vicevers
-
-            }//custom design ur form accroding to the needs
         },
         view: {
             "globalTemplate": "#viewTripDetails"

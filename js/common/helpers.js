@@ -98,10 +98,13 @@ Handlebars.registerHelper('ifArray', function(arr) {
     return true;
 });
 
+Handlebars.registerHelper('isloggedIn', function(arg1, arg2, options) {
+    return (arg1._id == arg2) ? options.fn(this) : options.inverse(this);
+});
+
 Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
     return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
 });
-
 
 Handlebars.registerHelper('getIcon', function(mimetype) {
     var icon = 'fa-file';

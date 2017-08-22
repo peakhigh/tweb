@@ -178,6 +178,6 @@
 {{{{/raw-helper}}}}
 {{{{raw-helper}}}}
 <script type="text/javascript">
-    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();FORM_HELPER.draw(".view-trip-content",e,{schemaOverride:{},optionsOverride:{form:{buttons:{submit:{title:"Comments",click:function(){MENU_HELPER.menuClick("addComments","manageTrip",{extraHref:e.data._id})}},documents:{title:"Documents",click:function(){MENU_HELPER.menuClick("uploadDocs","manageTrip",{extraHref:e.data._id})}}}}},callbacks:{preRender:function(e){},beforeSubmit:function(){},afterSubmit:function(){MENU_HELPER.menuClick("manageTrip","manageTrip")},onSubmitError:function(){},postRender:function(){}},view:{globalTemplate:"#viewTripDetails"}})});
+    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();FORM_HELPER.draw(".view-trip-content",e,{schemaOverride:{},optionsOverride:{form:{buttons:{submit:{title:"Comments",click:function(){MENU_HELPER.menuClick("addComments","manageTrip",{extraHref:e.data._id})}},documents:{title:"Documents",click:function(){MENU_HELPER.menuClick("uploadDocs","manageTrip",{extraHref:e.data._id})}}}}},callbacks:{},view:{globalTemplate:"#viewTripDetails"}})});
 </script>
 {{{{/raw-helper}}}}

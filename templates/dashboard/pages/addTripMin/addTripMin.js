@@ -85,7 +85,7 @@ $(document).ready(function () {
                         address: {
                             title: ""
                         }
-                    }
+                    }   
                 },
                 vehicleRequirements: {
                     properties: {

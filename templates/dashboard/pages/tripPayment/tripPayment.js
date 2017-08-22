@@ -47,7 +47,7 @@ $(document).ready(function () {
         },
         postUrl: "trips/service/tripPayment",
         view: {
-            "parent": "bootstrap-edit",
+            "parent": "bootstrap-edit-horizontal",
             "fields": {
                 "/quotes/cost": {
                     "templates": {

@@ -1,7 +1,6 @@
 console.log('123template data', UTILS.getCurrentTemplateData());
 $(document).ready(function () {
     var config = UTILS.getCurrentTemplateData();
- //   config.view = 
     FORM_HELPER.draw(".update-profile-content", config, {
         bindings: {
             firstName: "column-1",
@@ -15,11 +14,30 @@ $(document).ready(function () {
             security: "column-1",
         },
         schemaOverride: {
+            fields: {
+                security:{
+                    fields:{
+                        confirmPassword: {
+                            default: config.data.security.password
+                        }
+                    }
+                }
+            }
         },
         optionsOverride: {
             fields: {
                 profilePic: {
                     type: "file"
+                }
+            },
+            form: {
+                buttons: {
+                    cancel: {
+                        title: "Cancel",
+                        click: function(){
+                            MENU_HELPER.menuClick('viewProfile', 'updateProfile');
+                        }
+                    }
                 }
             }
         },

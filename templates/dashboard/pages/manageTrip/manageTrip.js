@@ -1,5 +1,4 @@
 console.log('template data', UTILS.getCurrentTemplateData());
-var currentStatus;
 $(document).ready(function () {
     var moduleData = UTILS.getCurrentTemplateData();
     var grid = new GRID_HELPER.GRID('.manage-trips-content', {
@@ -140,8 +139,7 @@ $(document).ready(function () {
         }        
     });
 
-    console.log(currentStatus);
-    $(".dropdown").find(".btn BtnCaption").text(moduleData.status);
+//    $(".dropdown").find(".btn BtnCaption").text(moduleData.status);
     statusChanged = function(newStatus){
         var options = {
             data : {
@@ -156,7 +154,7 @@ $(document).ready(function () {
 
 
     approveQuote =  function (record){
-        var moduleData = UTILS.getCurrentTemplateData('manageTruck');
+      
         var source = $('#viewquotesmodal').html(); 
          var template1 = Handlebars.compile(source);
         $('body').append(template1());    

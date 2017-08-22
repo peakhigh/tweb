@@ -1,5 +1,5 @@
 // console.log(JSON.stringify(UTILS.getCurrentTemplateData()));
-console.log('template data', UTILS.getCurrentTemplateData());
+console.log('template data comments', UTILS.getCurrentTemplateData());
 
 $(document).ready(function () {
     var moduleData = UTILS.getCurrentTemplateData();
@@ -60,6 +60,7 @@ $(document).ready(function () {
     });
 
     var moduleData = UTILS.getCurrentTemplateData();
+    if(moduleData.data.comments){
     var test = {"data":moduleData.data.comments,"total":moduleData.data.comments.length};
     var grid = new GRID_HELPER.GRID('.list-comments-content', {
         gridData: test,
@@ -71,4 +72,5 @@ $(document).ready(function () {
             template: 'grid-row-template-details',
         }
     });
+  }
 });

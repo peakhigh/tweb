@@ -1,8 +1,8 @@
 MENU_HELPER = new function () {
 
     this.menuClick = function (page, parentpage, extraOptions) {
-        // console.log(page, parentpage, CURRENT_MODULE);
-        // console.log(MODULE_DATA); 
+       //  console.log(page, parentpage, CURRENT_MODULE);
+       //  console.log(MODULE_DATA); 
         $("#content-wrapper").html(Handlebars.compile('{{> loading }}')); 
 
         CURRENT_PAGE = page;
@@ -32,6 +32,7 @@ MENU_HELPER = new function () {
             helperData.pageHeading = currentPageDetails.title;
             helperData.pageSubHeading = currentPageDetails.title;
             helperData.pageIcon = currentPageDetails.icon;
+            helperData.extraOptions = extraOptions;
             currentPageDetails.extraOptions = extraOptions;
             if (currentPageDetails.service) {//first load the service, get the service data & render the template 
                 if (extraOptions && extraOptions.data) {

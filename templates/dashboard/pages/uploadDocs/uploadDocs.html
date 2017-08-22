@@ -25,25 +25,26 @@
                         <button type="submit" class="btn btn-default">Upload</button>
                       </form>  
          </div> 
-
+         <div class="upload-files-content">
+            <a href="javascript:showUploadedFiles();">View uploaded docs</a>
+         </div>
      </div>
-     <div class="row">
-       
-      <div class='upload-files-content'>
+     <div class="row">    
+        <div class='upload-files-content'>
 
 
-          <div class="col-sm-12">
-              <div class="pull-right">
-                      <div class="pager-container">
+            <div class="col-sm-12">
+                <div class="pull-right">
+                        <div class="pager-container">
 
-                      </div>
-              </div>
-          </div>
+                        </div>
+                </div>
+            </div>
 
-          <div class="datarea">
-          </div>
+            <div class="datarea">
+            </div>
 
-      </div>
+        </div>
      </div>
 </div> 
 
@@ -73,11 +74,13 @@
                   <td><i class="fa {{getIcon mimetype}} fa-2x" aria-hidden="true"></i></td>
                   <td>{{originalname}}</td>
                   <td>{{typeofdocument}}</td>
-                  <td>{{createdby}}</td>
+                  <td>{{createdby.username}}</td>
                   <td>
                     <div class="actions">
                     <button class="btn btn-glyphicon" role="button"><span  _id="{{_id}}" id="download" class="glyphicon glyphicon-save"></span></button>
+                    {{#isloggedIn (getLoggedInUser) createdby._id}}
                     <button class="btn btn-glyphicon"  role="button"><span _id="{{_id}}" id="delete" class="glyphicon glyphicon-trash"></span></button>
+                    {{/isloggedIn}}
                     </div>
                   </td>
                 </tr>

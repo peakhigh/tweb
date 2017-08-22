@@ -6,12 +6,18 @@
                     <li class="active">
                             <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa {{pageIcon}}"></i>  <BtnCaption>{{pageSubHeading}}</BtnCaption>  
+                            <i class="fa {{pageIcon}}"></i> 
+                             {{#if extraOptions.data}}
+                             <BtnCaption>{{extraOptions.data.status}}</BtnCaption>  
+                             {{else}}
+                             <BtnCaption>{{pageSubHeading}}</BtnCaption>  
+                             {{/if}}
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" href="javascript:statusChanged('New');">New Trips</a>
                             <a class="dropdown-item" href="javascript:statusChanged('Quoted');">Quoted</a>
                             <a class="dropdown-item" href="javascript:statusChanged('Paymentpending');">Payment Pending</a>
+                            <a class="dropdown-item" href="javascript:statusChanged('Paymentmade');">Payment Made</a>
                             <a class="dropdown-item" href="javascript:statusChanged('Running');">Running</a>
                             <a class="dropdown-item" href="javascript:statusChanged('Assigned');">Assigned</a>
                             <a class="dropdown-item" href="javascript:statusChanged('Successful');">Successful</a>
@@ -171,6 +177,30 @@
                 </div>  
             </div>
             {{/if}}
+            {{#if truckdetails}}            
+            <div class="grid-row-title">Truckdetails:</div>  
+            <div class="row">     
+                <div class="grid-row-tile col-sm-12">                
+                    <div>
+                        <span class="grid-row-tile-text">
+                           {{plateNumber}} {{truckType}}
+                        </span>
+                    </div>                                           
+                </div>  
+            </div>
+        {{/if}} 
+            {{#if currentPoint}}            
+            <div class="grid-row-title">Current location:</div>  
+            <div class="row">     
+                <div class="grid-row-tile col-sm-12">                
+                    <div>
+                        <span class="grid-row-tile-text">
+                        {{currentPoint}}
+                        </span>
+                    </div>                                           
+                </div>  
+            </div>
+        {{/if}} 
             {{#if quotes}}
                 <div class="grid-row-title">Quote:</div> 
                 <div class="row">     
@@ -210,9 +240,34 @@
     </div>
   </div>
 </script>
+<script id="viewquotesmodal" type="text/x-handlebars-template"> 
+    <div class="modal fade" id="viewquotesmodalid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+             <div class="modal-dialog">
+                 <div class="modal-content">
+                   <div class="modal-header">
+                       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                           &times;
+                       </button>
+                       <h4 class="modal-title" id="myModalLabel">Are you sure?</h4>
+                   </div>
+                   <div class="modal-body myModalclass">
+                        If approved, payment is mandatory and once payment is received suitable truck & driver will be assigned to your trip.
+                   </div>
+                   <div class="modal-footer">
+                        <button type="submit" id="yes" class="btn btn-primary" name="submit" value="submit">
+                          Yes
+                      </button> 
+                       <button name="cancel" value="cancel" class="btn btn-default" data-dismiss="modal">
+                           Cancel
+                       </button>
+                   </div>
+                   </div>
+                   </div> 
+        </div>
+    </script> 
 {{{{/raw-helper}}}}
 {{{{raw-helper}}}}
 <script type="text/javascript">
-    console.log("template data",UTILS.getCurrentTemplateData());var currentStatus;$(document).ready(function(){var e=UTILS.getCurrentTemplateData();new GRID_HELPER.GRID(".manage-trips-content",{gridData:e,gridId:"gridManageTrips",rowConfig:{template:"grid-row-template-details",optionsTemplate:"grid-row-options-template",optionsEvent:"mouseover",optionsPostRender:function(e,t){$(e).find(".edit-trip").click(function(){MENU_HELPER.menuClick("addTripMin","manageTrip",{extraHref:t._id})}),$(e).find(".edit-trip").click(function(){MENU_HELPER.menuClick("addTripMin","manageTrip",{extraHref:t._id})}),$(e).find(".comments-trip").click(function(){MENU_HELPER.menuClick("addComments","manageTrip",{extraHref:t._id})}),$(e).find(".docs-trip").click(function(){MENU_HELPER.menuClick("uploadDocs","manageTrip",{extraHref:t._id})}),$(e).find(".viewdetails").click(function(){MENU_HELPER.menuClick("viewTripDetails","manageTrip",{extraHref:t._id})}),$(e).find(".payment").click(function(){MENU_HELPER.menuClick("tripPayment","manageTrip",{extraHref:t._id})}),$(e).find(".cancel-trip").click(function(){MENU_HELPER.menuClick("cancelTrip","manageTrip",{extraHref:t._id})}),$(e).find(".approve-quote").click(function(){approveQuote(t)}),$(e).find(".reject-bid").click(function(){var e={};e.formData=JSON.stringify({truckDetails:t}),e.uri="requests/service/setStatus",e.extraHref="id="+t._id+"&status=Rejected",e.type="POST",API_HELPER.postData(e,function(e,t){if(e)return void console.log("error",e)})})}},sortConfig:{multiple:!1,options:[{title:"Pickup Date",key:"pickup.date",selected:!0,order:"desc"},{title:"Drop Date",key:"drop.date"},{title:"Material Value",key:"pickup.material.approximateCost"}]},filterConfig:{type:"default",order:[],formOptions:{bindings:{"pickup.date_start":"column-1","pickup.date_end":"column-2","drop.date_start":"column-1","drop.date_end":"column-2",status:"column-1"},schemaOverride:{fields:{"pickup.date":{title:"Pickup Date",format:"date",rangeField:!0},"drop.date":{title:"Drop Date",format:"date",rangeField:!0},status:{"default":"Running"}}},optionsOverride:{fields:{"pickup.date_start":{order:1},"pickup.date_end":{order:2},"drop.date_start":{order:3},"drop.date_end":{order:4},status:{order:5}}}}}});console.log(currentStatus),$(".dropdown").find(".btn BtnCaption").text(e.status),statusChanged=function(e){var t={data:{status:e}};currentStatus=e,MENU_HELPER.menuClick("manageTrip","manageTrip",t)},approveQuote=function(e){var t=(UTILS.getCurrentTemplateData("manageTruck"),$("#viewquotesmodal").html()),i=Handlebars.compile(t);$("body").append(i()),$("#viewquotesmodalid").modal({show:!0,background:!0}),$("#yes").click(function(){var t={};t.formData=JSON.stringify({tripDetails:e}),t.uri="trips/service/setStatus",t.extraHref="id="+e._id+"&status=Paymentpending",t.type="POST",API_HELPER.postData(t,function(t,i){return t?void console.log("error",t):void MENU_HELPER.menuClick("paymentPending","manageTrip",{extraHref:e._id})}),$("#viewquotesmodalid").modal("hide")})}}),Handlebars.registerHelper("getGridOptions",function(e,t){switch(e){case"New":return[{option:"Edit",_id:t,id:"edit-trip"},{option:"Comments",_id:t,id:"comments-trip"},{option:"Docs",_id:t,id:"docs-trip"},{option:"Cancel Trip",_id:t,id:"cancel-trip"}];case"Quoted":return[{option:"Edit",_id:t,id:"edit-trip"},{option:"Comments",_id:t,id:"comments-trip"},{option:"Approve",_id:t,id:"approve-quote"},{option:"Reject Trip",_id:t,id:"reject-quote"},{option:"Cancel Trip",_id:t,id:"cancel-trip"}];case"Paymentpending":return[{option:"Docs",_id:t,id:"docs-trip"},{option:"Comments",_id:t,id:"comments-trip"},{option:"ViewDetails",_id:t,id:"viewdetails"},{option:"Payment",_id:t,id:"payment"}];case"Running":case"Assigned":case"Successful":return[{option:"ViewDetails",_id:t,id:"viewdetails"},{option:"Comments",_id:t,id:"comments-trip"},{option:"Documents",_id:t,id:"docs-trip"}];case"Cancelled":return[{option:"ViewDetails",_id:t,id:"viewdetails"}]}});
+    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();new GRID_HELPER.GRID(".manage-trips-content",{gridData:e,gridId:"gridManageTrips",rowConfig:{template:"grid-row-template-details",optionsTemplate:"grid-row-options-template",optionsEvent:"mouseover",optionsPostRender:function(e,i){$(e).find(".edit-trip").click(function(){MENU_HELPER.menuClick("addTripMin","manageTrip",{extraHref:i._id})}),$(e).find(".edit-trip").click(function(){MENU_HELPER.menuClick("addTripMin","manageTrip",{extraHref:i._id})}),$(e).find(".comments-trip").click(function(){MENU_HELPER.menuClick("addComments","manageTrip",{extraHref:i._id})}),$(e).find(".docs-trip").click(function(){MENU_HELPER.menuClick("uploadDocs","manageTrip",{extraHref:i._id})}),$(e).find(".viewdetails").click(function(){MENU_HELPER.menuClick("viewTripDetails","manageTrip",{extraHref:i._id})}),$(e).find(".payment").click(function(){MENU_HELPER.menuClick("tripPayment","manageTrip",{extraHref:i._id})}),$(e).find(".cancel-trip").click(function(){MENU_HELPER.menuClick("cancelTrip","manageTrip",{extraHref:i._id})}),$(e).find(".approve-quote").click(function(){approveQuote(i)}),$(e).find(".reject-bid").click(function(){var e={};e.formData=JSON.stringify({truckDetails:i}),e.uri="requests/service/setStatus",e.extraHref="id="+i._id+"&status=Rejected",e.type="POST",API_HELPER.postData(e,function(e,i){if(e)return void console.log("error",e)})})}},sortConfig:{multiple:!1,options:[{title:"Pickup Date",key:"pickup.date",selected:!0,order:"desc"},{title:"Drop Date",key:"drop.date"},{title:"Material Value",key:"pickup.material.approximateCost"}]},filterConfig:{type:"default",order:[],formOptions:{bindings:{"pickup.date_start":"column-1","pickup.date_end":"column-2","drop.date_start":"column-1","drop.date_end":"column-2",status:"column-1"},schemaOverride:{fields:{"pickup.date":{title:"Pickup Date",format:"date",rangeField:!0},"drop.date":{title:"Drop Date",format:"date",rangeField:!0},status:{"default":"Running"}}},optionsOverride:{fields:{"pickup.date_start":{order:1},"pickup.date_end":{order:2},"drop.date_start":{order:3},"drop.date_end":{order:4},status:{order:5}}}}}});statusChanged=function(e){var i={data:{status:e}};currentStatus=e,MENU_HELPER.menuClick("manageTrip","manageTrip",i)},approveQuote=function(e){var i=$("#viewquotesmodal").html(),t=Handlebars.compile(i);$("body").append(t()),$("#viewquotesmodalid").modal({show:!0,background:!0}),$("#yes").click(function(){var i={};i.formData=JSON.stringify({tripDetails:e}),i.uri="trips/service/setStatus",i.extraHref="id="+e._id+"&status=Paymentpending",i.type="POST",API_HELPER.postData(i,function(i,t){return i?void console.log("error",i):void MENU_HELPER.menuClick("paymentPending","manageTrip",{extraHref:e._id})}),$("#viewquotesmodalid").modal("hide")})}}),Handlebars.registerHelper("getGridOptions",function(e,i){switch(e){case"New":return[{option:"Edit",_id:i,id:"edit-trip"},{option:"Comments",_id:i,id:"comments-trip"},{option:"Docs",_id:i,id:"docs-trip"},{option:"Cancel Trip",_id:i,id:"cancel-trip"}];case"Quoted":return[{option:"Edit",_id:i,id:"edit-trip"},{option:"Comments",_id:i,id:"comments-trip"},{option:"Approve",_id:i,id:"approve-quote"},{option:"Reject Trip",_id:i,id:"reject-quote"},{option:"Cancel Trip",_id:i,id:"cancel-trip"}];case"Paymentpending":return[{option:"Docs",_id:i,id:"docs-trip"},{option:"Comments",_id:i,id:"comments-trip"},{option:"ViewDetails",_id:i,id:"viewdetails"},{option:"Payment",_id:i,id:"payment"}];case"Running":case"Assigned":case"Successful":return[{option:"ViewDetails",_id:i,id:"viewdetails"},{option:"Comments",_id:i,id:"comments-trip"},{option:"Documents",_id:i,id:"docs-trip"}];case"Cancelled":return[{option:"ViewDetails",_id:i,id:"viewdetails"}]}});
 </script>
 {{{{/raw-helper}}}}
