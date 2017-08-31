@@ -1,0 +1,124 @@
+{{{{raw-helper}}}}
+<style>
+dt{display:block;float:left;text-align:left}dt:after{content:':'}.top-buffer{margin-top:10px}
+</style>
+{{{{/raw-helper}}}}
+<div class="row">
+  <div class="col-lg-12">
+          <ol class="breadcrumb" style="margin-top: 10px;">
+              <li class="active">
+                      <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fa {{pageIcon}}"></i> 
+                       {{#if extraOptions.data}}
+                       <BtnCaption>{{extraOptions.data.status}}</BtnCaption>  
+                       {{else}}
+                       <BtnCaption>{{pageSubHeading}}</BtnCaption>  
+                       {{/if}}
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" href="javascript:statusChanged('Running');">Running</a>
+                      <a class="dropdown-item" href="javascript:statusChanged('Free');">Free Trucks</a>
+                      <a class="dropdown-item" href="javascript:statusChanged('Deactivated');">Deactivated</a>      
+                  </div>
+                  </div>
+              </li>
+          </ol>
+  </div>
+</div>
+<div class='manage-trucks'>
+    <div class='manage-trucks-content'>
+    </div>
+</div> 
+{{{{raw-helper}}}}
+<script id="grid-row-template-details" type="text/x-handlebars-template">
+  <div class="container-fluid">
+    <div class="row grid-row">
+        <!--  <div class="col-md-3 col-lg-3 " align="center"> 
+           <img alt="Truck Pic" height="150" width="150" src="/img/noimage.png" class="img-circle img-responsive">
+        </div>  -->
+        <div class="col-md-10">
+             <div class="row">
+               <div class="col-md-4">
+                 <dt>Plate Number </dt>&emsp; {{plateNumber}}
+                </div> 
+                <div class="col-md-4">
+                    <dt>Model </dt>&emsp; {{model}}
+                </div> 
+                <div class="col-md-4">
+                    <dt>TruckType </dt>&emsp;{{truckType}}
+                </div> 
+             </div>
+             <div class="row top-buffer">
+                <div class="col-md-4">
+                    <dt>Capacity </dt>&emsp; {{capacity}} {{ capacityUnits}}
+                </div> 
+                <div class="col-md-4">
+                    <dt>Status </dt>&emsp; {{status}}
+                </div> 
+                <div class="col-md-4">
+                     {{#if currentPoint}}
+                    <dt>Current Location </dt>&emsp; {{currentPoint}}
+                    {{/if}}
+                </div> 
+             </div>
+             <div class="row top-buffer">
+                {{#if nextAvailableAt}}
+                <div class="col-md-4">
+                    <dt>NextAvailableAt </dt>&emsp; {{nextAvailableAt}} 
+                </div> 
+                {{/if}}
+                {{#if nextFreeDate}}
+                <div class="col-md-4">
+                    <dt>NextFreeDate </dt>&emsp; {{nextFreeDate}}
+                </div> 
+                {{/if}}
+             </div>
+        </div>
+    </div>
+  </div>
+</script>
+<script id="grid-row-options-template" type="text/x-handlebars-template">
+  <div class="container-fluid">
+    <div class="row grid-row">       
+        <div class="col-sm-12">
+            <div class="pull-right">
+                {{#each (getTruckGridOptions status _id)}}     
+                <button type="button" class="btn btn-default btn-primary {{id}}" _id="{{_id}}">{{option}}</button>
+                {{/each}}
+            </div>
+        </div>       
+    </div>
+  </div>
+</script>
+<script id="truckmodal" type="text/x-handlebars-template"> 
+  <div class="modal fade" id="truckmodalid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+           <div class="modal-dialog">
+               <div class="modal-content">
+                 <div class="modal-header">
+                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                         &times;
+                     </button>
+                     <h4 class="modal-title" id="myModalLabel">Are you sure?</h4>
+                 </div>
+                 <div class="modal-body myModalclass">
+                      This will change the status of the truck.
+                 </div>
+                 <div class="modal-footer">
+                      <button type="submit" id="yes" class="btn btn-primary" name="submit" value="submit">
+                        Yes
+                    </button> 
+                     <button name="cancel" value="cancel" class="btn btn-default" data-dismiss="modal">
+                         Cancel
+                     </button>
+                 </div>
+                 </div>
+                 </div> 
+      </div>
+  </script> 
+{{{{/raw-helper}}}}
+{{{{raw-helper}}}}
+<script type="text/javascript">
+    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var t=UTILS.getCurrentTemplateData();new GRID_HELPER.GRID(".manage-trucks-content",{gridData:t,drawSort:!1,gridId:"gridManageTrucks",rowConfig:{template:"grid-row-template-details",optionsTemplate:"grid-row-options-template",optionsPostRender:function(t,e){console.log(e),$(t).find(".edit-truck").click(function(){MENU_HELPER.menuClick("addTruck","manageTrucks",{extraHref:e._id})}),$(t).find(".docs-truck").click(function(){MENU_HELPER.menuClick("uploadDocs","manageTrucks",{extraHref:e._id})}),$(t).find(".mark-running").click(function(){}),$(t).find(".mark-free").click(function(){changeTruckStatus(e,"Free")}),$(t).find(".activate-truck").click(function(){changeTruckStatus(e,"Free")}),$(t).find(".deactivate-truck").click(function(){changeTruckStatus(e,"Deactivated")})}}});statusChanged=function(t){var e={data:{status:t}};MENU_HELPER.menuClick("manageTrucks","manageTrucks",e)},changeTruckStatus=function(t,e){console.log(e);var i=$("#truckmodal").html(),a=Handlebars.compile(i);$("body").append(a()),$("#truckmodalid").modal({show:!0,background:!0}),$("#yes").click(function(){var i={};i.formData=JSON.stringify({tripDetails:t}),i.uri="trucks/service/setStatus",i.extraHref="id="+t._id+"&status="+e,i.type="POST",API_HELPER.postData(i,function(e,i){return e?void console.log("error",e):void MENU_HELPER.menuClick("manageTrucks","manageTrucks",{extraHref:t._id})}),$("#truckmodalid").modal("hide")})}}),Handlebars.registerHelper("getTruckGridOptions",function(t,e){switch(t){case"Free":return[{option:"Edit",_id:e,id:"edit-truck"},{option:"Docs",_id:e,id:"docs-truck"},{option:"Mark Running",_id:e,id:"mark-running"},{option:"Deactivate",_id:e,id:"deactivate-truck"}];case"Running":return[{option:"Edit",_id:e,id:"edit-truck"},{option:"Docs",_id:e,id:"docs-truck"},{option:"Mark Free",_id:e,id:"mark-free"}];case"Deactivated":return[{option:"Edit",_id:e,id:"edit-truck"},{option:"Activate",_id:e,id:"activate-truck"}]}});
+</script>
+{{{{/raw-helper}}}}

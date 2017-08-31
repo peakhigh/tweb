@@ -1,0 +1,66 @@
+{{{{raw-helper}}}}
+{{{{/raw-helper}}}}
+{{> header}}
+<div class='manage-accounts'>
+
+    <div class='manage-accounts-content'>
+            
+    </div>
+</div> 
+{{{{raw-helper}}}}
+<script id="grid-row-template-details" type="text/x-handlebars-template">
+  <div class="container-fluid">
+    <div class="row grid-row">
+        <div class="col-sm-12" >
+              <div class="row">
+                <div class="col-sm-9 col-sm-9 "> 
+                  <table class="table table-user-information">
+                    <tbody>
+                      <tr>
+                        <td>AccountName:</td>
+                        <td>{{accountName}}</td>
+                      </tr>
+                        <tr>
+                        <td>AccountNumber:</td>
+                        <td>{{accountNumber}}</td>
+                         </tr>
+
+                         <tr>
+                        <td>BankName:</td>
+                        <td>{{bankName}}</td>
+                         </tr>
+
+                        <tr>
+                        <td>IFSC:</td>
+                        <td>
+                            {{ifscCode}}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>BranchAddress:</td>
+                        <td><a href="">{{branchAddress}}</a></td>
+                      </tr>
+                     
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+        </div>     
+           		
+    </div>
+  </div>
+</script>
+
+<script id="grid-row-options-template" type="text/x-handlebars-template">
+  <div class="container-fluid">
+    <div class="row grid-row">       
+        <div class="col-sm-12">
+            <div class="pull-right">
+                <button type="button" class="btn btn-default btn-primary edit-account" _id="{{_id}}">Edit</button>
+            </div>
+        </div>       
+    </div>
+  </div>
+</script>
+
+{{{{/raw-helper}}}}

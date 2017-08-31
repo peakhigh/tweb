@@ -13,38 +13,43 @@ $(document).ready(function () {
             capacityUnits: "column-2",
             insurance:"column-1",
             material:"column-2",
-            currentPoint: "column-1",
+          /*   currentPoint: "column-1",
             status:"column-2",
             currentPoint:"column-1",
             nextAvailableAt:"column-2",
-            nextFreeDate:"column-1"
+            nextFreeDate:"column-1" */
         },
-        schemaOverride: {
-             dependencies: {
+         schemaOverride: {
+            /*  dependencies: {
                 currentPoint: ["status"],
                 nextAvailableAt: ["status"],
                 nextFreeDate: ["status"],
+            } */
+            fields: {
+                material: {
+                    title:"",
+                }
             }
         },
         optionsOverride: {
             fields: {
-                currentPoint :{
+                /* currentPoint :{
                     dependencies: {
-                        status: "busy"
+                        status: "Running"
                     }
                 },
                 nextAvailableAt :{
                     dependencies: {
-                        status: "busy"
+                        status: "Running"
                     }
                 },
                 nextFreeDate :{
                     dependencies: {
-                        status: "busy"
+                        status: "Running"
                     }
-                },
+                }, */
             }
-        },
+        }, 
         callbacks: {
             preRender: function (config) {//before drawing alpaca dom form - used to adjust the config 
             },

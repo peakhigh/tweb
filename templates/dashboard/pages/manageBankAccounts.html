@@ -1,0 +1,65 @@
+{{{{raw-helper}}}}
+{{{{/raw-helper}}}}
+{{{{raw-helper}}}}
+{{{{/raw-helper}}}}
+{{> header}}
+<div class='manage-accounts'>
+    <div class='manage-accounts-content'>
+    </div>
+</div> 
+{{{{raw-helper}}}}
+<script id="grid-row-template-details" type="text/x-handlebars-template">
+  <div class="container-fluid">
+    <div class="row grid-row">
+        <div class="col-sm-12" >
+              <div class="row">
+                <div class="col-sm-9 col-sm-9 "> 
+                  <table class="table table-user-information">
+                    <tbody>
+                      <tr>
+                        <td>AccountName:</td>
+                        <td>{{accountName}}</td>
+                      </tr>
+                        <tr>
+                        <td>AccountNumber:</td>
+                        <td>{{accountNumber}}</td>
+                         </tr>
+                         <tr>
+                        <td>BankName:</td>
+                        <td>{{bankName}}</td>
+                         </tr>
+                        <tr>
+                        <td>IFSC:</td>
+                        <td>
+                            {{ifscCode}}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>BranchAddress:</td>
+                        <td><a href="">{{branchAddress}}</a></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+        </div>     
+    </div>
+  </div>
+</script>
+<script id="grid-row-options-template" type="text/x-handlebars-template">
+  <div class="container-fluid">
+    <div class="row grid-row">       
+        <div class="col-sm-12">
+            <div class="pull-right">
+                <button type="button" class="btn btn-default btn-primary edit-account" _id="{{_id}}">Edit</button>
+            </div>
+        </div>       
+    </div>
+  </div>
+</script>
+{{{{/raw-helper}}}}
+{{{{raw-helper}}}}
+<script type="text/javascript">
+    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var t=UTILS.getCurrentTemplateData();new GRID_HELPER.GRID(".manage-accounts-content",{gridData:t,gridId:"gridAccounts",drawSort:!1,drawFilters:!1,drawPager:!0,rowConfig:{template:"grid-row-template-details",optionsTemplate:"grid-row-options-template",optionsPostRender:function(t,e){console.log(e),$(t).find(".edit-account").click(function(){MENU_HELPER.menuClick("addBankAccount","manageBankAccounts",{extraHref:e._id})})}}})});
+</script>
+{{{{/raw-helper}}}}

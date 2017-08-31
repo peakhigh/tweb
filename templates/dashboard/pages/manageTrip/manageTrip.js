@@ -139,14 +139,12 @@ $(document).ready(function () {
         }        
     });
 
-//    $(".dropdown").find(".btn BtnCaption").text(moduleData.status);
     statusChanged = function(newStatus){
         var options = {
             data : {
                 status: newStatus
             }
         };
-        currentStatus = newStatus;
 //        $(".dropdown").find(".btn BtnCaption").text(newStatus);
         MENU_HELPER.menuClick('manageTrip','manageTrip',options);
     }

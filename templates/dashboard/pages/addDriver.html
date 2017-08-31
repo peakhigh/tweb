@@ -11,6 +11,6 @@
 {{{{/raw-helper}}}}
 {{{{raw-helper}}}}
 <script type="text/javascript">
-    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();FORM_HELPER.draw(".new-driver-content",e,{postUrl:"drivers/service/addDriver",callbacks:{afterSubmit:function(){MENU_HELPER.menuClick("manageDriver","manageDriver")}}})});
+    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();FORM_HELPER.draw(".new-driver-content",e,{bindings:{name:"column-1",mobile:"column-2",licenseNumber:"column-1",licenseExpiryDate:"column-2",experience:"column-1",email:"column-2",alternativePhone:"column-1"},schemaOverride:{fields:{experience:{title:"Experience (in years)"},licenseExpiryDate:{title:"License Expiry"}}},postUrl:"drivers/service/addDriver",callbacks:{afterSubmit:function(){MENU_HELPER.menuClick("manageDriver","manageDriver")}}})});
 </script>
 {{{{/raw-helper}}}}

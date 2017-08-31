@@ -6,10 +6,11 @@
             </div>
             <div class="card-block">
                 
+                    {{#ifEquals role "TRIP_ADMIN"}}
                   <li>3 trips are in <a href="javascript:navigateToPage('Running');">Running</a> state currently. <br></li>
                   
                   <li>1 trip is waiting to be <a href="javascript:navigateToPage('Assigned');">Assigned </a></li>
-
+                    {{/ifEquals}}
 
                 <div class="text-xs-right">
                     <a href="javascript:;">View Details <i class="fa fa-arrow-circle-right"></i></a>

@@ -1,0 +1,12 @@
+{{{{raw-helper}}}}
+{{{{/raw-helper}}}}
+{{> header}}
+<div class='add-account'>
+    <div class='col-sm-9 add-account-content'>
+    </div>
+</div> 
+{{{{raw-helper}}}}
+<script type="text/javascript">
+    console.log("template data account",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();FORM_HELPER.draw(".add-account-content",e,{schemaOverride:{fields:{ifscCode:{title:"IFSC Code"}}},optionsOverride:{fields:{}},postUrl:"accounts/service/addBankAccount",callbacks:{beforeSubmit:function(e){},afterSubmit:function(){MENU_HELPER.menuClick("manageBankAccounts","manageBankAccounts")}}})});
+</script>
+{{{{/raw-helper}}}}

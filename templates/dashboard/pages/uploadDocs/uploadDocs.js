@@ -82,7 +82,8 @@ $(document).ready(function () {
     showUploadedFiles = function(){
         var source   = $("#grid-row-template-details").html();
         var template = Handlebars.compile(source);
-        $(".datarea").append(template(moduleData)); 
+        $(".datarea").html('');
+        $(".datarea").html(template(moduleData)); 
 
         if ($(".upload-files-content").find('.pager-container')) {
 
