@@ -110,7 +110,12 @@ API_HELPER = new function() {
             // set tokens for all the api requests
             if (options.url.indexOf(CONSTANTS.apiServer) === 0) {
                 options.headers = {'Authorization': 'Bearer ' + API_HELPER.getToken()};        
-            }                
+            } 
+             if( API_HELPER.getLoggedInUser().role === 'CALL_CENTER_USER' && 
+                typeof(CALLCENTER_USER_SELECTED) !== 'undefined' && 
+            CALLCENTER_USER_SELECTED.length > 0){
+            console.log(CALLCENTER_USER_SELECTED);               
+            } 
         });
     }
 }

@@ -9,13 +9,7 @@ $(document).ready(function () {
             optionsTemplate: 'grid-row-options-template',
             optionsEvent: 'mouseover',
             optionsPostRender: function(rowElement, record) {
-                $(rowElement).find('.edit-trip').click(function() {
-                    MENU_HELPER.menuClick('addTripMin', 'manageTrip', {extraHref: record._id});
-                });
 
-              /*   $(rowElement).find('.set-status-trip').click(function() {
-                    MENU_HELPER.menuClick('setStatus', 'manageTrip', {extraHref: record._id});
-                }); */
                 $(rowElement).find('.edit-trip').click(function() {
                     MENU_HELPER.menuClick('addTripMin', 'manageTrip', {extraHref: record._id});
                 });
@@ -43,6 +37,15 @@ $(document).ready(function () {
 
                 $(rowElement).find('.approve-quote').click(function() {
                     approveQuote(record);
+                });
+
+
+                $(rowElement).find('.quote-trip').click(function() {
+                    MENU_HELPER.menuClick('setQuote', 'manageTrip', {extraHref: record._id});
+                });
+
+                $(rowElement).find('.status-trip').click(function() {
+                    MENU_HELPER.menuClick('setTripStatus', 'manageTrip', {extraHref: record._id});
                 });
 
                   $(rowElement).find('.reject-bid').click(function() {
@@ -179,22 +182,27 @@ $(document).ready(function () {
 });
 
  Handlebars.registerHelper('getGridOptions', function(status,id) {
+       var options = [];
+       var loggedInUser = API_HELPER.getLoggedInUser();
         switch (status){
             case 'New':
-            return [{'option':'Edit','_id':id,'id':'edit-trip'},
+            options = [{'option':'Edit','_id':id,'id':'edit-trip'},
                     {'option':'Comments','_id':id,'id':'comments-trip'},
                     {'option':'Docs','_id':id,'id':'docs-trip'},
                     {'option':'Cancel Trip','_id':id,'id':'cancel-trip'}];
+            if(loggedInUser.role === 'CALL_CENTER_USER'){
+                options.push({'option':'setQuote','_id':id,'id':'quote-trip'});       
+            }
             break;
             case 'Quoted':
-            return [{'option':'Edit','_id':id,'id':'edit-trip'},
+            options = [{'option':'Edit','_id':id,'id':'edit-trip'},
                     {'option':'Comments','_id':id,'id':'comments-trip'},
                     {'option':'Approve','_id':id,'id':'approve-quote'},
                     {'option':'Reject Trip','_id':id,'id':'reject-quote'},
                     {'option':'Cancel Trip','_id':id,'id':'cancel-trip'}];
             break;
             case 'Paymentpending':
-            return [{'option':'Docs','_id':id,'id':'docs-trip'},
+            options = [{'option':'Docs','_id':id,'id':'docs-trip'},
                     {'option':'Comments','_id':id,'id':'comments-trip'},
                     {'option':'ViewDetails','_id':id,'id':'viewdetails'},
                     {'option':'Payment','_id':id,'id':'payment'}];
@@ -202,12 +210,18 @@ $(document).ready(function () {
             case 'Running':
             case 'Assigned':
             case 'Successful':
-            return [{'option':'ViewDetails','_id':id,'id':'viewdetails'},
+            options = [{'option':'ViewDetails','_id':id,'id':'viewdetails'},
                     {'option':'Comments','_id':id,'id':'comments-trip'},
                     {'option':'Documents','_id':id,'id':'docs-trip'}];
+
+            if(loggedInUser.role === 'CALL_CENTER_USER'){
+                        options.push({'option':'Status','_id':id,'id':'status-trip'});       
+            }
             break;
             case 'Cancelled':
-            return [{'option':'ViewDetails','_id':id,'id':'viewdetails'}];
+            options = [{'option':'ViewDetails','_id':id,'id':'viewdetails'}];
             break;
         }
+       
+        return options;
 }); 
