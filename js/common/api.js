@@ -39,6 +39,7 @@ API_HELPER = new function() {
     }
     this.clearToken = function() {
         STORAGE.removeItem('auth-token');
+        STORAGE.removeItem('viewAsUser');
     }
     this.testToken = function() {
         //TODO - test from the backend
@@ -105,16 +106,33 @@ API_HELPER = new function() {
         });
     }
 
+    this.setViewAsUser = function(response) {
+        console.log("setViewAsUser",response);
+        if(response) {
+            STORAGE.setItem('viewAsUser', response);
+        }else {
+            STORAGE.removeItem('viewAsUser');
+        }
+    }
+
+
+    this.getViewAsUser = function(response) {
+        let user = STORAGE.getItem('viewAsUser');
+        if(user) {
+            return JSON.parse(user);
+        }
+        return null;
+    }
+
     this.attachPreFiltersToAllAjaxRequests = function() {
         $.ajaxPrefilter( function(options) {
             // set tokens for all the api requests
             if (options.url.indexOf(CONSTANTS.apiServer) === 0) {
                 options.headers = {'Authorization': 'Bearer ' + API_HELPER.getToken()};        
             } 
-             if( API_HELPER.getLoggedInUser().role === 'CALL_CENTER_USER' && 
-                typeof(CALLCENTER_USER_SELECTED) !== 'undefined' && 
-            CALLCENTER_USER_SELECTED.length > 0){
-            console.log(CALLCENTER_USER_SELECTED);               
+            
+             if( API_HELPER.getLoggedInUser().role === 'CALL_CENTER_USER' && API_HELPER.getViewAsUser()){
+                options.headers = $.extend(options.headers, {'viewedAsUser': API_HELPER.getViewAsUser()}); 
             } 
         });
     }

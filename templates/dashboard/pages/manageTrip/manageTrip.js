@@ -41,7 +41,7 @@ $(document).ready(function () {
 
 
                 $(rowElement).find('.quote-trip').click(function() {
-                    MENU_HELPER.menuClick('setQuote', 'manageTrip', {extraHref: record._id});
+                    MENU_HELPER.menuClick('setTripQuote', 'manageTrip', {extraHref: record._id});
                 });
 
                 $(rowElement).find('.status-trip').click(function() {

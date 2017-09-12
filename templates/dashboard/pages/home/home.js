@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     navigateToPage = function(page){
         var extras;
         switch(page){
@@ -15,9 +14,12 @@ $(document).ready(function () {
         }
         MENU_HELPER.menuClick(page, page, extras);
     }
-
+ if(API_HELPER.getLoggedInUser().role === "CALL_CENTER_USER"){
+    
+    var selectedUser;
+    var userType = "TRUCK_ADMIN";
     //move this code main js file
-    var data = new Bloodhound({ 
+    var userdata = new Bloodhound({ 
         datumTokenizer: function(d) {
         var test = Bloodhound.tokenizers.whitespace(d.value);
             $.each(test,function(k,v){
@@ -30,31 +32,54 @@ $(document).ready(function () {
             return test;
         },
         queryTokenizer: Bloodhound.tokenizers.whitespace,
-    
-        prefetch: {
-            url: CONSTANTS.apiServer + "users/service/manageUser",
+          remote: {
+            url: CONSTANTS.apiServer + "users/service/manageUser?userType=",
+             replace: function (url, query) {
+             //   console.log(url,query);
+                url += encodeURIComponent(userType);
+                return url;
+            }, 
+            identify: function(obj) { 
+                console.log("identify",obj);
+                return obj.id; },
             ajax : {
-                /* beforeSend: function(jqXhr, settings){
-                   settings.data = $.param({q: queryInput.val()})
-                }, */
-                type: "GET"
+                 type: "GET"
+             },
+             filter: function(data) {
+                //console.log("** Filter response to get remote data **")
+                 return $.map(data.data, function(item) {  
+                     return {
+                       id:item._id,value: item.firstName+" "+item.lastName
+                     };
+                 });
+             }
+        },    
+/*         prefetch: {
+            url: CONSTANTS.apiServer + "users/service/manageUser?profile.userType=TRIP_ADMIN",
+            replace: function (url, query) {
+                console.log(userType);
+                url += encodeURIComponent(userType);
+                return url;
             },
-            filter: function(data) {
-               //console.log("** Filter response to get remote data **")
-                return $.map(data.data, function(item) {  
-                    return {
-                      id:item._id,value: item.firstName+" "+item.lastName
-                    };
-                });
-            }
-        }
+            ajax : {
+                 type: "GET"
+             },
+             filter: function(data) {
+                //console.log("** Filter response to get remote data **")
+                 return $.map(data.data, function(item) {  
+                     return {
+                       id:item._id,value: item.firstName+" "+item.lastName
+                     };
+                 });
+             }
+        }  */
     });
     // If prefetch is used, clear cache
-    data.clearPrefetchCache();
+    userdata.clearPrefetchCache();
     //console.log("** Clear cache called **")
     //Initialize the bloodhound suggestion engine
-    data.initialize();
-    //console.log("** Initialize called **")
+    userdata.initialize();
+    
     $(".modal-body").alpaca({
         "schema": {
             "type": "object",
@@ -62,6 +87,7 @@ $(document).ready(function () {
                 "userType": {
                     "type": "string",
                     "enum": ["TRUCK_ADMIN", "TRIP_ADMIN"],
+                    "default": "TRUCK_ADMIN",
                     "required": false
                 },
                 "userName": {
@@ -75,7 +101,12 @@ $(document).ready(function () {
                     "type": "select",
                     "label": "User Type:",
                     "hideNone": true,
-                    "helpers": []
+                    "helpers": [],
+                    "onFieldChange": function(e) {
+                        userType = this.getValue();
+                        userdata.clearRemoteCache();
+                        userdata.initialize(true);
+                    }
                 },
                 "userName": {
                     "type": "text",
@@ -89,12 +120,11 @@ $(document).ready(function () {
                             "minLength": 1
                         },
                         "datasets": {
-                            "name": "data",
-                            "displayKey": 'value',
-                            "source": data.ttAdapter()
- 
+                            "name": "userdata",
+                            "displayKey": "value",
+                            "source": userdata.ttAdapter()
                         }
-                    }
+                    },
                 }
             },
             "form": {
@@ -102,6 +132,13 @@ $(document).ready(function () {
                     "submit": {
                         "title": "Submit",
                         "click": function() {
+                            if(this.getValue().userName){
+                              var currentUser = this.getValue();
+                              currentUser.userid = selectedUser.id;
+                              API_HELPER.setViewAsUser(currentUser);
+                            }
+                            this.clear();
+                            location.reload();
                             console.log("Value is: " , this.getValue());
                         }
                     },
@@ -110,15 +147,23 @@ $(document).ready(function () {
                         "click": function() {
                          //   console.log("Value is: " + this.getValue());
                             $('#myModal').modal('hide'); 
+                            this.clear();
                         }
                     }
                 }
             }
         },
        
+    }).bind('typeahead:selected', function (obj, datum, name) {
+        selectedUser = datum;
+        //alert(JSON.stringify(datum)); 
+        //$('.typeahead').typeahead('val',name); 
     });
 
-    chooseUser = function(){
-        console.log();
-    }
+    $('.img-wrap .close').on('click', function() {
+  //      var id = $(this).closest('.img-wrap').find('img').data('id');
+        API_HELPER.setViewAsUser();
+        location.reload();
+    });
+  }
 });

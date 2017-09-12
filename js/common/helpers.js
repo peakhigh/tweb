@@ -106,6 +106,9 @@ Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
     return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
 });
 
+Handlebars.registerHelper('getViewAsUser', function() {
+    return API_HELPER.getViewAsUser()?API_HELPER.getViewAsUser().userName:null;
+});
 Handlebars.registerHelper('getIcon', function(mimetype) {
     var icon = 'fa-file';
     switch (mimetype){
