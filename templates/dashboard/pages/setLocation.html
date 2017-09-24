@@ -1,0 +1,12 @@
+{{{{raw-helper}}}}
+{{{{/raw-helper}}}}
+{{> header}}
+<div class='set-location'>
+    <div class='col-sm-9 set-location-content'>
+    </div>
+</div> 
+{{{{raw-helper}}}}
+<script type="text/javascript">
+    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();e.data.comments=[{}],FORM_HELPER.draw(".set-location-content",e,{schemaOverride:{fields:{comments:{title:"Comment",items:{properties:{}}}}},optionsOverride:{fields:{comments:{type:"textarea"}}},postUrl:"trips/service/setLocation",callbacks:{afterSubmit:function(){MENU_HELPER.menuClick("manageTrip","manageTrip")}}})});
+</script>
+{{{{/raw-helper}}}}

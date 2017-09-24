@@ -1,0 +1,16 @@
+{{{{raw-helper}}}}
+{{{{/raw-helper}}}}
+{{{{raw-helper}}}}
+{{{{/raw-helper}}}}
+{{> header}}
+<div class='send-truck-request'>
+    <div class='col-sm-9 send-request-content'>
+    </div>
+</div> 
+{{{{raw-helper}}}}
+{{{{/raw-helper}}}}
+{{{{raw-helper}}}}
+<script type="text/javascript">
+    console.log("template data 1234",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();FORM_HELPER.draw(".send-request-content",e,{bindings:{quote:"column-1",comment:"column-1"},schemaOverride:{fields:{}},optionsOverride:{fields:{comment:{type:"textarea"}}},postUrl:"requests/service/addRequest",callbacks:{afterSubmit:function(){MENU_HELPER.menuClick("manageTrip","manageTrip")}}})});
+</script>
+{{{{/raw-helper}}}}

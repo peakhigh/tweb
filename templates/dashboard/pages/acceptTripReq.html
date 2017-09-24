@@ -1,0 +1,17 @@
+{{{{raw-helper}}}}
+{{{{/raw-helper}}}}
+{{> header}}
+<div class='accept-trip-req'>
+    <div class='col-sm-9 accept-trip-content'>
+    </div>
+</div> 
+{{> header}}
+<div class='accept-trip-req'>
+    <div class='col-sm-9 accept-trip-content'>
+    </div>
+</div> 
+{{{{raw-helper}}}}
+<script type="text/javascript">
+    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();FORM_HELPER.draw(".reject-trip-content",e,{bindings:{truckid:"column-1",driverid:"column-1",comment:"column-1"},schemaOverride:{fields:{}},optionsOverride:{fields:{comment:{type:"textarea"}}},postUrl:"requests/service/addRequest",callbacks:{afterSubmit:function(){MENU_HELPER.menuClick("manageTrip","manageTrip")}}})});
+</script>
+{{{{/raw-helper}}}}

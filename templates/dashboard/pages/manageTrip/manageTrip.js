@@ -48,6 +48,18 @@ $(document).ready(function () {
                     MENU_HELPER.menuClick('setTripStatus', 'manageTrip', {extraHref: record._id});
                 });
 
+                $(rowElement).find('.setlocation').click(function() {
+                    MENU_HELPER.menuClick('setLocation', 'manageTrip', {extraHref: record._id});
+                });
+
+                $(rowElement).find('.assigntruck').click(function() {
+                    MENU_HELPER.menuClick('assignTruck', 'manageTrip', {extraHref: record._id});
+                });
+
+                $(rowElement).find('.approvepayment').click(function() {
+                    //MENU_HELPER.menuClick('assignTruck', 'manageTrip', {extraHref: record._id});
+                });
+
                   $(rowElement).find('.reject-bid').click(function() {
                       var options = {};
                         options.formData = JSON.stringify({ truckDetails : record});
@@ -191,35 +203,54 @@ $(document).ready(function () {
                     {'option':'Docs','_id':id,'id':'docs-trip'},
                     {'option':'Cancel Trip','_id':id,'id':'cancel-trip'}];
             if(loggedInUser.role === 'CALL_CENTER_USER'){
-                options.push({'option':'setQuote','_id':id,'id':'quote-trip'});       
+                options.push({'option':'Quote','_id':id,'id':'quote-trip'});       
             }
             break;
             case 'Quoted':
             options = [{'option':'Edit','_id':id,'id':'edit-trip'},
                     {'option':'Comments','_id':id,'id':'comments-trip'},
-                    {'option':'Approve','_id':id,'id':'approve-quote'},
-                    {'option':'Reject Trip','_id':id,'id':'reject-quote'},
+                    {'option':'Approve Quote','_id':id,'id':'approve-quote'},
+                    {'option':'Reject Quote','_id':id,'id':'reject-quote'},
                     {'option':'Cancel Trip','_id':id,'id':'cancel-trip'}];
             break;
-            case 'Paymentpending':
+            case 'PaymentPending':
             options = [{'option':'Docs','_id':id,'id':'docs-trip'},
                     {'option':'Comments','_id':id,'id':'comments-trip'},
-                    {'option':'ViewDetails','_id':id,'id':'viewdetails'},
+                    {'option':'Details','_id':id,'id':'viewdetails'},
                     {'option':'Payment','_id':id,'id':'payment'}];
             break;
+             case 'PaymentMade':
+            options = [{'option':'Docs','_id':id,'id':'docs-trip'},
+                    {'option':'Comments','_id':id,'id':'comments-trip'},
+                    {'option':'Details','_id':id,'id':'viewdetails'},
+                    {'option':'Approve','_id':id,'id':'approvepayment'}];
+            break; 
+            case 'PaymentApproved':
+            options = [{'option':'Docs','_id':id,'id':'docs-trip'},
+                    {'option':'Comments','_id':id,'id':'comments-trip'},
+                    {'option':'Details','_id':id,'id':'viewdetails'},
+                    {'option':'Assign Truck','_id':id,'id':'assigntruck'}];
+            break;
             case 'Running':
+            options = [{'option':'Details','_id':id,'id':'viewdetails'},
+            {'option':'Comments','_id':id,'id':'comments-trip'},
+            {'option':'Docs','_id':id,'id':'docs-trip'}];
+            if(loggedInUser.role === 'CALL_CENTER_USER'){
+                options.push({'option':'Location','_id':id,'id':'setlocation'});       
+            }
+            break;
             case 'Assigned':
             case 'Successful':
-            options = [{'option':'ViewDetails','_id':id,'id':'viewdetails'},
+            options = [{'option':'Details','_id':id,'id':'viewdetails'},
                     {'option':'Comments','_id':id,'id':'comments-trip'},
-                    {'option':'Documents','_id':id,'id':'docs-trip'}];
+                    {'option':'Docs','_id':id,'id':'docs-trip'}];
 
             if(loggedInUser.role === 'CALL_CENTER_USER'){
                         options.push({'option':'Status','_id':id,'id':'status-trip'});       
             }
             break;
             case 'Cancelled':
-            options = [{'option':'ViewDetails','_id':id,'id':'viewdetails'}];
+            options = [{'option':'Details','_id':id,'id':'viewdetails'}];
             break;
         }
        

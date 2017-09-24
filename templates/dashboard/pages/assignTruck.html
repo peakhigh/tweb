@@ -1,0 +1,99 @@
+{{{{raw-helper}}}}
+<style>
+dt{display:block;float:left;text-align:left}dt:after{content:':'}.top-buffer{margin-top:10px}
+</style>
+{{{{/raw-helper}}}}
+{{> header}}
+  <div class='assign-trucks'>
+      <div class='assign-trucks-content'>
+      </div>
+  </div> 
+  {{{{raw-helper}}}}
+  <script id="grid-row-template-details" type="text/x-handlebars-template">
+    <div class="container-fluid">
+      <div class="row grid-row">
+          <!--  <div class="col-md-3 col-lg-3 " align="center"> 
+             <img alt="Truck Pic" height="150" width="150" src="/img/noimage.png" class="img-circle img-responsive">
+          </div>  -->
+          <div class="col-md-10">
+               <div class="row">
+                 <div class="col-md-4">
+                   <dt>Plate Number </dt>&emsp; {{plateNumber}}
+                  </div> 
+                  <div class="col-md-4">
+                      <dt>Model </dt>&emsp; {{model}}
+                  </div> 
+                  <div class="col-md-4">
+                      <dt>TruckType </dt>&emsp;{{truckType}}
+                  </div> 
+               </div>
+               <div class="row top-buffer">
+                  <div class="col-md-4">
+                      <dt>Capacity </dt>&emsp; {{capacity}} {{ capacityUnits}}
+                  </div> 
+                  <div class="col-md-4">
+                      <dt>Status </dt>&emsp; {{status}}
+                  </div> 
+                  <div class="col-md-4">
+                       {{#if currentPoint}}
+                      <dt>Current Location </dt>&emsp; {{currentPoint}}
+                      {{/if}}
+                  </div> 
+               </div>
+               <div class="row top-buffer">
+                  {{#if nextAvailableAt}}
+                  <div class="col-md-4">
+                      <dt>NextAvailableAt </dt>&emsp; {{nextAvailableAt}} 
+                  </div> 
+                  {{/if}}
+                  {{#if nextFreeDate}}
+                  <div class="col-md-4">
+                      <dt>NextFreeDate </dt>&emsp; {{nextFreeDate}}
+                  </div> 
+                  {{/if}}
+               </div>
+          </div>
+      </div>
+    </div>
+  </script>
+  <script id="grid-row-options-template" type="text/x-handlebars-template">
+    <div class="container-fluid">
+      <div class="row grid-row">       
+          <div class="col-sm-12">
+              <div class="pull-right">
+                  <button type="button" class="btn btn-default btn-primary sendrequest" _id="{{_id}}">Send Request</button>
+              </div>
+          </div>       
+      </div>
+    </div>
+  </script>
+  <script id="sendrequestmodal" type="text/x-handlebars-template"> 
+    <div class="modal fade" id="sendrequestmodalid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+             <div class="modal-dialog">
+                 <div class="modal-content">
+                   <div class="modal-header">
+                       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                           &times;
+                       </button>
+                       <h4 class="modal-title" id="myModalLabel">Are you sure?</h4>
+                   </div>
+                   <div class="modal-body myModalclass">
+                   </div>
+                  <!--  <div class="modal-footer">
+                        <button type="submit" id="yes" class="btn btn-primary" name="submit" value="submit">
+                          Yes
+                      </button> 
+                       <button name="cancel" value="cancel" class="btn btn-default" data-dismiss="modal">
+                           Cancel
+                       </button>
+                   </div> -->
+                   </div>
+                   </div> 
+        </div>
+    </script> 
+  {{{{/raw-helper}}}}
+{{{{raw-helper}}}}
+<script type="text/javascript">
+    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();new GRID_HELPER.GRID(".assign-trucks-content",{gridData:e,drawSort:!1,gridId:"gridAssignTrucks",rowConfig:{template:"grid-row-template-details",optionsTemplate:"grid-row-options-template",optionsPostRender:function(e,t){$(e).find(".sendrequest").click(function(){sendRequest(t)})}}});sendRequest=function(t){var a=$("#sendrequestmodal").html(),r=Handlebars.compile(a);$("body").append(r()),$("#sendrequestmodalid").modal({show:!0,background:!0}),$(".myModalclass").alpaca({schema:{type:"object",properties:{advance:{title:"Adavance",type:"number"},balance:{title:"Balance",type:"number",required:!0},comment:{title:"Comment",type:"string",required:!1}}},options:{fields:{comment:{type:"textarea"}},form:{buttons:{submit:{title:"Submit",click:function(){var a=this.getValue();a.tripid=e._id,a.truckid=t._id,a.toUser=t.createdBy;var r={};r.formData=JSON.stringify(a),r.uri="requests/service/addRequest",r.type="POST",API_HELPER.postData(r,function(e,t){return e?void console.log("error",e):void MENU_HELPER.menuClick("manageTrip","manageTrip")}),$("#sendrequestmodalid").modal("hide")}}}}}})}});
+</script>
+{{{{/raw-helper}}}}

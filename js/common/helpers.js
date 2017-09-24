@@ -98,6 +98,10 @@ Handlebars.registerHelper('ifArray', function(arr) {
     return true;
 });
 
+Handlebars.registerHelper('getLoggedInRole', function () {
+    return API_HELPER.getLoggedInUser().role;
+});
+
 Handlebars.registerHelper('isloggedIn', function(arg1, arg2, options) {
     return (arg1._id == arg2) ? options.fn(this) : options.inverse(this);
 });

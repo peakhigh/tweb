@@ -1,0 +1,114 @@
+{{> header}}
+
+  <div class='assign-trucks'>
+  
+      <div class='assign-trucks-content'>
+              
+      </div>
+  </div> 
+  {{{{raw-helper}}}}
+  <script id="grid-row-template-details" type="text/x-handlebars-template">
+    <div class="container-fluid">
+      <div class="row grid-row">
+  
+  
+          <!--  <div class="col-md-3 col-lg-3 " align="center"> 
+             <img alt="Truck Pic" height="150" width="150" src="/img/noimage.png" class="img-circle img-responsive">
+          </div>  -->
+          <div class="col-md-10">
+            
+               <div class="row">
+                 <div class="col-md-4">
+                   <dt>Plate Number </dt>&emsp; {{plateNumber}}
+                  </div> 
+  
+                  <div class="col-md-4">
+                      <dt>Model </dt>&emsp; {{model}}
+                  </div> 
+  
+                  <div class="col-md-4">
+                      <dt>TruckType </dt>&emsp;{{truckType}}
+                  </div> 
+               </div>
+              
+               <div class="row top-buffer">
+                  <div class="col-md-4">
+                      <dt>Capacity </dt>&emsp; {{capacity}} {{ capacityUnits}}
+                  </div> 
+  
+                  <div class="col-md-4">
+                      <dt>Status </dt>&emsp; {{status}}
+                  </div> 
+  
+                  <div class="col-md-4">
+                       {{#if currentPoint}}
+                      <dt>Current Location </dt>&emsp; {{currentPoint}}
+                      {{/if}}
+                  </div> 
+               </div>
+  
+               <div class="row top-buffer">
+                  {{#if nextAvailableAt}}
+                  <div class="col-md-4">
+                      <dt>NextAvailableAt </dt>&emsp; {{nextAvailableAt}} 
+                  </div> 
+                  {{/if}}
+                  {{#if nextFreeDate}}
+                  <div class="col-md-4">
+                      <dt>NextFreeDate </dt>&emsp; {{nextFreeDate}}
+                  </div> 
+                  {{/if}}
+               </div>
+  
+          </div>
+  
+                     
+      </div>
+      
+    </div>
+  </script>
+  
+  <script id="grid-row-options-template" type="text/x-handlebars-template">
+    <div class="container-fluid">
+      <div class="row grid-row">       
+          <div class="col-sm-12">
+              <div class="pull-right">
+                  <button type="button" class="btn btn-default btn-primary sendrequest" _id="{{_id}}">Send Request</button>
+              </div>
+          </div>       
+      </div>
+    </div>
+  </script>
+
+
+  <script id="sendrequestmodal" type="text/x-handlebars-template"> 
+    <div class="modal fade" id="sendrequestmodalid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+             <div class="modal-dialog">
+                 <div class="modal-content">
+                   <div class="modal-header">
+                       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                           &times;
+                       </button>
+                       <h4 class="modal-title" id="myModalLabel">Are you sure?</h4>
+                   </div>
+                   <div class="modal-body myModalclass">
+                       <!--  If approved, payment is mandatory and once payment is received suitable truck & driver will be assigned to your trip. -->
+                   </div>
+                       
+                  <!--  <div class="modal-footer">
+                        <button type="submit" id="yes" class="btn btn-primary" name="submit" value="submit">
+                          Yes
+                      </button> 
+                       <button name="cancel" value="cancel" class="btn btn-default" data-dismiss="modal">
+                           Cancel
+                       </button>
+                   </div> -->
+                   </div>
+                   </div> 
+        </div>
+    </script> 
+  
+  
+  
+  {{{{/raw-helper}}}}
+  

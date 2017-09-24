@@ -12,15 +12,19 @@
                              {{/if}}
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            
                             <a class="dropdown-item" href="javascript:statusChanged('New');">New Trips</a>
                             <a class="dropdown-item" href="javascript:statusChanged('Quoted');">Quoted</a>
-                            <a class="dropdown-item" href="javascript:statusChanged('Paymentpending');">Payment Pending</a>
-                            <a class="dropdown-item" href="javascript:statusChanged('Paymentmade');">Payment Made</a>
+                            <a class="dropdown-item" href="javascript:statusChanged('PaymentPending');">Payment Pending</a>
+                            <a class="dropdown-item" href="javascript:statusChanged('PaymentMade');">Payment Made</a>
+                             {{#ifEquals (getLoggedInRole) "CALL_CENTER_USER"}}
+                            <!-- <a class="dropdown-item" href="javascript:statusChanged('Paymentreceived');">Payment Received</a> -->
+                            <a class="dropdown-item" href="javascript:statusChanged('PaymentApproved');">Payment Approved</a>
+                            {{/ifEquals}} 
                             <a class="dropdown-item" href="javascript:statusChanged('Running');">Running</a>
                             <a class="dropdown-item" href="javascript:statusChanged('Assigned');">Assigned</a>
                             <a class="dropdown-item" href="javascript:statusChanged('Successful');">Successful</a>
-                            <a class="dropdown-item" href="javascript:statusChanged('Cancelled');">Cancelled</a>
-                            
+                            <a class="dropdown-item" href="javascript:statusChanged('Cancelled');">Cancelled</a>                
                         </div>
                         </div>
     
