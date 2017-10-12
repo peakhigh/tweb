@@ -131,9 +131,16 @@ API_HELPER = new function() {
                 options.headers = {'Authorization': 'Bearer ' + API_HELPER.getToken()};        
             } 
             
-             if( API_HELPER.getLoggedInUser().role === 'CALL_CENTER_USER' && API_HELPER.getViewAsUser()){
-                options.headers = $.extend(options.headers, {'viewedAsUser': API_HELPER.getViewAsUser()}); 
-            } 
+            let loggedInUser = API_HELPER.getLoggedInUser();
+             if(loggedInUser.role === 'CALL_CENTER_USER' && API_HELPER.getViewAsUser()){
+                  options.headers = $.extend(options.headers, {'owner': JSON.stringify(API_HELPER.getViewAsUser())}); 
+            } else{
+                var user = {
+                    _id : loggedInUser._id,
+                    role : loggedInUser.role
+                };
+                options.headers = $.extend(options.headers, {'owner': JSON.stringify(user)}); 
+            }
         });
     }
 }

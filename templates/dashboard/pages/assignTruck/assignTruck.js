@@ -31,7 +31,7 @@ $(document).ready(function () {
                 "type": "object",
                 "properties": {
                     "advance": {
-                        "title": "Adavance",
+                        "title": "Advance",
                         "type": "number",
                     },
                     "balance": {
@@ -62,8 +62,8 @@ $(document).ready(function () {
                             "title": "Submit",
                             "click": function() {
                                 var value = this.getValue();
-                                value.tripid = moduleData._id;
-                                value.truckid = record._id;
+                                value.tripDetails = moduleData._id;
+                              //  value.truckDetails = record;
                                 value.toUser  = record.createdBy;
      
                                var options = {};

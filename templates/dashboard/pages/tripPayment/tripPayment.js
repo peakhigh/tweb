@@ -1,4 +1,4 @@
-console.log('123template data', UTILS.getCurrentTemplateData());
+console.log('trippayment template data', UTILS.getCurrentTemplateData());
 $(document).ready(function () {
     var config = UTILS.getCurrentTemplateData();
     FORM_HELPER.draw(".trip-payment-content", config, {
@@ -10,7 +10,9 @@ $(document).ready(function () {
 
                     }   
                 },
-                paymentInfo: {   
+                paymentInfo: {
+                    title:'',
+                    paymentlog:{   
                     maxItems: 1,
                     minItems:1,
                     title: "Payment",
@@ -18,20 +20,29 @@ $(document).ready(function () {
                         properties: {
                         }
                     }
+                 }
                 }
             }
         },
         optionsOverride: {
             fields: {
+
                 paymentInfo: {
+                    fields: {
+                     paymentlog:{   
                     toolbarSticky: false,
                     items:{
                         fields: {
                     referenceDoc: {
                         type: "file"
+                    },
+                    modeOfPayment: {
+                        hideNone: true
                     }
                         }
                     }
+                }
+                  }
                 }
             }
         },
@@ -40,6 +51,7 @@ $(document).ready(function () {
             },
             beforeSubmit: function () { },//here in all callbacks, this stands for alpaca object
             afterSubmit: function () {
+                MENU_HELPER.menuClick('manageTrip', 'manageTrip');
             },
             onSubmitError: function () { },//on submission if error occurs
             postRender: function () {

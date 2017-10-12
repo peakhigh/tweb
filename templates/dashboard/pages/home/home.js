@@ -40,7 +40,6 @@ $(document).ready(function () {
                 return url;
             }, 
             identify: function(obj) { 
-                console.log("identify",obj);
                 return obj.id; },
             ajax : {
                  type: "GET"
@@ -80,7 +79,7 @@ $(document).ready(function () {
     //Initialize the bloodhound suggestion engine
     userdata.initialize();
     
-    $(".modal-body").alpaca({
+  var val =  $(".modal-body").alpaca({
         "schema": {
             "type": "object",
             "properties": {
@@ -109,6 +108,7 @@ $(document).ready(function () {
                     }
                 },
                 "userName": {
+                    "id": "mytypehead",
                     "type": "text",
                     "label": "User Name:",
                     "helper": "Select user name",
@@ -124,7 +124,7 @@ $(document).ready(function () {
                             "displayKey": "value",
                             "source": userdata.ttAdapter()
                         }
-                    },
+                    }
                 }
             },
             "form": {
@@ -134,7 +134,7 @@ $(document).ready(function () {
                         "click": function() {
                             if(this.getValue().userName){
                               var currentUser = this.getValue();
-                              currentUser.userid = selectedUser.id;
+                              currentUser._id = selectedUser.id;
                               API_HELPER.setViewAsUser(currentUser);
                             }
                             this.clear();
@@ -154,11 +154,12 @@ $(document).ready(function () {
             }
         },
        
-    }).bind('typeahead:selected', function (obj, datum, name) {
+    }).on('typeahead:selected', function(obj, datum, name) {
         selectedUser = datum;
         //alert(JSON.stringify(datum)); 
-        //$('.typeahead').typeahead('val',name); 
-    });
+        // Your Code Here
+    })
+
 
     $('.img-wrap .close').on('click', function() {
   //      var id = $(this).closest('.img-wrap').find('img').data('id');

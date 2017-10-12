@@ -10,6 +10,6 @@
 </div> 
 {{{{raw-helper}}}}
 <script type="text/javascript">
-    console.log("truck template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();FORM_HELPER.draw(".new-trucks-content",e,{bindings:{plateNumber:"column-1",model:"column-2",truckType:"column-1",description:"column-2",capacity:"column-1",capacityUnits:"column-2",insurance:"column-1",material:"column-2"},schemaOverride:{fields:{material:{title:""}}},optionsOverride:{fields:{}},callbacks:{preRender:function(e){},beforeSubmit:function(){},afterSubmit:function(){MENU_HELPER.menuClick("manageTruck","manageTruck")},onSubmitError:function(){},postRender:function(){}},postUrl:"trucks/service/addTruck"})});
+    console.log("truck template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();FORM_HELPER.draw(".new-trucks-content",e,{bindings:{plateNumber:"column-1",model:"column-2",truckType:"column-1",description:"column-2",capacity:"column-1",capacityUnits:"column-2",insurance:"column-1",material:"column-2"},schemaOverride:{fields:{material:{title:""}}},optionsOverride:{fields:{}},callbacks:{preRender:function(e){},beforeSubmit:function(){},afterSubmit:function(){MENU_HELPER.menuClick("manageTrucks","manageTrucks")},onSubmitError:function(){},postRender:function(){}},postUrl:"trucks/service/addTruck"})});
 </script>
 {{{{/raw-helper}}}}

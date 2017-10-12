@@ -74,7 +74,6 @@ FORM_HELPER = new function (options) {
             config.error = function () {//configure error handler
                 console.log('Form Render Errors', arguments);
             };
-            console.log(config);
             $(elementSelector).alpaca(config);
         }
     }

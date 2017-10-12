@@ -57,7 +57,21 @@ $(document).ready(function () {
                 });
 
                 $(rowElement).find('.approvepayment').click(function() {
-                    //MENU_HELPER.menuClick('assignTruck', 'manageTrip', {extraHref: record._id});
+
+                    var options = {};
+                    options.formData = JSON.stringify({ tripDetails : record});
+                    options.uri = "trips/service/setStatus";
+                    options.extraHref = "id="+record._id+"&status=PaymentApproved";
+                    options.type = 'POST';
+                    
+                        API_HELPER.postData(options, function (error, response) {
+                            if (error) {
+                                        console.log('error', error);
+                                        return;
+                            }
+                        });
+                    
+                   MENU_HELPER.menuClick('manageTrip', 'manageTrip');
                 });
 
                   $(rowElement).find('.reject-bid').click(function() {
@@ -73,6 +87,7 @@ $(document).ready(function () {
                                             return;
                                 }
                             });
+                            MENU_HELPER.menuClick('manageTrip', 'manageTrip', {extraHref: record._id});
                 });
             }
             // click: function() {
@@ -177,7 +192,7 @@ $(document).ready(function () {
             var options = {};
             options.formData = JSON.stringify({ tripDetails : record});
             options.uri = "trips/service/setStatus";
-            options.extraHref = "id="+record._id+"&status=Paymentpending";
+            options.extraHref = "id="+record._id+"&status=PaymentPending";
             options.type = 'POST';
             
                 API_HELPER.postData(options, function (error, response) {
@@ -222,14 +237,20 @@ $(document).ready(function () {
              case 'PaymentMade':
             options = [{'option':'Docs','_id':id,'id':'docs-trip'},
                     {'option':'Comments','_id':id,'id':'comments-trip'},
-                    {'option':'Details','_id':id,'id':'viewdetails'},
-                    {'option':'Approve','_id':id,'id':'approvepayment'}];
+                    {'option':'Details','_id':id,'id':'viewdetails'}];
+                    if(loggedInUser.role === 'CALL_CENTER_USER'){
+                        options.push({'option':'Approve','_id':id,'id':'approvepayment'});       
+                    }         
             break; 
             case 'PaymentApproved':
             options = [{'option':'Docs','_id':id,'id':'docs-trip'},
                     {'option':'Comments','_id':id,'id':'comments-trip'},
-                    {'option':'Details','_id':id,'id':'viewdetails'},
-                    {'option':'Assign Truck','_id':id,'id':'assigntruck'}];
+                    {'option':'Details','_id':id,'id':'viewdetails'}];
+
+                    if(loggedInUser.role === 'CALL_CENTER_USER'){
+                        options.push({'option':'Assign Truck','_id':id,'id':'assigntruck'});       
+                    }            
+                    
             break;
             case 'Running':
             options = [{'option':'Details','_id':id,'id':'viewdetails'},

@@ -55,7 +55,7 @@ $(document).ready(function () {
             },
             beforeSubmit: function () { },//here in all callbacks, this stands for alpaca object
             afterSubmit: function () {
-                MENU_HELPER.menuClick('manageTruck', 'manageTruck');
+                MENU_HELPER.menuClick('manageTrucks', 'manageTrucks');
             },
             onSubmitError: function () { },//on submission if error occurs
             postRender: function () {

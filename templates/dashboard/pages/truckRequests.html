@@ -33,7 +33,7 @@
 <div class="row grid-row">
     <div class="col-sm-4 grid-row-container">
         <div class="grid-row-title">Pickup point:</div>                      
-            {{#with pickup}}
+            {{#with tripDetails.pickup}}
                 {{{exceptOnFirst @index '<hr/>'}}}
                 <div class="row">     
                     <div class="grid-row-tile col-sm-12">                
@@ -52,22 +52,6 @@
                         </div>                            
                     </div>  
                 </div>
-                {{#if contact}}
-                <div class="row"> 
-                     <div class="grid-row-tile col-sm-12">
-                        <span class="grid-row-tile-label">Contact(s)</span>
-                        <div>        
-                            {{#each contact}} 
-                                <div>                                        
-                                     <span class="grid-row-tile-text">
-                                        {{#if firstName}} {{firstName}} {{lastName}} - {{/if}} {{mobile}} {{#if email}} - {{email}} {{/if}} 
-                                    </span>                   
-                                </div>                                                                             
-                            {{/each}}
-                        </div>
-                    </div> 
-                </div> 
-                {{/if}}
                 <div class="row"> 
                      <div class="grid-row-tile col-sm-12">
                         <span class="grid-row-tile-label">Material(s)</span>
@@ -89,7 +73,7 @@
     </div>   
     <div class="col-sm-4 grid-row-container">
         <div class="grid-row-title">Drop point:</div>                      
-            {{#with drop}}
+            {{#with tripDetails.drop}}
                 <div class="row">     
                     <div class="grid-row-tile col-sm-12">                
                         {{#if date}}
@@ -108,37 +92,7 @@
                             </span>                    
                         </div>                            
                     </div>  
-                </div>
-                {{#if contact}}
-                <div class="row"> 
-                     <div class="grid-row-tile col-sm-12">
-                        <span class="grid-row-tile-label">Contact(s)</span>
-                        <div>        
-                            {{#each contact}} 
-                                <div>                                        
-                                     <span class="grid-row-tile-text">
-                                        {{#if firstName}} {{firstName}} {{lastName}} - {{/if}} {{mobile}} {{#if email}} - {{email}} {{/if}} 
-                                    </span>                   
-                                </div>                                                                             
-                            {{/each}}
-                        </div>
-                    </div> 
-                </div> 
-                {{/if}}
-                {{#if itemsToDrop}}
-                <div class="row"> 
-                     <div class="grid-row-tile col-sm-12">
-                        <div>        
-                            <span class="grid-row-tile-label">Items to drop</span>
-                            <span class="grid-row-tile-text">
-                                {{#if itemsToDrop}}
-                                {{commaSeperatedArray itemsToDrop}}                                    
-                                {{/if}}
-                            </span>
-                        </div>
-                    </div> 
-                </div>           
-                {{/if}}                          
+                </div>                        
             {{/with}}                                   
     </div>  
     <div class="col-sm-4 grid-row-container">
@@ -147,7 +101,7 @@
             <div class="grid-row-tile col-sm-12">                
                 <div>
                     <span class="grid-row-tile-text">
-                        {{#with vehicleRequirements}}
+                        {{#with tripDetails.vehicleRequirements}}
                             <div>
                                 {{vehicleType}}
                                 {{#if requiredCapacity}}
@@ -160,7 +114,7 @@
                 </div>                                           
             </div>  
         </div>
-        {{#if totalWeight}}
+        {{#if tripDetails.totalWeight}}
         <div class="grid-row-title">Total Weight:</div> 
          <div class="row">     
             <div class="grid-row-tile col-sm-12">                
@@ -172,30 +126,27 @@
             </div>  
         </div>
         {{/if}}
-        {{#if truckdetails}}            
-        <div class="grid-row-title">Truckdetails:</div>  
-        <div class="row">     
+         <div class="row">     
             <div class="grid-row-tile col-sm-12">                
                 <div>
-                    <span class="grid-row-tile-text">
-                       {{plateNumber}} {{truckType}}
+                    <span class="grid-row-tile-text">  
+                       Advance: {{advance}} Balance: {{balance}} 
                     </span>
                 </div>                                           
-            </div>  
-        </div>
-    {{/if}} 
-        {{#if quotes}}
-            <div class="grid-row-title">Quote:</div> 
-            <div class="row">     
-                <div class="grid-row-tile col-sm-12">                
-                    <div>
-                        <span class="grid-row-tile-text">
-                            {{quotes.cost}} 
-                        </span>
-                    </div>                                           
-                </div>  
             </div>
-        {{/if}}
+         </div>
+       {{#if comment}}
+       <div class="grid-row-title">Comment:</div> 
+       <div class="row">     
+          <div class="grid-row-tile col-sm-12">                
+              <div>
+                  <span class="grid-row-tile-text">  
+                      {{comment}} 
+                  </span>
+              </div>                                           
+          </div>  
+      </div>
+      {{/if}}
         <div class="grid-row-title">Status:</div> 
          <div class="row">     
             <div class="grid-row-tile col-sm-12">                

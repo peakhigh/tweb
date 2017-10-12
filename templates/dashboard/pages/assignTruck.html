@@ -75,7 +75,7 @@ dt{display:block;float:left;text-align:left}dt:after{content:':'}.top-buffer{mar
                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                            &times;
                        </button>
-                       <h4 class="modal-title" id="myModalLabel">Are you sure?</h4>
+                       <h4 class="modal-title" id="myModalLabel">Send Request</h4>
                    </div>
                    <div class="modal-body myModalclass">
                    </div>
@@ -94,6 +94,6 @@ dt{display:block;float:left;text-align:left}dt:after{content:':'}.top-buffer{mar
   {{{{/raw-helper}}}}
 {{{{raw-helper}}}}
 <script type="text/javascript">
-    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();new GRID_HELPER.GRID(".assign-trucks-content",{gridData:e,drawSort:!1,gridId:"gridAssignTrucks",rowConfig:{template:"grid-row-template-details",optionsTemplate:"grid-row-options-template",optionsPostRender:function(e,t){$(e).find(".sendrequest").click(function(){sendRequest(t)})}}});sendRequest=function(t){var a=$("#sendrequestmodal").html(),r=Handlebars.compile(a);$("body").append(r()),$("#sendrequestmodalid").modal({show:!0,background:!0}),$(".myModalclass").alpaca({schema:{type:"object",properties:{advance:{title:"Adavance",type:"number"},balance:{title:"Balance",type:"number",required:!0},comment:{title:"Comment",type:"string",required:!1}}},options:{fields:{comment:{type:"textarea"}},form:{buttons:{submit:{title:"Submit",click:function(){var a=this.getValue();a.tripid=e._id,a.truckid=t._id,a.toUser=t.createdBy;var r={};r.formData=JSON.stringify(a),r.uri="requests/service/addRequest",r.type="POST",API_HELPER.postData(r,function(e,t){return e?void console.log("error",e):void MENU_HELPER.menuClick("manageTrip","manageTrip")}),$("#sendrequestmodalid").modal("hide")}}}}}})}});
+    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();new GRID_HELPER.GRID(".assign-trucks-content",{gridData:e,drawSort:!1,gridId:"gridAssignTrucks",rowConfig:{template:"grid-row-template-details",optionsTemplate:"grid-row-options-template",optionsPostRender:function(e,t){$(e).find(".sendrequest").click(function(){sendRequest(t)})}}});sendRequest=function(t){var a=$("#sendrequestmodal").html(),n=Handlebars.compile(a);$("body").append(n()),$("#sendrequestmodalid").modal({show:!0,background:!0}),$(".myModalclass").alpaca({schema:{type:"object",properties:{advance:{title:"Advance",type:"number"},balance:{title:"Balance",type:"number",required:!0},comment:{title:"Comment",type:"string",required:!1}}},options:{fields:{comment:{type:"textarea"}},form:{buttons:{submit:{title:"Submit",click:function(){var a=this.getValue();a.tripDetails=e._id,a.toUser=t.createdBy;var n={};n.formData=JSON.stringify(a),n.uri="requests/service/addRequest",n.type="POST",API_HELPER.postData(n,function(e,t){return e?void console.log("error",e):void MENU_HELPER.menuClick("manageTrip","manageTrip")}),$("#sendrequestmodalid").modal("hide")}}}}}})}});
 </script>
 {{{{/raw-helper}}}}

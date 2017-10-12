@@ -90,7 +90,22 @@
         if (API_HELPER.testToken()) {
             MODULE_DATA.loggedIn = true;
             MODULE_DATA.loggedInUser = API_HELPER.getLoggedInUser();
-            console.log(MODULE_DATA.loggedInUser);
+            
+            //filter out unnecessary menu
+            if(MODULE_DATA.loggedInUser.role === 'CALL_CENTER_USER' && API_HELPER.getViewAsUser()
+                        !==null){
+                 var menu = [];           
+                for (var key in MODULE_DATA.loggedInUser.menu.SideMenu) {                            
+                 if(typeof MODULE_DATA.loggedInUser.menu.SideMenu[key].type!='undefined' &&
+                     MODULE_DATA.loggedInUser.menu.SideMenu[key].type!=API_HELPER.getViewAsUser().userType){
+                     continue;   
+                    }         
+                    menu.push(MODULE_DATA.loggedInUser.menu.SideMenu[key]);  
+                }
+                MODULE_DATA.loggedInUser.menu.SideMenu = [];
+                MODULE_DATA.loggedInUser.menu.SideMenu = menu.slice(0);
+            }
+            
         } else {
             window.location = '/';
         }   
