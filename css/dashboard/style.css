@@ -1,6 +1,6 @@
 /*!
  * Start Bootstrap - Agency v3.3.7+1 (http://startbootstrap.com/template-overviews/agency)
- * Copyright 2013-2017 Start Bootstrap
+ * Copyright 2013-2018 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
 /*!
@@ -58,6 +58,37 @@ footer {
   #page-wrapper {
     padding: 10px;
   }
+}
+.currentuser {
+  position: fixed;
+  z-index: 10;
+  right: 0;
+  margin-right: 10px;
+}
+.img-wrap {
+  position: relative;
+  display: inline-block;
+  /*     border: 1px red solid; */
+  font-size: 0;
+}
+.img-wrap .close {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  z-index: 100;
+  background-color: #FF0000;
+  padding: 5px 2px 2px;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  opacity: .2;
+  text-align: center;
+  font-size: 22px;
+  line-height: 10px;
+  border-radius: 50%;
+}
+.img-wrap:hover .close {
+  opacity: 1;
 }
 /* Top Navigation */
 .top-nav {
@@ -432,4 +463,9 @@ ul.alert-dropdown {
 .btn-default:focus {
   background-color: #fed136;
   border-color: #fed136;
+}
+#top-alert {
+  vertical-align: middle;
+  top: 0;
+  z-index: 99999;
 }

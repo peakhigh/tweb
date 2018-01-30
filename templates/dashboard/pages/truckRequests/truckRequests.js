@@ -11,7 +11,10 @@ $(document).ready(function () {
             optionsPostRender: function(rowElement, record) {
 
                 $(rowElement).find('.approve-trip').click(function() {
-                    MENU_HELPER.menuClick('acceptTripReq', 'manageTrip', {extraHref: record._id});
+                    var options = {};
+                  //  options.extraHref = record._id;
+                    options.data = record;
+                    MENU_HELPER.menuClick('acceptTripReq', 'manageTrip', options);
                 });
 
                 $(rowElement).find('.reject-trip').click(function() {

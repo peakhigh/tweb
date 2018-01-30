@@ -51,15 +51,15 @@
                         <div class="grid-row-tile col-sm-12">                
                             <div>
                                 <span class="grid-row-tile-label">Date & time</span>
-                                <span class="grid-row-tile-text">{{date}}</span>
+                                <span class="grid-row-tile-text">{{formatDate date}}</span>
                             </div>
                             <div>
                                 <span class="grid-row-tile-label">Address</span>
                                 <span class="grid-row-tile-text">
-                                    {{#if address.organisation}} {{address.organisation}}, {{/if}}
-                                    {{#if address.city}} {{address.city}}, {{/if}}
+                                    {{#if address.organisation}} {{address.organisation}} {{/if}}
+                                    {{#if address.city}} {{address.city}} {{/if}}
                                     {{#if address.location}}
-                                    {{address.location}}, {{/if}} {{#if address.zip}}{{address.zip}}.{{/if}}
+                                    {{address.location}} {{/if}} {{#if address.zip}}{{address.zip}}.{{/if}}
                                 </span>                    
                             </div>                            
                         </div>  
@@ -107,16 +107,16 @@
                             {{#if date}}
                             <div>
                                 <span class="grid-row-tile-label">Date & time</span>
-                                <span class="grid-row-tile-text">{{date}}</span>
+                                <span class="grid-row-tile-text">{{formatDate date}}</span>
                             </div>
                             {{/if}}
                             <div>
                                 <span class="grid-row-tile-label">Address</span>
                                 <span class="grid-row-tile-text">
-                                    {{#if address.organisation}} {{address.organisation}}, {{/if}}
-                                    {{#if address.city}} {{address.city}}, {{/if}}
+                                    {{#if address.organisation}} {{address.organisation}} {{/if}}
+                                    {{#if address.city}} {{address.city}} {{/if}}
                                     {{#if address.location}}
-                                    {{address.location}}, {{/if}} {{#if address.zip}}{{address.zip}}.{{/if}}
+                                    {{address.location}} {{/if}} {{#if address.zip}}{{address.zip}}.{{/if}}
                                 </span>                    
                             </div>                            
                         </div>  

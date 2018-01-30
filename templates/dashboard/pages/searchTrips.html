@@ -17,7 +17,7 @@
                         <div class="grid-row-tile col-sm-12">                
                             <div>
                                 <span class="grid-row-tile-label">Date & time</span>
-                                <span class="grid-row-tile-text">{{date}}</span>
+                                <span class="grid-row-tile-text">{{formatDate date}}</span>
                             </div>
                             <div>
                                 <span class="grid-row-tile-label">Address</span>
@@ -69,7 +69,7 @@
                         <div class="grid-row-tile col-sm-12">                
                             <div>
                                 <span class="grid-row-tile-label">Date & time</span>
-                                <span class="grid-row-tile-text">{{date}}</span>
+                                <span class="grid-row-tile-text">{{formatDate date}}</span>
                             </div>
                             <div>
                                 <span class="grid-row-tile-label">Address</span>
@@ -191,7 +191,7 @@
         <div class="col-sm-12 grid-row-container">
             <span class="grid-row-title">Pickup</span> at 
             {{#each pickup}}
-                {{address.street}}, {{address.city}} on {{date}}
+                {{address.street}}, {{address.city}} on {{formatDate date}}
                 {{{exceptOnFirst @index ','}}}
                 (<span class="grid-row-title">Contact:</span>             
                 {{#each contact}} 
@@ -207,7 +207,7 @@
             <br/>
             <span class="grid-row-title">Drop</span> at 
             {{#each drop}}
-                {{address.city}} on {{date}}
+                {{address.city}} on {{formatDate date}}
                 {{{exceptOnFirst @index ','}}}
                 (<span class="grid-row-title">Contact:</span> 
                  {{#each contact}}                  

@@ -5,11 +5,28 @@
            <!--      <li class="dropdown nav-item active">
                         <a class="nav-link dropdown-toggle" href="javascript:;" id="dropdownMenu4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-envelope"></i> <b class="caret"></b><span class="sr-only">(current)</span></a>
                         {{> messagemenu}}
-                </li>
-                <li class="dropdown nav-item">
-                        <a href="javascript:;" class="nav-link dropdown-toggle" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell"></i> <b class="caret"></b><span class="sr-only">(current)</span></a>
-                        {{> alertmenu}}                       
                 </li> -->
+                <li class="dropdown nav-item">
+                        {{#ifEquals loggedInUser.role "CALL_CENTER_USER"}}
+                        {{#if (getViewAsUser)}}   
+                               <!--  <a href="javascript:MENU_HELPER.clearViewAsSelection();" class="nav-link" 
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-trash-o"></i> <b class="caret"></b>Clear</a> -->
+                        <!-- {{> alertmenu}}    -->
+
+                           <div id="top-alert" class="alert alert-danger align-middle" role="alert">
+                                <button onclick="javascript:MENU_HELPER.clearViewAsSelection();" type="button" class="close" data-dismiss="alert">×</button>
+                                Viewing As <strong>Leelakrishna kantamenni</strong> 
+                              </div>
+
+                        {{else}}
+                         <a href="javascript:MENU_HELPER.showViewAsPopUp();" class="nav-link" 
+                        aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-user-plus"></i> <b class="caret"></b>View As</a>  
+                        {{> alertmenu}}
+                        {{/if}}  
+                        {{/ifEquals}}                    
+                </li> 
                 <li class="dropdown nav-item">
                     <a href="javascript:;" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{ loggedInUser.name }} <b class="caret"></b></a>
                         {{> usermenu}}

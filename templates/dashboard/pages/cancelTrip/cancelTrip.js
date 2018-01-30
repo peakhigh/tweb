@@ -11,7 +11,7 @@ $(document).ready(function () {
         schemaOverride: {
             fields: {
                 comments: {   
-                    title: "Reason:",
+                    title: "",
                     items: {
                         properties: {
 
@@ -23,10 +23,11 @@ $(document).ready(function () {
         optionsOverride: {
             fields: {
                 comments: {
-                      type: "textarea"
-                   /* items: {
+                    toolbarSticky: false,
+                    items: {
                         fields: {
                             comment: {
+                                title:"Comment:",
                                 type: "textarea"
                             } ,
                             date: {
@@ -36,11 +37,10 @@ $(document).ready(function () {
                             commentedby: {
                                 type: "text",
                                 hidden: true,
-                                default: "truck_admin"
-                             //   default: API_HELPER.getLoggedInUser().username
+                                default: API_HELPER.getLoggedInUser().username
                             } 
                         }
-                    } */
+                    } 
                 },
                 status: {
                     default: "Cancelled",

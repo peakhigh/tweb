@@ -1,13 +1,8 @@
-console.log('template data', UTILS.getCurrentTemplateData());
+console.log('template data acceptTripReq', UTILS.getCurrentTemplateData());
 
 $(document).ready(function () {
     var config = UTILS.getCurrentTemplateData();
-    FORM_HELPER.draw(".reject-trip-content", config, {
-        bindings: {
-            truckid: "column-1",
-            driverid: "column-1",
-            comment: "column-1",
-        },
+    FORM_HELPER.draw(".accept-trip-content", config, {
         schemaOverride: {
             fields: {
             }

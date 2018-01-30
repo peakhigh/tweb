@@ -1,22 +1,6 @@
 {{> navbar}}
 <div id="page-wrapper">
-        {{#ifEquals loggedInUser.role "CALL_CENTER_USER"}}
-        <div class="currentuser" >
-                    {{#if (getViewAsUser)}}          
-                           <!--  {{this.userType}} -->
-                            <div class="img-wrap">
-                              <span class="close">&times;</span>
-                            <a class="btn btn-large" href="#" data-toggle="tooltip" data-placement="bottom" title='{{getViewAsUser}}'>
-                                <i class="fa fa-user-circle fa-3x" aria-hidden="true"></i>
-                            </a>
-                          </div>
-                     {{else}}
-                         <a class="btn btn-large" href="#" data-toggle="modal" data-target="#myModal">
-                                <i class="fa fa-user-circle fa-3x" aria-hidden="true"></i>
-                        </a> 
-                    {{/if}}  
-        </div>  
-        {{/ifEquals}}
+     
     <div class="container-fluid">      
         <div id="content-wrapper">  
              {{> (whichPage)}}
@@ -37,6 +21,7 @@
         </div>
       </div>
 </div>
+
 {{> footer}}
 
 <!-- Theme JavaScript -->

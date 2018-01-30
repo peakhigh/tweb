@@ -39,7 +39,7 @@
                     <div class="grid-row-tile col-sm-12">                
                         <div>
                             <span class="grid-row-tile-label">Date & time</span>
-                            <span class="grid-row-tile-text">{{date}}</span>
+                            <span class="grid-row-tile-text">{{formatDate date}}</span>
                         </div>
                         <div>
                             <span class="grid-row-tile-label">Address</span>
@@ -79,7 +79,7 @@
                         {{#if date}}
                         <div>
                             <span class="grid-row-tile-label">Date & time</span>
-                            <span class="grid-row-tile-text">{{date}}</span>
+                            <span class="grid-row-tile-text">{{formatDate date}}</span>
                         </div>
                         {{/if}}
                         <div>
@@ -177,6 +177,6 @@
 {{{{/raw-helper}}}}
 {{{{raw-helper}}}}
 <script type="text/javascript">
-    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();new GRID_HELPER.GRID(".truck-requests-content",{gridData:e,gridId:"gridTruckRequests",rowConfig:{template:"grid-row-template-details",optionsTemplate:"grid-row-options-template",optionsEvent:"mouseover",optionsPostRender:function(e,t){$(e).find(".approve-trip").click(function(){MENU_HELPER.menuClick("acceptTripReq","manageTrip",{extraHref:t._id})}),$(e).find(".reject-trip").click(function(){MENU_HELPER.menuClick("rejectTripReq","manageTrip",{extraHref:t._id})})}},sortConfig:{multiple:!1,options:[{title:"Pickup Date",key:"pickup.date",selected:!0,order:"desc"},{title:"Drop Date",key:"drop.date"},{title:"Material Value",key:"pickup.material.approximateCost"}]},filterConfig:{type:"default",order:[],formOptions:{bindings:{"pickup.date_start":"column-1","pickup.date_end":"column-2","drop.date_start":"column-1","drop.date_end":"column-2",status:"column-1"},schemaOverride:{fields:{"pickup.date":{title:"Pickup Date",format:"date",rangeField:!0},"drop.date":{title:"Drop Date",format:"date",rangeField:!0},status:{"default":"Running"}}},optionsOverride:{fields:{"pickup.date_start":{order:1},"pickup.date_end":{order:2},"drop.date_start":{order:3},"drop.date_end":{order:4},status:{order:5}}}}}});statusChanged=function(e){var t={data:{status:e}};MENU_HELPER.menuClick("truckRequests","manageTrucks",t)},Handlebars.registerHelper("getGridOptions",function(e,t){var r=[];API_HELPER.getLoggedInUser();switch(e){case"Pending":r=[{option:"approveTrip",_id:t,id:"approve-trip"},{option:"rejectTrip",_id:t,id:"reject-trip"}];break;case"Approved":r=[];break;case"Rejected":r=[]}return r})});
+    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();new GRID_HELPER.GRID(".truck-requests-content",{gridData:e,gridId:"gridTruckRequests",rowConfig:{template:"grid-row-template-details",optionsTemplate:"grid-row-options-template",optionsEvent:"mouseover",optionsPostRender:function(e,t){$(e).find(".approve-trip").click(function(){var e={};e.data=t,MENU_HELPER.menuClick("acceptTripReq","manageTrip",e)}),$(e).find(".reject-trip").click(function(){MENU_HELPER.menuClick("rejectTripReq","manageTrip",{extraHref:t._id})})}},sortConfig:{multiple:!1,options:[{title:"Pickup Date",key:"pickup.date",selected:!0,order:"desc"},{title:"Drop Date",key:"drop.date"},{title:"Material Value",key:"pickup.material.approximateCost"}]},filterConfig:{type:"default",order:[],formOptions:{bindings:{"pickup.date_start":"column-1","pickup.date_end":"column-2","drop.date_start":"column-1","drop.date_end":"column-2",status:"column-1"},schemaOverride:{fields:{"pickup.date":{title:"Pickup Date",format:"date",rangeField:!0},"drop.date":{title:"Drop Date",format:"date",rangeField:!0},status:{"default":"Running"}}},optionsOverride:{fields:{"pickup.date_start":{order:1},"pickup.date_end":{order:2},"drop.date_start":{order:3},"drop.date_end":{order:4},status:{order:5}}}}}});statusChanged=function(e){var t={data:{status:e}};MENU_HELPER.menuClick("truckRequests","manageTrucks",t)},Handlebars.registerHelper("getGridOptions",function(e,t){var r=[];API_HELPER.getLoggedInUser();switch(e){case"Pending":r=[{option:"approveTrip",_id:t,id:"approve-trip"},{option:"rejectTrip",_id:t,id:"reject-trip"}];break;case"Approved":r=[];break;case"Rejected":r=[]}return r})});
 </script>
 {{{{/raw-helper}}}}

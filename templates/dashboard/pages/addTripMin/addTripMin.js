@@ -102,7 +102,15 @@ $(document).ready(function () {
             fields: {
                 pickup: {
                     order: 1,
-                    items: {
+                    fields:{
+                        date: {
+                            picker: {
+                                "sideBySide": true,
+                            },
+                            dateFormat: "YYYY-MM-DD HH:mm:ss"
+                        }
+                     }
+                    /* items: {
                         fields: {
                             material: {
                                 items: {
@@ -117,12 +125,26 @@ $(document).ready(function () {
                                         }
                                     }
                                 }
+                            },
+                            date:{
+                                "picker": {
+                                    "sideBySide": true,
+                                },
+                                "dateFormat": "YYYY-MM-DD HH:mm:ss"
                             }
                         }
-                    }
+                    } */
                 },
                 drop: {
-                    order: 2
+                    order: 2,
+                    fields:{
+                        date: {
+                            picker: {
+                                "sideBySide": true,
+                            },
+                            dateFormat: "YYYY-MM-DD HH:mm:ss"
+                        }
+                     }
                 },
                 vehicleRequirements: {
                     order: 3
@@ -169,4 +191,26 @@ $(document).ready(function () {
             }   
         } */
     });
+
+
+    $("#loadPrevious").alpaca({
+        "data": "coffee",
+        "schema": {
+            "enum": ["vanilla", "chocolate", "coffee", "strawberry", "mint"]
+        },
+        "options": {
+            "label": "Load From Previous?",
+            "helper": "Get the data from previous trips",
+            "optionLabels": ["Vanille", "Chocolat", "Café", "Fraise", "Comme"],
+            "sort": function(a, b) {
+                if (a.text > b.text) {
+                    return -1;
+                } else if (a.text < b.text) {
+                    return 1;
+                }
+                return 0;
+            }
+        }
+    });
+
 });
