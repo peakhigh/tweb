@@ -30,6 +30,12 @@ $(document).ready(function () {
                         unLoadingPerTon: {
                             dependencies: "quotetype",
                             required: true
+                        },
+                        defaultForPeriod: {
+                            title:"",
+                            fields:{
+
+                            }
                         }
                     }
                 }

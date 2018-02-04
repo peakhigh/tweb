@@ -60,8 +60,7 @@ function initializeItemsToDropInEditMode(config) {
     }
 }
 
-$(document).ready(function () {
-    var config = UTILS.getCurrentTemplateData();
+function drawTripsForm(config){
     FORM_HELPER.draw(".new-trips-content", config, {
         // type: config.data ? 'edit' : 'create',
          bindings: {
@@ -125,12 +124,6 @@ $(document).ready(function () {
                                         }
                                     }
                                 }
-                            },
-                            date:{
-                                "picker": {
-                                    "sideBySide": true,
-                                },
-                                "dateFormat": "YYYY-MM-DD HH:mm:ss"
                             }
                         }
                     } */
@@ -192,8 +185,37 @@ $(document).ready(function () {
         } */
     });
 
+}
 
-    $("#loadPrevious").alpaca({
+$(document).ready(function () {
+    var config = UTILS.getCurrentTemplateData();
+  
+    drawTripsForm(config);
+    
+    var previousTrips = [];
+    var options={};
+    options.uri = "trips/service/getPreviousTrips";
+    options.extraHref = "limit=3";
+    options.type = 'GET';
+    
+     API_HELPER.postData(options,function (error, response) {
+        if (error) {
+                   console.log('error', error);
+                   return;
+         }
+         previousTrips = response.data;
+      }); 
+
+
+      $('input:checkbox').change(function(){
+        if($(this).is(':checked')){
+            $('#newtripscontainer').alpaca('get').setValue(previousTrips[0]);
+        } else {
+            $('#newtripscontainer').alpaca('get').setValue(config);
+        }
+    });
+    
+/*      $("#loadPrevious").alpaca({
         "data": "coffee",
         "schema": {
             "enum": ["vanilla", "chocolate", "coffee", "strawberry", "mint"]
@@ -211,6 +233,6 @@ $(document).ready(function () {
                 return 0;
             }
         }
-    });
+    }); */ 
 
 });

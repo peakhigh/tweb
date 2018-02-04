@@ -16,14 +16,14 @@
 
                            <div id="top-alert" class="alert alert-danger align-middle" role="alert">
                                 <button onclick="javascript:MENU_HELPER.clearViewAsSelection();" type="button" class="close" data-dismiss="alert">×</button>
-                                Viewing As <strong>Leelakrishna kantamenni</strong> 
+                                Viewing As &nbsp;<strong>{{getViewAsUser}}</strong>&nbsp; 
                               </div>
 
                         {{else}}
                          <a href="javascript:MENU_HELPER.showViewAsPopUp();" class="nav-link" 
                         aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-user-plus"></i> <b class="caret"></b>View As</a>  
-                        {{> alertmenu}}
+                        <!-- {{> alertmenu}} -->
                         {{/if}}  
                         {{/ifEquals}}                    
                 </li> 
