@@ -147,7 +147,8 @@ function drawTripsForm(config){
         callbacks: {
             preRender: function (config) {//before drawing alpaca dom form - used to adjust the config 
             },
-            beforeSubmit: function () { },//here in all callbacks, this stands for alpaca object
+            beforeSubmit: function () { 
+            },//here in all callbacks, this stands for alpaca object
             afterSubmit: function () {
                 MENU_HELPER.menuClick('manageTrip', 'manageTrip');
             },

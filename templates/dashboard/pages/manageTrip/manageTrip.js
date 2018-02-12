@@ -170,12 +170,15 @@ $(document).ready(function () {
     });
 
     statusChanged = function(newStatus){
+        
         var options = {
             data : {
                 status: newStatus
             }
         };
-//        $(".dropdown").find(".btn BtnCaption").text(newStatus);
+        if(newStatus === 'All'){
+            options.data = {};   
+        }
         MENU_HELPER.menuClick('manageTrip','manageTrip',options);
     }
 
@@ -195,18 +198,34 @@ $(document).ready(function () {
             options.extraHref = "id="+record._id+"&status=PaymentPending";
             options.type = 'POST';
             
-                API_HELPER.postData(options, function (error, response) {
+            setDefaultQuote(record);
+            
+            API_HELPER.postData(options, function (error, response) {
                     if (error) {
                                 console.log('error', error);
                                 return;
                     }
                     MENU_HELPER.menuClick('paymentPending', 'manageTrip', {extraHref: record._id});
                 }); 
-
-                $('#viewquotesmodalid').modal('hide');   
+             $('#viewquotesmodalid').modal('hide');   
         });
    }
+
+   setDefaultQuote = function(record){
+    var options = {};
+    options.formData = JSON.stringify({ tripDetails : record});
+    options.uri = "trips/service/setDefaultQuote";
+    options.type = 'POST';
+    
+        API_HELPER.postData(options, function (error, response) {
+            if (error) {
+                        console.log('error', error);
+                        return;
+            }
+        }); 
+   }
 });
+
 
  Handlebars.registerHelper('getGridOptions', function(status,id) {
        var options = [];

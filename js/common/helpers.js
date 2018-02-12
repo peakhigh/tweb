@@ -114,8 +114,8 @@ Handlebars.registerHelper('getViewAsUser', function() {
     return API_HELPER.getViewAsUser()?API_HELPER.getViewAsUser().userName:null;
 });
 
-Handlebars.registerHelper('formatDate', function(date) {
-    return moment.utc(date).format("DD-MM-YYYY HH:mm:ss");
+Handlebars.registerHelper('formatDate', function(date) {  
+        return moment.utc(date).format("DD-MM-YYYY HH:mm:ss");
 });
 
 Handlebars.registerHelper('getIcon', function(mimetype) {

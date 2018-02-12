@@ -14,4 +14,5 @@ $(document).ready(function () {
         }
         MENU_HELPER.menuClick(page, page, extras);
     }
+
 });

@@ -88,9 +88,12 @@ API_HELPER = new function() {
          });  */
     }
     this.postData = function(options,callback){
-
+        var uri = CONSTANTS.apiServer + options.uri;
+        if(options.extraHref){
+            uri = uri + "?" + options.extraHref;
+        }
         $.ajax({
-            url: CONSTANTS.apiServer + options.uri + "?"+ options.extraHref,
+            url: uri,
             data: options.formData,
             type: options.type,    
             dataType: 'json',  

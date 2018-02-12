@@ -308,7 +308,6 @@ FORM_HELPER = new function (options) {
             } else {//type=string/date/object/ etc  
                 if (typeof schema[key] === 'object') {
                     schema[key].type = schema[key].type.toLowerCase();
-
                     //default for all types
                     if (!options[key]) {
                         options[key] = {};

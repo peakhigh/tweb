@@ -36,6 +36,9 @@ $(document).ready(function () {
                 status: newStatus
             }
         };
+        if(newStatus === 'All'){
+            options.data = {};   
+        }
         MENU_HELPER.menuClick('manageDrivers','manageDrivers',options);
     }
 

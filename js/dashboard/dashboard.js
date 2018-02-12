@@ -15,5 +15,30 @@ $(function() {
             $("#page-wrapper").css("min-height", (height) + "px");            
         }
     }
-    setPageHeight();
+    setPageHeight();    
+
+   /*  window.onhashchange = function(e) {
+        console.log(e);
+        if (window.innerDocClick) {
+            //Your own in-page mechanism triggered the hash change
+            console.log('browserclick');
+        } else {
+            //Browser back button was clicked
+            console.log('Browser clicked..');
+        }
+
+        var baseURL = "dashboard.html#";
+        var oldURL = e.oldURL.split('#')[1];
+        var newURL = e.newURL.split('#')[1];
+
+        
+        if(!newURL){
+            newURL = "home";
+        }
+     //   MENU_HELPER.menuClick(newURL, oldURL);
+        e.preventDefault();
+         
+        console.log("back button...",oldURL,newURL);
+        return false;    
+    } */
 });

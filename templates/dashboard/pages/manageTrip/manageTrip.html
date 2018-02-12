@@ -13,14 +13,15 @@
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             
+                            <a class="dropdown-item" href="javascript:statusChanged('All');">All</a>
                             <a class="dropdown-item" href="javascript:statusChanged('New');">New Trips</a>
                             <a class="dropdown-item" href="javascript:statusChanged('Quoted');">Quoted</a>
                             <a class="dropdown-item" href="javascript:statusChanged('PaymentPending');">Payment Pending</a>
                             <a class="dropdown-item" href="javascript:statusChanged('PaymentMade');">Payment Made</a>
-                             {{#ifEquals (getLoggedInRole) "CALL_CENTER_USER"}}
+                           <!--   {{#ifEquals (getLoggedInRole) "CALL_CENTER_USER"}} -->
                             <!-- <a class="dropdown-item" href="javascript:statusChanged('Paymentreceived');">Payment Received</a> -->
-                            <a class="dropdown-item" href="javascript:statusChanged('PaymentApproved');">Payment Approved</a>
-                            {{/ifEquals}} 
+                            <a class="dropdown-item" href="javascript:statusChanged('Approved');">Approved</a>
+                     <!--        {{/ifEquals}}  -->
                             <a class="dropdown-item" href="javascript:statusChanged('Running');">Running</a>
                             <a class="dropdown-item" href="javascript:statusChanged('Assigned');">Assigned</a>
                             <a class="dropdown-item" href="javascript:statusChanged('Successful');">Successful</a>
@@ -30,6 +31,14 @@
     
                     </li>
                 </ol>
+
+                <div class="container">
+                    <ol class="breadcrumb breadcrumb-arrow">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Library</a></li>
+                        <li class="active"><span>Data</span></li>
+                    </ol>
+                </div>
             
         </div>
     </div>
@@ -217,7 +226,12 @@
                     <div class="grid-row-tile col-sm-12">                
                         <div>
                             <span class="grid-row-tile-text">
-                                {{quotes.cost}} 
+                                  Quote Type: {{quotes.quotetype}}<br>
+                                  Total Cost: {{quotes.cost}} <br>
+                                   {{#if quotes.startDate}}
+                                       Same cost: {{formatDate quotes.startDate}}
+                                     to {{formatDate quotes.endDate}} 
+                                  {{/if}} 
                             </span>
                         </div>                                           
                     </div>  
