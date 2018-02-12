@@ -261,7 +261,7 @@ $(document).ready(function () {
                         options.push({'option':'Approve','_id':id,'id':'approvepayment'});       
                     }         
             break; 
-            case 'PaymentApproved':
+            case 'Approved':
             options = [{'option':'Docs','_id':id,'id':'docs-trip'},
                     {'option':'Comments','_id':id,'id':'comments-trip'},
                     {'option':'Details','_id':id,'id':'viewdetails'}];
