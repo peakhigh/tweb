@@ -1,4 +1,7 @@
 {{{{raw-helper}}}}
+<style>
+.alpaca-field-object{border:0 solid #eee;border-radius:0;padding:10px}
+</style>
 {{{{/raw-helper}}}}
 {{> header}}
 <div class='trip-payment'>
@@ -10,12 +13,11 @@
 {{{{raw-helper}}}}
 <script id="cost" type="text/x-handlebars-template">
     <div>
-    <p class="h5">Total cost of the trip is <mark>{{data}}</mark> Rs, this 
-        can be paid in parts (advance or full).<p>
-  Account No:  XXXXXXXXX787,<br>
-  Bank Name:   State Bank of India,<br>
-  Branch:      Vijayawada.<br>
-  IFSC:        SBI004562 <br>
+    <p class="h5">Total cost of the trip is <mark>{{data}}</mark> Rs.<p>
+  <strong>Account No:</strong>  XXXXXXXXX787,<br>
+  <strong>Bank Name:</strong>  State Bank of India,<br>
+  <strong>Branch:</strong>      Vijayawada.<br>
+  <strong>IFSC: </strong>       SBI004562 <br>
         </div>
 </script>
 <script id="tripPayment" type="text/x-handlebars-template">
@@ -34,6 +36,6 @@
 {{{{/raw-helper}}}}
 {{{{raw-helper}}}}
 <script type="text/javascript">
-    console.log("trippayment template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();FORM_HELPER.draw(".trip-payment-content",e,{schemaOverride:{fields:{quotes:{title:"",cost:{}},paymentInfo:{title:"",paymentlog:{maxItems:1,minItems:1,title:"Payment",items:{properties:{}}}}}},optionsOverride:{fields:{paymentInfo:{fields:{paymentlog:{toolbarSticky:!1,items:{fields:{referenceDoc:{type:"file"},modeOfPayment:{hideNone:!0}}}}}}}},callbacks:{preRender:function(e){},beforeSubmit:function(){},afterSubmit:function(){MENU_HELPER.menuClick("manageTrip","manageTrip")},onSubmitError:function(){},postRender:function(){}},postUrl:"trips/service/tripPayment",view:{parent:"bootstrap-edit-horizontal",fields:{"/quotes/cost":{templates:{control:"#cost"}}}}})});
+    console.log("trippayment template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();console.log(e),FORM_HELPER.draw(".trip-payment-content",e,{schemaOverride:{fields:{quotes:{title:"",cost:{}},paymentInfo:{title:"",paymentlog:{maxItems:1,minItems:1,title:"Payment",items:{properties:{}}}}}},optionsOverride:{fields:{paymentInfo:{fields:{paymentlog:{toolbarSticky:!1,items:{fields:{referenceDoc:{type:"file"},modeOfPayment:{hideNone:!0}}}}}}}},callbacks:{preRender:function(e){},beforeSubmit:function(){},afterSubmit:function(){MENU_HELPER.menuClick("manageTrip","manageTrip")},onSubmitError:function(){},postRender:function(){}},postUrl:"trips/service/tripPayment",view:{parent:"bootstrap-edit-horizontal",fields:{"/quotes/cost":{templates:{control:"#cost"}}}}})});
 </script>
 {{{{/raw-helper}}}}

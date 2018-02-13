@@ -1,5 +1,5 @@
 API_HELPER = new function() {
-    this.login = function(uname, pass) {
+    this.login = function(uname, pass,callback) {
         $.ajax({
             url: CONSTANTS.apiServer + 'auth/login',
             data: {
@@ -11,9 +11,11 @@ API_HELPER = new function() {
             success: function (response) {  
                 API_HELPER.setToken(response);   
                 window.location = '/dashboard.html';                             
+                callback(null,response);
             },
             error: function (e) {
                 console.log(e);
+                callback(e,null);
             }
         });
     }

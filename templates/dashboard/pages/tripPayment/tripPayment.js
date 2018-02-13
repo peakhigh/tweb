@@ -30,18 +30,18 @@ $(document).ready(function () {
                 paymentInfo: {
                     fields: {
                      paymentlog:{   
-                    toolbarSticky: false,
-                    items:{
-                        fields: {
-                    referenceDoc: {
-                        type: "file"
-                    },
-                    modeOfPayment: {
-                        hideNone: true
-                    }
+                        toolbarSticky: false,
+                        items:{
+                            fields: {
+                                referenceDoc: {
+                                    type: "file"
+                                },
+                                modeOfPayment: {
+                                    hideNone: true
+                                }
+                            }
                         }
                     }
-                }
                   }
                 }
             }

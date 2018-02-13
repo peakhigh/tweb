@@ -49,7 +49,13 @@
 
     $('#login-submit').click(function(e) {        
  		$(e.target).attr('disabled','disabled');
-        API_HELPER.login($('#login-username').val(), $('#login-password').val());
+        API_HELPER.login($('#login-username').val(), $('#login-password').val(),
+                function(error,response){
+                if(error){
+                    $('#alermessage').show();
+                    $(e.target).attr('disabled',false);   
+                }
+        });
 		e.preventDefault();        
         e.stopPropagation();        
 	});
