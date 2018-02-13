@@ -67,7 +67,7 @@ GRID_HELPER = new function () {
             }
             if (me.options.drawSort) {
                 me.sorter = new GRID_HELPER.SORTER($(elementSelector).find('.sort-container'), me.options.sortConfig, function(sortOptions) {
-                    console.log(sortOptions);
+                  //  console.log(sortOptions);
                     var sort = {};
                     if (sortOptions && Array.isArray(sortOptions) && sortOptions.length > 0) {                        
                         sortOptions.forEach(function(entry) {
@@ -187,7 +187,7 @@ GRID_HELPER = new function () {
             $('#' + me.options.gridId).html('');
         }
         me.redraw = function(response) {
-            console.log(response);
+        //    console.log(response);
             me.options.gridData = response;
             $('#' + me.options.gridId).html(me.dataTemplate(me.options));
             me.attachRowHooks();
@@ -472,7 +472,7 @@ GRID_HELPER = new function () {
                                             filters[field] = values[field];
                                         }
                                     }); 
-                                      console.log(filters);
+                                  //    console.log(filters);
                                       if (callback) {
                                         callback(filters);
                                     }
@@ -491,7 +491,7 @@ GRID_HELPER = new function () {
 
             me.getFilterFields(options.gridData.schema, me.filterSchema, (me.formOptions.schemaOverride && me.formOptions.schemaOverride.fields) ? me.formOptions.schemaOverride.fields : {});
             delete me.formOptions.schemaOverride;
-            console.log(me.filterSchema);
+      //      console.log(me.filterSchema);
             if (Object.keys(me.filterSchema).length > 0) {
                 me.options.moreFilters = true;    
             }

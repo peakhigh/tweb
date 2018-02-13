@@ -118,6 +118,14 @@ Handlebars.registerHelper('formatDate', function(date) {
         return moment.utc(date).format("DD-MM-YYYY HH:mm:ss");
 });
 
+
+Handlebars.registerHelper('getBredCrumbStack', function() {  
+    if(MENU_HELPER.getBreadCrumbStack().length>1){
+        return {"data":MENU_HELPER.getBreadCrumbStack()};
+    }
+   return;
+});
+
 Handlebars.registerHelper('getIcon', function(mimetype) {
     var icon = 'fa-file';
     switch (mimetype){

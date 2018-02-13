@@ -4,7 +4,11 @@
         <!--<h1 class="page-header">
             {{pageHeading}}
         </h1>-->
-        
+        {{#if (getBredCrumbStack)}}
+            <div id="breadcrumbid" style="margin-top: 10px;">
+                {{> breadCrumb (getBredCrumbStack)}}
+           </div>
+        {{else}}
             <ol class="breadcrumb" style="margin-top: 10px;">
                 <li class="active">
                     
@@ -27,11 +31,11 @@
                     </div>
                     </div>
                     {{else}}
-                     <i class="fa {{pageIcon}}"></i> {{pageSubHeading}}
+                       <i class="fa {{pageIcon}}"></i> {{pageSubHeading}}
                     {{/ifEquals}}
                 </li>
             </ol>
-        
+            {{/if}}
         
     </div>
 </div>

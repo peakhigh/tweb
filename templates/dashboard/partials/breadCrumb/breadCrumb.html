@@ -1,0 +1,8 @@
+ <div class="container">
+                    <ol class="breadcrumb breadcrumb-arrow">
+                     {{#each data}}  
+                        <li><a href="javascript:MENU_HELPER.removeFromBreadCrumb('{{@index}}');">
+                                {{title}}</a></li> 
+                        {{/each}}
+                    </ol>
+ </div> 

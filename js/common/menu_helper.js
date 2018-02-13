@@ -1,7 +1,7 @@
 MENU_HELPER = new function () {
-
+    breadCrumbStack = [];
     this.menuClick = function (page, parentpage, extraOptions) {
-       //  console.log(page, parentpage, CURRENT_MODULE);
+      //   console.log(page, parentpage, CURRENT_MODULE);
        //  console.log(MODULE_DATA); 
         $("#content-wrapper").html(Handlebars.compile('{{> loading }}')); 
 
@@ -25,7 +25,7 @@ MENU_HELPER = new function () {
                 templateExtension: 'html',
                 partialPath: 'templates/' + CURRENT_MODULE + '/partials',
                 partialExtension: 'html',
-                partials: ['loading']
+                partials: ['loading','breadCrumb']
             });
             var helperData = {};
             helperData.pageHeading = currentPageDetails.title;
@@ -79,8 +79,20 @@ MENU_HELPER = new function () {
                     href += '/' + extraOptions.extraHref;
                 }
             }
-            window.location.href = href;
+            
+           // window.location.href = href;
+           if(extraOptions && extraOptions.skiphistory){
+                   //dont add state..
+           }else{
+                history.pushState(page,null,href)
+           }       
+
+           MENU_HELPER.addToBreadCrumbStack(MODULE_DATA.loggedInUser.menu.SideMenu,page,parentpage);
+        /*        breadCrumbStack.forEach(function(entry) {
+            console.log(entry);
+        });  */
         }
+        
     }
 
     this.setCurrentPageDetails = function (page, parentpage, currentPageDetails) {
@@ -88,6 +100,46 @@ MENU_HELPER = new function () {
         CURRENT_PARENT_PAGE = parentpage;
         CURRENT_PAGE_CONFIG = currentPageDetails;
     }
+    // BreadCrumb methods start
+    this.addToBreadCrumbStack = function(menu,page,parentpage){
+            for (var i = 0; i < menu.length; i++) {
+                if (parentpage && menu[i]['page'] === parentpage) {
+                    return  MENU_HELPER.addToBreadCrumbStack(menu[i].Menu, page);
+                } else if (menu[i]['page'] === page) {
+                    if(menu[i]['hide'] === true){
+                        if(MENU_HELPER.checkTopPageisSame(menu[i]) === false){
+                            breadCrumbStack.push(menu[i]);
+                        }
+                    }else{
+                        breadCrumbStack.length = 0;
+                        breadCrumbStack.push(menu[i]);
+                    }
+                }
+            }
+    }
+    this.checkTopPageisSame = function(currentPage){
+        if(breadCrumbStack.length > 0){
+            var top = breadCrumbStack.length -1 ;
+            var topPage = breadCrumbStack[top];
+            if(topPage.page === currentPage.page){
+                return true;
+            }
+        }
+        return false;
+    }
+    this.removeFromBreadCrumb = function(index){
+        if(index < breadCrumbStack.length -1){
+            for(var i = breadCrumbStack.length -1 ; i>index;i--){
+                breadCrumbStack.pop();
+            }
+            MENU_HELPER.menuClick(breadCrumbStack[index].page,CURRENT_PARENT_PAGE);
+       }
+    }
+
+    this.getBreadCrumbStack = function(){
+        return breadCrumbStack;
+    }
+    // BreadCrumb methods end
 
     this.getMenuItem = function (menu, page, parentpage) {
         for (var i = 0; i < menu.length; i++) {

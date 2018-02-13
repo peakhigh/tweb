@@ -3,6 +3,7 @@ CURRENT_MODULE = 'dashboard';
 CURRENT_PAGE = pageDetails.page;
 CURRENT_PARENT_PAGE = pageDetails.parentPage;
 CURRENT_PAGE_CONFIG = pageDetails.currentPageConfig;
+
 $(function() {
     $(window).bind("load resize", setPageHeight);
 
@@ -17,28 +18,20 @@ $(function() {
     }
     setPageHeight();    
 
-   /*  window.onhashchange = function(e) {
-        console.log(e);
-        if (window.innerDocClick) {
-            //Your own in-page mechanism triggered the hash change
-            console.log('browserclick');
-        } else {
-            //Browser back button was clicked
-            console.log('Browser clicked..');
-        }
-
-        var baseURL = "dashboard.html#";
-        var oldURL = e.oldURL.split('#')[1];
-        var newURL = e.newURL.split('#')[1];
-
-        
-        if(!newURL){
-            newURL = "home";
-        }
-     //   MENU_HELPER.menuClick(newURL, oldURL);
-        e.preventDefault();
-         
-        console.log("back button...",oldURL,newURL);
-        return false;    
-    } */
+     window.onpopstate = function(event) {
+            if(location.hash && location.hash.length>0){
+                var uri = location.hash.replace('#','');
+                var page = uri.split('/')[1];
+                var parentpage = uri.split('/')[0];
+                if(!page){
+                    page = parentpage;
+                    parentpage = null;
+                }
+                MENU_HELPER.menuClick(page, parentpage,{'skiphistory':'true'});
+            }else{
+          //      MENU_HELPER.menuClick('dashboard');
+            }
+        event.preventDefault();
+        return false;  
+    } 
 });
