@@ -1,7 +1,7 @@
 MENU_HELPER = new function () {
     breadCrumbStack = [];
     this.menuClick = function (page, parentpage, extraOptions) {
-      //   console.log(page, parentpage, CURRENT_MODULE);
+        // console.log(page, parentpage, CURRENT_MODULE);
        //  console.log(MODULE_DATA); 
         $("#content-wrapper").html(Handlebars.compile('{{> loading }}')); 
 
@@ -117,7 +117,8 @@ MENU_HELPER = new function () {
                 }
             }
     }
-    this.checkTopPageisSame = function(currentPage){
+     //Dont navigate if we are already on the same page
+    this.checkTopPageisSame = function(currentPage){ 
         if(breadCrumbStack.length > 0){
             var top = breadCrumbStack.length -1 ;
             var topPage = breadCrumbStack[top];
@@ -127,12 +128,17 @@ MENU_HELPER = new function () {
         }
         return false;
     }
+    //Pop the item from the breadcrumb stack.
     this.removeFromBreadCrumb = function(index){
         if(index < breadCrumbStack.length -1){
             for(var i = breadCrumbStack.length -1 ; i>index;i--){
                 breadCrumbStack.pop();
             }
-            MENU_HELPER.menuClick(breadCrumbStack[index].page,CURRENT_PARENT_PAGE);
+            if(breadCrumbStack[index].hide === true){
+                MENU_HELPER.menuClick(breadCrumbStack[index].page,CURRENT_PARENT_PAGE);
+            }else{
+                MENU_HELPER.menuClick(breadCrumbStack[index].page);
+            }
        }
     }
 

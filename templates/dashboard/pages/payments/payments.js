@@ -9,14 +9,15 @@ $(document).ready(function () {
             optionsTemplate: 'grid-row-options-template',
          	optionsPostRender: function(rowElement, record) {
                 $(rowElement).find('.log-payment').click(function() {
-                   // MENU_HELPER.menuClick('addUser', 'manageUsers', {extraHref: record._id});
+                    MENU_HELPER.menuClick('logPaymentDetails', 'manageTrip', {extraHref: record._id});
                 });
-                $(rowElement).find('.cancel').click(function() {
-                    // MENU_HELPER.menuClick('addUser', 'manageUsers', {extraHref: record._id});
-                 });
+                $(rowElement).find('.managePaymentLog').click(function() {
+                    var options = {
+                         tripDetails: record,
+                        extraHref: record._id
+                    };
 
-                 $(rowElement).find('.comment').click(function() {
-                    // MENU_HELPER.menuClick('addUser', 'manageUsers', {extraHref: record._id});
+                     MENU_HELPER.menuClick('managePaymentLog', 'manageTrip',options);
                  });
 
                  $(rowElement).find('.mark-received').click(function() {
@@ -38,13 +39,18 @@ $(document).ready(function () {
 
 
 Handlebars.registerHelper('getPaymentGridOptions', function(status,id) {
-    switch (status){
+    return [{'option':'Notify Payment','_id':id,'id':'log-payment'},
+    {'option':'Payment logs','_id':id,'id':'managePaymentLog'},
+    {'option':'Cancel','_id':id,'id':'cancel'}];
+   /*  switch (status){
         case 'Paid':
-        return [{'option':'Log Payment','_id':id,'id':'log-payment'},
+        return [{'option':'Log Payment','_id':id,'id':'LogPaymentDetails'},
+                {'option':'Detailed logs','_id':id,'id':'managePaymentLog'},
                 {'option':'Cancel','_id':id,'id':'cancel'}]
         break;
         case 'PendingPayments':
-        return [{'option':'Log Payment','_id':id,'id':'log-payment'},
+        return [{'option':'Log Payment','_id':id,'id':'LogPaymentDetails'},
+        {'option':'Detailed logs','_id':id,'id':'managePaymentLog'},
         {'option':'Cancel','_id':id,'id':'cancel'}]
         break;
         case 'PendingReceivable':
@@ -55,5 +61,5 @@ Handlebars.registerHelper('getPaymentGridOptions', function(status,id) {
         case 'Received':
         return [];
         break;
-    }
+    } */
 });

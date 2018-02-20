@@ -5,11 +5,17 @@
                         <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa {{pageIcon}}"></i> 
-                         {{#if extraOptions.data}}
-                         <BtnCaption>{{extraOptions.data.status}}</BtnCaption>  
-                         {{else}}
-                         <BtnCaption>{{pageSubHeading}}</BtnCaption>  
-                         {{/if}}
+                        <BtnCaption>
+                                {{#if extraOptions.data}}
+                                           {{#if extraOptions.data.status}}
+                                               {{extraOptions.data.status}}
+                                           {{else}}
+                                                All
+                                           {{/if}} 
+                                {{else}}
+                                   {{pageSubHeading}}  
+                                {{/if}}
+                               </BtnCaption>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         
@@ -29,8 +35,6 @@
 </div>
 <div class='payments'>
     <div class='payments-content'>
-
-		  NOT YET IMPLEMENTED
 
     </div>
 </div> 
@@ -117,7 +121,7 @@
                     {{/if}}                          
                 {{/with}}                                   
         </div>  
-        <div class="col-sm-4 grid-row-container">
+       <div class="col-sm-4 grid-row-container">
             <div class="grid-row-title">Vehicle Requirements:</div> 
             <div class="row">     
                 <div class="grid-row-tile col-sm-12">                
@@ -135,7 +139,7 @@
                         </span>
                     </div>                                           
                 </div>  
-            </div>
+            </div> 
             {{#if totalWeight}}
             <div class="grid-row-title">Total Weight:</div> 
              <div class="row">     
@@ -163,18 +167,34 @@
         {{/if}} 
 
 
-            {{#if quotes}}
-                <div class="grid-row-title">Quote:</div> 
+            {{#with tripAdmin}}
+                <div class="grid-row-title">Need to be paid:</div> 
                 <div class="row">     
                     <div class="grid-row-tile col-sm-12">                
                         <div>
                             <span class="grid-row-tile-text">
-                                {{quotes.cost}} 
+                                Total: {{totalAmount}} <br>
+                                Balance: {{balanceAmount}} 
                             </span>
                         </div>                                           
                     </div>  
                 </div>
-            {{/if}}
+            {{/with}}
+
+
+            {{#with truckAdmin}}
+            <div class="grid-row-title">Need to pay:</div> 
+            <div class="row">     
+                <div class="grid-row-tile col-sm-12">                
+                    <div>
+                        <span class="grid-row-tile-text">
+                            Total: {{totalAmount}} <br>
+                            Balance: {{balanceAmount}} 
+                        </span>
+                    </div>                                           
+                </div>  
+            </div>
+         {{/with}}
 
         </div>     
     </div>

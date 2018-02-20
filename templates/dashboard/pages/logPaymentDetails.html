@@ -1,0 +1,43 @@
+{{{{raw-helper}}}}
+<style>
+.alpaca-field-object{border:0 solid #eee;border-radius:0;padding:10px}
+</style>
+{{{{/raw-helper}}}}
+{{> header}}
+<div class='trip-payment'>
+                       <div class="col-sm-6">
+                           Total cost of the trip is <strong>
+                               {{templateData.data.quotes.cost}} &#8377; </strong> <br>
+                        <div class='trip-payment-content'>
+                         </div>
+                       </div>
+</div> 
+{{{{raw-helper}}}}
+<script id="cost" type="text/x-handlebars-template">
+    <div>
+    <p class="h5">Total cost of the trip is <mark>{{data}}</mark> Rs.<p>
+ <!--  <strong>Account No:</strong>  XXXXXXXXX787,<br>
+  <strong>Bank Name:</strong>  State Bank of India,<br>
+  <strong>Branch:</strong>      Vijayawada.<br>
+  <strong>IFSC: </strong>       SBI004562 <br>
+        </div> -->
+</script>
+<script id="tripPayment" type="text/x-handlebars-template">
+ <div class="container-fluid">
+      <div class="row">
+       {{#with data}}
+        <div class="col-sm-12" >
+              <div class="row">
+              </div>
+            </div>
+        </div>
+            {{/with}}
+    </div>
+ </div> 
+</script>
+{{{{/raw-helper}}}}
+{{{{raw-helper}}}}
+<script type="text/javascript">
+    console.log("trippayment template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var t=UTILS.getCurrentTemplateData();$(".trip-payment-content").alpaca({view:"bootstrap-create-horizontal",schema:{title:"",type:"object",properties:{amount:{type:"number",title:"Amount (Rs) :",required:!0},modeOfPayment:{type:"string",title:"Mode :","enum":["Online","BankDeposit","Cash"],required:!0},dateOfPayment:{type:"string",format:"date",title:"Date :",required:!0},transactionid:{type:"string",title:"Transaction-Id :"},referenceDoc:{type:"string",title:"Reference Doc :"}}},options:{hideInitValidationError:!0,focus:"amount",fields:{referenceDoc:{type:"file"}},form:{buttons:{submit:{click:function(){if(this.refreshValidationState(!0),!this.isValid(!0))return void this.focus();var e=this.getValue();e.tripid=t.data._id,postPaymentInfo(e)}}}}}}),postPaymentInfo=function(e){var a={};a.formData=JSON.stringify(e),a.uri="payments/service/addTripPayment",a.extraHref="totalcost="+t.data.cost+"&currentstatus="+t.data.status,a.type="POST",API_HELPER.postData(a,function(t,e){return t?void console.log("error",t):void MENU_HELPER.menuClick("manageTrip","manageTrip")})}});
+</script>
+{{{{/raw-helper}}}}

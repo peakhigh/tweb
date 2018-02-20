@@ -29,7 +29,7 @@ $(document).ready(function () {
                 });
 
                 $(rowElement).find('.payment').click(function() {
-                    MENU_HELPER.menuClick('tripPayment', 'manageTrip', {extraHref: record._id});
+                    MENU_HELPER.menuClick('logPaymentDetails', 'manageTrip', {extraHref: record._id});
                 });
 
 
@@ -59,21 +59,7 @@ $(document).ready(function () {
                 });
 
                 $(rowElement).find('.approvepayment').click(function() {
-
-                    var options = {};
-                    options.formData = JSON.stringify({ tripDetails : record});
-                    options.uri = "trips/service/setStatus";
-                    options.extraHref = "id="+record._id+"&status=PaymentApproved";
-                    options.type = 'POST';
-                    
-                        API_HELPER.postData(options, function (error, response) {
-                            if (error) {
-                                        console.log('error', error);
-                                        return;
-                            }
-                        });
-                    
-                   MENU_HELPER.menuClick('manageTrip', 'manageTrip');
+                    approveTrip(record);
                 });
 
                   $(rowElement).find('.reject-bid').click(function() {
@@ -171,6 +157,25 @@ $(document).ready(function () {
         }        
     });
 
+   approveTrip = function (record){
+    var options = {};
+    options.formData = JSON.stringify({ truckDetails : record});
+    options.uri = "trips/service/setStatus";
+    options.extraHref = "id="+record._id+"&status=Approved";
+    options.type = 'POST';
+    
+        API_HELPER.postData(options, function (error, response) {
+            if (error) {
+                        console.log('error', error);
+                        return;
+            }
+            MENU_HELPER.menuClick('manageTrip', 'manageTrip');
+        });
+    } 
+
+    /**
+     * callback from the HTML
+     */
     statusChanged = function(newStatus){
         
         var options = {
@@ -195,8 +200,8 @@ $(document).ready(function () {
 
          $("#yes").click(function(){
             var options = {};
-            options.formData = JSON.stringify({ tripDetails : record});
-            options.uri = "trips/service/setStatus";
+            options.formData = JSON.stringify(record);
+            options.uri = "trips/service/approveTripQuote";
             options.extraHref = "id="+record._id+"&status=PaymentPending";
             options.type = 'POST';
             

@@ -17,7 +17,7 @@ $(document).ready(function () {
         postUrl: "requests/service/addRequest",
         callbacks: {
             afterSubmit: function () {
-                MENU_HELPER.menuClick('manageTrip', 'manageTrip');
+                MENU_HELPER.menuClick('manageTrucks', 'manageTrucks');
             }
         },
     });

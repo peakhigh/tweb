@@ -14,11 +14,11 @@ $(document).ready(function () {
                     var options = {};
                   //  options.extraHref = record._id;
                     options.data = record;
-                    MENU_HELPER.menuClick('acceptTripReq', 'manageTrip', options);
+                    MENU_HELPER.menuClick('acceptTripReq', 'manageTrucks', options);
                 });
 
                 $(rowElement).find('.reject-trip').click(function() {
-                    MENU_HELPER.menuClick('rejectTripReq', 'manageTrip', {extraHref: record._id});
+                    MENU_HELPER.menuClick('rejectTripReq', 'manageTrucks', {extraHref: record._id});
                 });        
             }
         }, 

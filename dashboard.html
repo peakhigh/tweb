@@ -91,7 +91,6 @@
         if (API_HELPER.testToken()) {
             MODULE_DATA.loggedIn = true;
             MODULE_DATA.loggedInUser = API_HELPER.getLoggedInUser();
-            
             //filter out unnecessary menu
             if(MODULE_DATA.loggedInUser.role === 'CALL_CENTER_USER' && API_HELPER.getViewAsUser()
                         !==null){

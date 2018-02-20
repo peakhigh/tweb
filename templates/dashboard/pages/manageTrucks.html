@@ -10,11 +10,17 @@ dt{display:block;float:left;text-align:left}dt:after{content:':'}.top-buffer{mar
                       <div class="dropdown">
                   <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i class="fa {{pageIcon}}"></i> 
-                       {{#if extraOptions.data}}
-                       <BtnCaption>{{extraOptions.data.status}}</BtnCaption>  
-                       {{else}}
-                       <BtnCaption>{{pageSubHeading}}</BtnCaption>  
-                       {{/if}}
+                      <BtnCaption>
+                            {{#if extraOptions.data}}
+                                       {{#if extraOptions.data.status}}
+                                           {{extraOptions.data.status}}
+                                       {{else}}
+                                            All
+                                       {{/if}} 
+                            {{else}}
+                               {{pageSubHeading}}  
+                            {{/if}}
+                     </BtnCaption>
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="javascript:statusChanged('All');">All</a>

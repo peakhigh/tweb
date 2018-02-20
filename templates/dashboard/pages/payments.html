@@ -7,11 +7,17 @@
                         <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa {{pageIcon}}"></i> 
-                         {{#if extraOptions.data}}
-                         <BtnCaption>{{extraOptions.data.status}}</BtnCaption>  
-                         {{else}}
-                         <BtnCaption>{{pageSubHeading}}</BtnCaption>  
-                         {{/if}}
+                        <BtnCaption>
+                                {{#if extraOptions.data}}
+                                           {{#if extraOptions.data.status}}
+                                               {{extraOptions.data.status}}
+                                           {{else}}
+                                                All
+                                           {{/if}} 
+                                {{else}}
+                                   {{pageSubHeading}}  
+                                {{/if}}
+                               </BtnCaption>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <!-- <a class="dropdown-item" href="javascript:statusChanged('All');">All</a> -->
@@ -28,7 +34,6 @@
 </div>
 <div class='payments'>
     <div class='payments-content'>
-		  NOT YET IMPLEMENTED
     </div>
 </div> 
 {{{{raw-helper}}}}
@@ -113,7 +118,7 @@
                     {{/if}}                          
                 {{/with}}                                   
         </div>  
-        <div class="col-sm-4 grid-row-container">
+       <div class="col-sm-4 grid-row-container">
             <div class="grid-row-title">Vehicle Requirements:</div> 
             <div class="row">     
                 <div class="grid-row-tile col-sm-12">                
@@ -131,7 +136,7 @@
                         </span>
                     </div>                                           
                 </div>  
-            </div>
+            </div> 
             {{#if totalWeight}}
             <div class="grid-row-title">Total Weight:</div> 
              <div class="row">     
@@ -156,18 +161,32 @@
                 </div>  
             </div>
         {{/if}} 
-            {{#if quotes}}
-                <div class="grid-row-title">Quote:</div> 
+            {{#with tripAdmin}}
+                <div class="grid-row-title">Need to be paid:</div> 
                 <div class="row">     
                     <div class="grid-row-tile col-sm-12">                
                         <div>
                             <span class="grid-row-tile-text">
-                                {{quotes.cost}} 
+                                Total: {{totalAmount}} <br>
+                                Balance: {{balanceAmount}} 
                             </span>
                         </div>                                           
                     </div>  
                 </div>
-            {{/if}}
+            {{/with}}
+            {{#with truckAdmin}}
+            <div class="grid-row-title">Need to pay:</div> 
+            <div class="row">     
+                <div class="grid-row-tile col-sm-12">                
+                    <div>
+                        <span class="grid-row-tile-text">
+                            Total: {{totalAmount}} <br>
+                            Balance: {{balanceAmount}} 
+                        </span>
+                    </div>                                           
+                </div>  
+            </div>
+         {{/with}}
         </div>     
     </div>
   </div>
@@ -188,6 +207,6 @@
 {{{{/raw-helper}}}}
 {{{{raw-helper}}}}
 <script type="text/javascript">
-    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();new GRID_HELPER.GRID(".payments-content",{gridData:e,gridId:"gridPayments",rowConfig:{template:"grid-row-template-details",optionsTemplate:"grid-row-options-template",optionsPostRender:function(e,n){$(e).find(".log-payment").click(function(){}),$(e).find(".cancel").click(function(){}),$(e).find(".comment").click(function(){}),$(e).find(".mark-received").click(function(){})}}});statusChanged=function(e){var n={data:{status:e}};MENU_HELPER.menuClick("payments","payments",n)}}),Handlebars.registerHelper("getPaymentGridOptions",function(e,n){switch(e){case"Paid":return[{option:"Log Payment",_id:n,id:"log-payment"},{option:"Cancel",_id:n,id:"cancel"}];case"PendingPayments":return[{option:"Log Payment",_id:n,id:"log-payment"},{option:"Cancel",_id:n,id:"cancel"}];case"PendingReceivable":return[{option:"Comments",_id:n,id:"comments"},{option:"Mark Received",_id:n,id:"mark-received"},{option:"Cancel",_id:n,id:"cancel"}];case"Received":return[]}});
+    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();new GRID_HELPER.GRID(".payments-content",{gridData:e,gridId:"gridPayments",rowConfig:{template:"grid-row-template-details",optionsTemplate:"grid-row-options-template",optionsPostRender:function(e,t){$(e).find(".log-payment").click(function(){MENU_HELPER.menuClick("logPaymentDetails","manageTrip",{extraHref:t._id})}),$(e).find(".managePaymentLog").click(function(){var e={tripDetails:t,extraHref:t._id};MENU_HELPER.menuClick("managePaymentLog","manageTrip",e)}),$(e).find(".mark-received").click(function(){})}}});statusChanged=function(e){var t={data:{status:e}};MENU_HELPER.menuClick("payments","payments",t)}}),Handlebars.registerHelper("getPaymentGridOptions",function(e,t){return[{option:"Notify Payment",_id:t,id:"log-payment"},{option:"Payment logs",_id:t,id:"managePaymentLog"},{option:"Cancel",_id:t,id:"cancel"}]});
 </script>
 {{{{/raw-helper}}}}

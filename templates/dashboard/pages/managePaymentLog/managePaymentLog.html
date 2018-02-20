@@ -1,0 +1,68 @@
+{{{{raw-helper}}}}
+{{{{/raw-helper}}}}
+{{> header}}
+<div class='manage-paymentLog'>
+
+    <div class='manage-paymentlog-content'>
+            
+    </div>
+</div> 
+{{{{raw-helper}}}}
+<script id="grid-row-template-details" type="text/x-handlebars-template">
+  <div class="container-fluid">
+    <div class="row grid-row">
+
+      <div class="col-md-10">
+        
+           <div class="row">
+             <div class="col-md-3">
+               <dt>Date of Payment </dt>&emsp; {{formatDate dateOfPayment}}
+              </div> 
+
+              <div class="col-md-3">
+                  <dt>Amount Paid </dt>&emsp; {{amount}}
+              </div> 
+
+              <div class="col-md-3">
+                  <dt>Mode of Payment </dt>&emsp;{{modeOfPayment}}
+              </div> 
+           </div>
+          
+           <div class="row top-buffer">
+              <div class="col-md-4">
+                  <dt>Status </dt>&emsp; {{status}}
+              </div> 
+              {{#if referenceDoc}}
+              <div class="col-md-4">
+               <dt>ReferenceDoc</dt>&emsp; {{referenceDoc}}
+            </div> 
+            {{/if}}
+
+            {{#if transactionid}}
+              <div class="col-md-4">
+                  <dt>Transactionid</dt>&emsp; {{transactionid}}
+              </div>
+              {{/if}} 
+           </div>
+
+      </div>   		
+    </div>
+    
+  </div>
+</script>
+
+<script id="grid-row-options-template" type="text/x-handlebars-template">
+  <div class="container-fluid">
+    <div class="row grid-row">       
+        <div class="col-sm-12">
+            <div class="pull-right">
+                {{#each (getGridOptions status _id)}}
+                <button type="button" class="btn btn-default btn-primary {{id}}" _id="{{_id}}">{{option}}</button>
+                    {{/each}}
+            </div>
+        </div>       
+    </div>
+  </div>
+</script>
+
+{{{{/raw-helper}}}}
