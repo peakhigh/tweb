@@ -2,11 +2,11 @@
 {{{{/raw-helper}}}}
 {{> header}}
 <div class='reject-trip-req'>
-    <div class='col-sm-9 reject-trip-content'>
+    <div class='col-sm-12 reject-trip-content'>
     </div>
 </div> 
 {{{{raw-helper}}}}
 <script type="text/javascript">
-    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();FORM_HELPER.draw(".reject-trip-content",e,{bindings:{comment:"column-1"},schemaOverride:{fields:{}},optionsOverride:{fields:{comment:{type:"textarea"}}},postUrl:"requests/service/addRequest",callbacks:{afterSubmit:function(){MENU_HELPER.menuClick("manageTrip","manageTrip")}}})});
+    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();e.data.comment="",e.data.status="Rejected",FORM_HELPER.draw(".reject-trip-content",e,{bindings:{comment:"column-1"},schemaOverride:{fields:{}},optionsOverride:{fields:{comment:{type:"textarea"}}},postUrl:"requests/service/addRequest",callbacks:{afterSubmit:function(){MENU_HELPER.menuClick("manageRequests","manageRequests")}}})});
 </script>
 {{{{/raw-helper}}}}

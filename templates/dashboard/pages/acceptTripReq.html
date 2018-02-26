@@ -1,17 +1,223 @@
 {{{{raw-helper}}}}
+<style>
+.tt-hint,.tt-query,.typeahead{width:396px;height:30px;padding:8px 12px;font-size:20px;line-height:30px;border:1px solid #ccc;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;outline:0}.typeahead{background-color:#fff}.typeahead:focus{border:2px solid #0097cf}.tt-query{-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075);-moz-box-shadow:inset 0 1px 1px rgba(0,0,0,.075);box-shadow:inset 0 1px 1px rgba(0,0,0,.075)}.tt-hint{color:#999}.tt-dropdown-menu{width:422px;margin-top:12px;padding:8px 0;background-color:#fff;border:1px solid #ccc;border:1px solid rgba(0,0,0,.2);-webkit-border-radius:8px;-moz-border-radius:8px;border-radius:8px;-webkit-box-shadow:0 5px 10px rgba(0,0,0,.2);-moz-box-shadow:0 5px 10px rgba(0,0,0,.2);box-shadow:0 5px 10px rgba(0,0,0,.2)}.tt-suggestion{padding:3px 20px;font-size:18px;line-height:24px}.tt-suggestion.tt-cursor{color:#fff;background-color:#0097cf}.tt-suggestion p{margin:0}tt-highlight{color:red}
+</style>
 {{{{/raw-helper}}}}
 {{> header}}
 <div class='accept-trip-req'>
-    <div class='col-sm-9 accept-trip-content'>
+    <div class='col-sm-12 accept-trip-content'>
+    </div>  
+    <div class="container">
+            <div class="row">
+                <div class='col-sm-12' class="form-group">
+                    <div class='form-group col-sm-6'>
+                        <label class="control-label" for="sel1">Select Driver:</label> 
+                        <input class="typeahead form-control" type="text" placeholder="Driver name" id='driverid'>
+                    </div>
+                    <div class='form-group col-sm-6'>           
+                    <label class="control-label" for="truckid">Select Truck:</label> 
+                    <input class="typeahead form-control" type="text" placeholder="Truck number" id='truckid'>
+                </div>
+                <button id="btnsubmit" class="btn btn-default pull-right">Submit</button>
+            </div>
+            </div> 
     </div>
-</div> 
-{{> header}}
-<div class='accept-trip-req'>
-    <div class='col-sm-9 accept-trip-content'>
-    </div>
+</div>
 </div> 
 {{{{raw-helper}}}}
+<script id="viewTripDetails" type="text/x-handlebars-template">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-4 grid-row-container">
+                <div class="grid-row-title">Pickup point:</div>                      
+                    {{#with tripDetails.pickup}}
+                        <div class="row">     
+                            <div class="grid-row-tile col-sm-12">                
+                                <div>
+                                    <span class="grid-row-tile-label">Date & time</span>
+                                    <span class="grid-row-tile-text">{{formatDate date}}</span>
+                                </div>
+                                <div>
+                                    <span class="grid-row-tile-label">Address</span>
+                                    <span class="grid-row-tile-text">
+                                        {{#if address.organisation}} {{address.organisation}}, {{/if}}
+                                        {{#if address.city}} {{address.city}}, {{/if}}
+                                        {{#if address.location}}
+                                        {{address.location}}, {{/if}} {{#if address.zip}}{{address.zip}}.{{/if}}
+                                    </span>                    
+                                </div>                            
+                            </div>  
+                        </div>
+                        {{#if contact}}
+                        <div class="row"> 
+                             <div class="grid-row-tile col-sm-12">
+                                <span class="grid-row-tile-label">Contact(s)</span>
+                                <div>        
+                                    {{#each contact}} 
+                                        <div>                                        
+                                             <span class="grid-row-tile-text">
+                                                {{#if firstName}} {{firstName}} {{lastName}} - {{/if}} {{mobile}} {{#if email}} - {{email}} {{/if}} 
+                                            </span>                   
+                                        </div>                                                                             
+                                    {{/each}}
+                                </div>
+                            </div> 
+                        </div> 
+                        {{/if}}
+                        <div class="row">   
+                             <div class="grid-row-tile col-sm-12">
+                                <span class="grid-row-tile-label">Material</span>
+                                <div>        
+                                    {{#with material}} 
+                                        <div>                                        
+                                             <span class="grid-row-tile-text">
+                                                {{name}} 
+                                                {{#if weight}} ({{weight}} {{weightUnit}}) {{/if}}
+                                                {{#if materialType}} - {{materialType}} {{/if}}
+                                                {{#if approximateCost}} - valued at {{currency approximateCost}} {{/if}}
+                                            </span>                   
+                                        </div>                                                                             
+                                    {{/with}}
+                                </div>
+                            </div> 
+                        </div>                    
+                    {{/with}}                                   
+            </div>   
+            <div class="col-sm-4 grid-row-container">
+                <div class="grid-row-title">Drop point:</div>                      
+                    {{#with tripDetails.drop}}
+                        <div class="row">     
+                            <div class="grid-row-tile col-sm-12">                
+                                {{#if date}}
+                                <div>
+                                    <span class="grid-row-tile-label">Date & time</span>
+                                    <span class="grid-row-tile-text">{{formatDate date}}</span>
+                                </div>
+                                {{/if}}
+                                <div>
+                                    <span class="grid-row-tile-label">Address</span>
+                                    <span class="grid-row-tile-text">
+                                        {{#if address.organisation}} {{address.organisation}}, {{/if}}
+                                        {{#if address.city}} {{address.city}}, {{/if}}
+                                        {{#if address.location}}
+                                        {{address.location}}, {{/if}} {{#if address.zip}}{{address.zip}}.{{/if}}
+                                    </span>                    
+                                </div>                            
+                            </div>  
+                        </div>
+                        {{#if contact}}
+                        <div class="row"> 
+                             <div class="grid-row-tile col-sm-12">
+                                <span class="grid-row-tile-label">Contact(s)</span>
+                                <div>        
+                                    {{#each contact}} 
+                                        <div>                                        
+                                             <span class="grid-row-tile-text">
+                                                {{#if firstName}} {{firstName}} {{lastName}} - {{/if}} {{mobile}} {{#if email}} - {{email}} {{/if}} 
+                                            </span>                   
+                                        </div>                                                                             
+                                    {{/each}}
+                                </div>
+                            </div> 
+                        </div> 
+                        {{/if}}
+                        {{#if itemsToDrop}}
+                        <div class="row"> 
+                             <div class="grid-row-tile col-sm-12">
+                                <div>        
+                                    <span class="grid-row-tile-label">Items to drop</span>
+                                    <span class="grid-row-tile-text">
+                                        {{#if itemsToDrop}}
+                                        {{commaSeperatedArray itemsToDrop}}                                    
+                                        {{/if}}
+                                    </span>
+                                </div>
+                            </div> 
+                        </div>           
+                        {{/if}}                          
+                    {{/with}}                                   
+            </div>  
+            <div class="col-sm-4 grid-row-container">
+                <div class="grid-row-title">Vehicle Requirements:</div> 
+                <div class="row">     
+                    <div class="grid-row-tile col-sm-12">                
+                        <div>
+                            <span class="grid-row-tile-text">
+                                {{#with data.vehicleRequirements}}
+                                    <div>
+                                        {{vehicleType}}
+                                        {{#if requiredCapacity}}
+                                             with capacity {{requiredCapacity}} {{capacityUnit}} 
+                                        {{/if}}
+                                        {{#if minRating}} with rating {{minRating}} {{/if}}
+                                    </div>
+                                {{/with}}
+                            </span>
+                        </div>                                           
+                    </div>  
+                </div>
+                {{#if tripDetails.totalWeight}}
+                <div class="grid-row-title">Total Weight:</div> 
+                 <div class="row">     
+                    <div class="grid-row-tile col-sm-12">                
+                        <div>
+                            <span class="grid-row-tile-text">  
+                                {{totalWeight}} {{totalWeightUnit}}
+                            </span>
+                        </div>                                           
+                    </div>  
+                </div>
+                {{/if}}
+                {{#if tripDetails.quotes}}
+                    <div class="grid-row-title">Quote:</div> 
+                    <div class="row">     
+                        <div class="grid-row-tile col-sm-12">                
+                            <div>
+                                <span class="grid-row-tile-text">
+                                    {{quotes.cost}} 
+                                </span>
+                            </div>                                           
+                        </div>  
+                    </div>
+                {{/if}}
+                <div class="row">     
+                    <div class="grid-row-tile col-sm-12">                
+                        <div>
+                            <span class="grid-row-tile-text">  
+                               Advance: {{advance}} Balance: {{balance}} 
+                            </span>
+                        </div>                                           
+                    </div>
+                 </div>
+               {{#if tripDetails.comment}}
+               <div class="grid-row-title">Comment:</div> 
+               <div class="row">     
+                  <div class="grid-row-tile col-sm-12">                
+                      <div>
+                          <span class="grid-row-tile-text">  
+                              {{comment}} 
+                          </span>
+                      </div>                                           
+                  </div>  
+              </div>
+              {{/if}}
+                <div class="grid-row-title">Status:</div> 
+                 <div class="row">     
+                    <div class="grid-row-tile col-sm-12">                
+                        <div>
+                            <span class="grid-row-tile-text">
+                                {{tripDetails.status}} 
+                            </span>
+                        </div>                                           
+                    </div>  
+                </div>
+            </div>     
+        </div>
+      </div>
+</script>
+{{{{/raw-helper}}}}
+{{{{raw-helper}}}}
 <script type="text/javascript">
-    console.log("template data acceptTripReq",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData();FORM_HELPER.draw(".accept-trip-content",e,{schemaOverride:{fields:{}},optionsOverride:{fields:{comment:{type:"textarea"}}},postUrl:"requests/service/addRequest",callbacks:{afterSubmit:function(){MENU_HELPER.menuClick("manageTrucks","manageTrucks")}}})});
+    console.log("template data acceptTripReq",UTILS.getCurrentTemplateData());var selectedTruckId,selectedDriverId;$(document).ready(function(){var e=UTILS.getCurrentTemplateData().tripDetails,t=(UTILS.getCurrentTemplateData(),$("#viewTripDetails").html()),r=Handlebars.compile(t);$(".accept-trip-content").html(r(e)),getFreeTrucks=function(){var e=new Bloodhound({datumTokenizer:function(e){var t=Bloodhound.tokenizers.whitespace(e.value);return $.each(t,function(e,r){for(i=0;i<r.length;i++)t.push(r.substr(i,r.length)),i++}),t},queryTokenizer:Bloodhound.tokenizers.whitespace,remote:{url:CONSTANTS.apiServer+"trucks/service/manageTrucks?status=Free",identify:function(e){return e.id},ajax:{type:"GET"},filter:function(e){return $.map(e.data,function(e){return{id:e._id,value:e.plateNumber+" "+e.truckType}})}}});e.clearPrefetchCache(),e.initialize();var t=$("#truckid");t.typeahead({hint:!0,highlight:!0,minLength:1},{name:"value",displayKey:"value",source:e.ttAdapter(),templates:{empty:['<div class="noitems">',"No Items Found","</div>"].join("\n")}}),$("#truckid").on(["typeahead:selected"].join(" "),function(e,t){selectedTruckId=t.id})},getFreeDrivers=function(){var e=new Bloodhound({datumTokenizer:function(e){var t=Bloodhound.tokenizers.whitespace(e.value);return $.each(t,function(e,r){for(i=0;i<r.length;i++)t.push(r.substr(i,r.length)),i++}),t},queryTokenizer:Bloodhound.tokenizers.whitespace,remote:{url:CONSTANTS.apiServer+"drivers/service/manageDrivers?status=Free",identify:function(e){return e.id},ajax:{type:"GET"},filter:function(e){return $.map(e.data,function(e){return{id:e._id,value:e.plateNumber+" "+e.truckType}})}}});e.clearPrefetchCache(),e.initialize();var t=$("#driverid");t.typeahead({hint:!0,highlight:!0,minLength:1},{name:"value",displayKey:"value",source:e.ttAdapter(),templates:{empty:['<div class="noitems">',"No Items Found","</div>"].join("\n")}}),$("#driverid").on(["typeahead:selected"].join(" "),function(e,t){selectedDriverId=t.id})},getFreeTrucks(),getFreeDrivers()}),$(function(){$("#btnsubmit").click(function(e){e.preventDefault();var t=UTILS.getCurrentTemplateData();t.data.status="Accepted",selectedDriverId&&(t.data.driverDetails=selectedDriverId),selectedTruckId&&(t.data.truckDetails=selectedTruckId);var r={};r.formData=JSON.stringify(t.data),r.uri="requests/service/addRequest",r.extraHref="id="+t.data._id,r.type="POST",API_HELPER.postData(r,function(e,t){return e?void console.log("error",e):void MENU_HELPER.menuClick("manageRequests","manageRequests")})})});
 </script>
 {{{{/raw-helper}}}}

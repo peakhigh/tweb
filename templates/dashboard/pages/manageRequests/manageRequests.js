@@ -11,14 +11,15 @@ $(document).ready(function () {
             optionsPostRender: function(rowElement, record) {
 
                 $(rowElement).find('.approve-trip').click(function() {
-                    var options = {};
-                  //  options.extraHref = record._id;
-                    options.data = record;
-                    MENU_HELPER.menuClick('acceptTripReq', 'manageTrucks', options);
+                    var options = {
+                        tripDetails: record,
+                       extraHref: record._id
+                   };
+                    MENU_HELPER.menuClick('acceptTripReq', 'manageRequests', options);
                 });
 
                 $(rowElement).find('.reject-trip').click(function() {
-                    MENU_HELPER.menuClick('rejectTripReq', 'manageTrucks', {extraHref: record._id});
+                    MENU_HELPER.menuClick('rejectTripReq', 'manageRequests', {extraHref: record._id});
                 });        
             }
         }, 
@@ -97,12 +98,17 @@ $(document).ready(function () {
 
 
     statusChanged = function(newStatus){
+        
         var options = {
             data : {
                 status: newStatus
             }
         };
-        MENU_HELPER.menuClick('truckRequests','manageTrucks',options);
+
+        if(newStatus === 'All'){
+            options.data = {};   
+        }
+        MENU_HELPER.menuClick('manageRequests',null,options);
     }
 
  Handlebars.registerHelper('getGridOptions', function(status,id) {
@@ -110,8 +116,8 @@ $(document).ready(function () {
        var loggedInUser = API_HELPER.getLoggedInUser();
         switch (status){
             case 'Pending':
-            options = [{'option':'approveTrip','_id':id,'id':'approve-trip'},
-                    {'option':'rejectTrip','_id':id,'id':'reject-trip'}];
+            options = [{'option':'ApproveTrip','_id':id,'id':'approve-trip'},
+                    {'option':'RejectTrip','_id':id,'id':'reject-trip'}];
             break;
             case 'Approved':
             options = [];

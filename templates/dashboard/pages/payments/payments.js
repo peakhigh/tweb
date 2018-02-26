@@ -39,9 +39,11 @@ $(document).ready(function () {
 
 
 Handlebars.registerHelper('getPaymentGridOptions', function(status,id) {
-    return [{'option':'Notify Payment','_id':id,'id':'log-payment'},
-    {'option':'Payment logs','_id':id,'id':'managePaymentLog'},
+    return [{'option':'Payment logs','_id':id,'id':'managePaymentLog'},
     {'option':'Cancel','_id':id,'id':'cancel'}];
+    if(loggedInUser.role != 'TRUCK_ADMIN'){
+        options.push({'option':'Notify Payment','_id':id,'id':'log-payment'});       
+    }
    /*  switch (status){
         case 'Paid':
         return [{'option':'Log Payment','_id':id,'id':'LogPaymentDetails'},

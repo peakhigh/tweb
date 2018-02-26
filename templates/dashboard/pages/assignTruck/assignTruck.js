@@ -63,7 +63,7 @@ $(document).ready(function () {
                             "click": function() {
                                 var value = this.getValue();
                                 value.tripDetails = moduleData._id;
-                              //  value.truckDetails = record;
+                               // value.tripDetails = record;
                                 value.toUser  = record.createdBy;
      
                                var options = {};

@@ -365,12 +365,9 @@ MENU_HELPER = new function () {
                
             }).on('typeahead:selected', function(obj, datum, name) {
                 selectedUser = datum;
-                //alert(JSON.stringify(datum)); 
-                // Your Code Here
             });
         
             $('.img-wrap .close').on('click', function() {
-          //      var id = $(this).closest('.img-wrap').find('img').data('id');
                 API_HELPER.setViewAsUser();
                 location.reload();
             });

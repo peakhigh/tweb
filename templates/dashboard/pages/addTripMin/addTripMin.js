@@ -184,7 +184,6 @@ function drawTripsForm(config,callback){
                     callback();
                 } 
 
-                console.log("came here...");
                 var form = renderedField.form;
                 form.validate(true);
                 // draw the validation state (top control + all children)
@@ -351,19 +350,11 @@ $(document).ready(function () {
         if($(this).is(':checked')){
             $("#newtripscontainer").hide();
             $("#newtripscontainerfull").show();
-            $('#newtripscontainerfull').alpaca('get').setValue(previousTrips[0]);
-           // $("#newtripscontainer").alpaca("destroy");
-           /*  drawTripsCompleteForm(original,function(){
-              $('#newtripscontainer').alpaca('get').setValue(previousTrips[0]);
-            }); */   
+            $('#newtripscontainerfull').alpaca('get').setValue(previousTrips[0]); 
         } else {
             $("#newtripscontainerfull").hide();
             $("#newtripscontainer").show();
-            $('#newtripscontainer').alpaca('get').setValue(previousTrips[0]);
-        //   $("#newtripscontainer").alpaca("destroy");
-           // drawTripsForm(config,function(){
-               // $('#newtripscontainer').alpaca('get').setValue(previousTrips[0]);
-           // });       
+            $('#newtripscontainer').alpaca('get').setValue(previousTrips[0]);      
         }
     });
     
