@@ -1,7 +1,12 @@
 $(document).ready(function () {
     navigateToPage = function(page){
         var extras;
+        console.log(page);
         switch(page){
+            case 'manageRequests':
+            case 'payments':
+            MENU_HELPER.menuClick(page);
+            break;
             case 'Quoted':
             case 'Paymentpending':
             case 'Running':
@@ -9,10 +14,16 @@ $(document).ready(function () {
            extras ={ data : {
                 status: page
             }};
+            case 'manageTrip':
             page = 'manageTrip';
-            break;
+            MENU_HELPER.menuClick(page, page, extras);   
+            break; 
+            case 'manageTrucks':
+            case 'manageUsers':
+            MENU_HELPER.menuClick(page, page, extras);   
+            break;   
         }
-        MENU_HELPER.menuClick(page, page, extras);
+        
     }
 
 });
