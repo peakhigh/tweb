@@ -329,10 +329,29 @@ ul.alert-dropdown {
   background-color: black;
 }
 /** grid **/
-.grid-row {
+.grid-row-default {
   border: 1px solid #eceeef;
   margin-bottom: 10px;
   padding: 5px;
+  position: relative;
+}
+.grid-row-option-icon {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  text-align: right;
+  font-size: 20px;
+  cursor: pointer !important;
+  margin: 5px;
+  margin-right: 10px;
+  z-index: 10;
+}
+.grid-row-option-icon:hover {
+  color: #fed136;
+}
+.grid-row-data {
+  margin-bottom: 25px;
+  margin-top: 10px;
 }
 .grid-row-title {
   font-weight: 600;
@@ -359,6 +378,34 @@ ul.alert-dropdown {
 }
 .grid-row-options-default {
   display: none;
+  position: absolute;
+  bottom: 0px;
+  right: 25px;
+  margin: 5px;
+  margin-bottom: 12px;
+  background-color: ivory;
+  border-radius: 10px;
+  padding-right: 10px;
+}
+.grid-row-options-default-remove-icon {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  font-size: 13px;
+  margin-right: 5px;
+  cursor: pointer;
+  z-index: 12;
+}
+.grid-row-options-button {
+  text-align: right;
+  font-size: 14px;
+  cursor: pointer !important;
+  margin: 5px;
+  z-index: 11;
+  text-decoration: underline;
+}
+.grid-row-options-button:hover {
+  color: #fed136;
 }
 .grid-row-no-records {
   text-align: center;

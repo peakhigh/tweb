@@ -152,11 +152,13 @@ GRID_HELPER = new function () {
                 //     });
                 // }
                 if (me.options.rowConfig.optionsTemplate) {
-                    $(row).bind(me.options.rowConfig.optionsEvent || 'mouseover', function(e) {                        
+                    $(row).find('.grid-row-option-icon').on('mouseover click', function(e) {    
                         if (!me.currentOptionsRowId || $(row).attr('_id') !== me.currentOptionsRowId) {
+                            //new visit to a row                            
                             $('#'+me.options.gridId).find('.grid-row-options-default').hide(250);
                             if (!$(row).find('.grid-row-options-default').data('rendered')) {
                                 var record = me.getRecordById($(row).attr('_id'));
+                                //$(row).find('.grid-row-options-default .grid-row-options-panel').html(me.options.rowConfig.optionsTemplate(record));
                                 $(row).find('.grid-row-options-default').html(me.options.rowConfig.optionsTemplate(record));
                                 $(row).find('.grid-row-options-default').data('rendered', true);
                                 if (me.options.rowConfig.optionsPostRender) {
@@ -165,8 +167,32 @@ GRID_HELPER = new function () {
                             }                            
                             $(row).find('.grid-row-options-default').slideDown(250);
                             me.currentOptionsRowId = $(row).attr('_id');
-                        }                        
+                        } else if (me.currentOptionsRowId && $(row).attr('_id') === me.currentOptionsRowId) {
+                            //existing row
+                            if (e.type === 'click') {
+                                if ($(row).find('.grid-row-options-default').is(':visible')) {
+                                    $(row).find('.grid-row-options-default').hide(250);
+                                } else {
+                                    $(row).find('.grid-row-options-default').show(250);
+                                }                             
+                            }  
+                        }                       
                     });
+                    // $(row).bind(me.options.rowConfig.optionsEvent || 'mouseover', function(e) {                        
+                    //     if (!me.currentOptionsRowId || $(row).attr('_id') !== me.currentOptionsRowId) {
+                    //         $('#'+me.options.gridId).find('.grid-row-options-default').hide(250);
+                    //         if (!$(row).find('.grid-row-options-default').data('rendered')) {
+                    //             var record = me.getRecordById($(row).attr('_id'));
+                    //             $(row).find('.grid-row-options-default').html(me.options.rowConfig.optionsTemplate(record));
+                    //             $(row).find('.grid-row-options-default').data('rendered', true);
+                    //             if (me.options.rowConfig.optionsPostRender) {
+                    //                 me.options.rowConfig.optionsPostRender($(row).find('.grid-row-options-default'), record);
+                    //             }
+                    //         }                            
+                    //         $(row).find('.grid-row-options-default').slideDown(250);
+                    //         me.currentOptionsRowId = $(row).attr('_id');
+                    //     }                        
+                    // });
                 }
             });
         }

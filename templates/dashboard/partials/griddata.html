@@ -3,13 +3,24 @@
     {{{compileTemplateByName headerTemplateId headerData}}}
     {{#each gridData.data}}
         <div class="grid-row-default" _id="{{_id}}">
-            {{{compileTemplateByName ../rowConfig.template this ../rowConfig}}}
+            <div class="grid-row-option-icon">
+                <span class="glyphicon glyphicon-tasks"></span>
+            </div>
+            <div class="grid-row-data">                    
+                    {{{compileTemplateByName ../rowConfig.template this ../rowConfig}}}
+            </div>            
             {{#if ../rowConfig.detailsTemplate}}
                 <div class="grid-row-details-default" _id="{{_id}}">                    
                 </div>                              
             {{/if}}                     
             {{#if ../rowConfig.optionsTemplate}}
-                <div class="grid-row-options-default" _id="{{_id}}"></div>
+                <div class="grid-row-options-default" _id="{{_id}}">
+                    <!-- <div class="grid-row-options-default-remove-icon">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </div>
+                    <div class="grid-row-options-panel">
+                    </div> -->
+                </div>
             {{/if}} 
             {{gridRowPostHook ../this.rowConfig this (compileTemplateByHtml ../rowConfig.rowId this)}}  
         </div>                
