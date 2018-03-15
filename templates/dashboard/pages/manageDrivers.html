@@ -1,4 +1,7 @@
 {{{{raw-helper}}}}
+<style>
+.user{display:inline-block;width:150px;height:150px;border-radius:50%;background-repeat:no-repeat;background-position:center center;background-size:cover}
+</style>
 {{{{/raw-helper}}}}
 <div class="row">
     <div class="col-lg-12">
@@ -46,8 +49,16 @@
                             <div class="panel-body">
                               <div class="row">
                                  <div class="col-md-3 col-lg-3 " align="center"> 
-                                  <img alt="User Pic" src="/img/default_image.png" class="img-circle img-responsive">
-                              </div> 
+                                  {{#if profilePic}}
+                                        <img alt="User Pic" 
+                                        src={{profilePic}} 
+                                        class="user img-responsive">
+                                {{else}}
+                                        <img alt="User Pic"
+                                        src="/img/default_image.png" 
+                                        class="user img-responsive">
+                                {{/if}}
+                                 </div> 
                                          <div class="col-md-5 col-lg-5 "> 
                                                   <table class="table table-user-information">
                                                     <tbody>

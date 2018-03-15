@@ -52,9 +52,17 @@
                               <div class="row">
                                  <div class="col-md-3 col-lg-3 " align="center"> 
 
-                                  <img alt="User Pic" src="/img/default_image.png" class="img-circle img-responsive">
+                                  {{#if profilePic}}
+                                        <img alt="User Pic" 
+                                        src={{profilePic}} 
+                                        class="user img-responsive">
+                                {{else}}
+                                        <img alt="User Pic"
+                                        src="/img/default_image.png" 
+                                        class="user img-responsive">
+                                {{/if}}
   
-                              </div> 
+                                 </div> 
 
                                          <div class="col-md-5 col-lg-5 "> 
                                                   <table class="table table-user-information">

@@ -103,6 +103,7 @@ Handlebars.registerHelper('getLoggedInRole', function () {
 });
 
 Handlebars.registerHelper('isloggedIn', function(arg1, arg2, options) {
+    console.log(arg1,arg2);
     return (arg1._id == arg2) ? options.fn(this) : options.inverse(this);
 });
 

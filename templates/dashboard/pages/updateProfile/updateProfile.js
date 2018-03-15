@@ -2,7 +2,6 @@ console.log('123template data', UTILS.getCurrentTemplateData());
 $(document).ready(function () {
     var config = UTILS.getCurrentTemplateData();
 
-    console.log(config);
     config.data.profilePic = "";
 
     var uploader = new qq.FineUploaderBasic({
@@ -12,7 +11,8 @@ $(document).ready(function () {
                "Authorization": 'Bearer ' + API_HELPER.getToken()
            },
            params: {
-               userid : config.data._id
+               userid : config.data._id,
+               type:"Users"
             },
             paramsInBody:false
        }, 
@@ -23,7 +23,6 @@ $(document).ready(function () {
        },  
        callbacks: {
         onComplete: function(id,filename,responseJSON){
-         //   location.reload();
             MENU_HELPER.menuClick('viewProfile', 'updateProfile');
         }
        },
@@ -64,7 +63,6 @@ $(document).ready(function () {
                         // files for multiple or use files[0] to get only one file
                         // and if you want to use base64 data you could use data 
                      //   this.data = files;
-                        console.log(files[0]);
                         uploader.addFiles(files);
                      }
                 }

@@ -19,6 +19,7 @@ MENU_HELPER = new function () {
         }
         if (currentPageDetails) {
             CURRENT_PAGE_CONFIG = currentPageDetails;
+            console.log(currentPageDetails);
             /** TODO: how to get partials list in a template ? change lib ? set in api level ?*/
             $.handlebars({
                 templatePath: 'templates/' + CURRENT_MODULE + '/pages',
@@ -86,7 +87,7 @@ MENU_HELPER = new function () {
            }else{
                 history.pushState(page,null,href)
            }       
-
+           
            MENU_HELPER.addToBreadCrumbStack(MODULE_DATA.loggedInUser.menu.SideMenu,page,parentpage);
         /*        breadCrumbStack.forEach(function(entry) {
             console.log(entry);

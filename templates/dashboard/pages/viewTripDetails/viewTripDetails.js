@@ -1,5 +1,5 @@
 // console.log(JSON.stringify(UTILS.getCurrentTemplateData()));
-console.log('template data', UTILS.getCurrentTemplateData());
+console.log('template data viewdetails', UTILS.getCurrentTemplateData());
 
 
 $(document).ready(function () {
