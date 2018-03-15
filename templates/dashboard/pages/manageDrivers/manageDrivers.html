@@ -128,7 +128,7 @@
         <div class="col-sm-12">
             <div class="pull-right">
                 {{#each (getDriverGridOptions status _id)}}     
-                <button type="button" class="btn btn-default btn-primary {{id}}" _id="{{_id}}">{{option}}</button>
+                <span class="grid-row-options-button {{id}}" _id="{{_id}}">{{option}}</span>
                 {{/each}}
             </div>
         </div>       

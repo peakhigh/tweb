@@ -1,6 +1,37 @@
 console.log('123template data', UTILS.getCurrentTemplateData());
 $(document).ready(function () {
     var config = UTILS.getCurrentTemplateData();
+
+    console.log(config);
+    config.data.profilePic = "";
+
+    var uploader = new qq.FineUploaderBasic({
+        request: {
+           endpoint: CONSTANTS.apiServer + "files/service/profilePics",
+           customHeaders: {
+               "Authorization": 'Bearer ' + API_HELPER.getToken()
+           },
+           params: {
+               userid : config.data._id
+            },
+            paramsInBody:false
+       }, 
+         validation: {
+           allowedExtensions: ['jpeg', 'jpg', 'png'],
+           itemLimit: 1,
+           sizeLimit: 5000000 // 5MB
+       },  
+       callbacks: {
+        onComplete: function(id,filename,responseJSON){
+         //   location.reload();
+            MENU_HELPER.menuClick('viewProfile', 'updateProfile');
+        }
+       },
+       autoUpload: false,
+       multiple: false,
+        debug:true 
+   }); 
+   
     FORM_HELPER.draw(".update-profile-content", config, {
         bindings: {
             firstName: "column-1",
@@ -27,7 +58,15 @@ $(document).ready(function () {
         optionsOverride: {
             fields: {
                 profilePic: {
-                    type: "file"
+                    id: "upload",
+                    type: "file",
+                    "selectionHandler": function(files, data) {
+                        // files for multiple or use files[0] to get only one file
+                        // and if you want to use base64 data you could use data 
+                     //   this.data = files;
+                        console.log(files[0]);
+                        uploader.addFiles(files);
+                     }
                 }
             },
             form: {
@@ -46,7 +85,8 @@ $(document).ready(function () {
             },
             beforeSubmit: function () { },//here in all callbacks, this stands for alpaca object
             afterSubmit: function () {
-                MENU_HELPER.menuClick('viewProfile', 'updateProfile');
+                uploader.uploadStoredFiles();
+               // MENU_HELPER.menuClick('viewProfile', 'updateProfile');
             },
             onSubmitError: function () { },//on submission if error occurs
             postRender: function () {
@@ -55,4 +95,7 @@ $(document).ready(function () {
         },
         postUrl: "users/service/updateProfile"
     });
+    
+  
+
 });

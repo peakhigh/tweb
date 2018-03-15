@@ -58,6 +58,20 @@ $(document).ready(function () {
             debug:true
         }); */
 
+        /*  window.pressed = function(){ 
+             
+            var a = document.getElementById('upload');
+            console.log(a.value);
+            if(a.value == "")
+            {
+                fileLabel.innerHTML = "Choose file";
+            }
+            else
+            {
+                var theSplit = a.value.split('\\');
+                fileLabel.innerHTML = theSplit[theSplit.length-1];
+            }
+        };  */
 
          $('#typeofdocument').on('change', function() {
             if(this.value === "Other"){
@@ -70,8 +84,8 @@ $(document).ready(function () {
         $("#myform").on("submit", function (e) {
             e.preventDefault();
             var moduleData = UTILS.getCurrentTemplateData();
-            var formData = new FormData(this);
-            formData.append('photo',formData);
+          //  var formData = new FormData(this);
+         //   formData.append('photo',formData);
             var doctype = $('#typeofdocument').val() === "Other" ? 
                                 $('#otherinput').val() : $('#typeofdocument').val();
             
@@ -107,7 +121,21 @@ $(document).ready(function () {
 
         $('.actions').on('click','button', function (evt) {
             if(evt.target.id === 'download'){
-                    console.log("download not implemented");
+                var options={};
+                options.formData = JSON.stringify({ name : "AA" });
+                options.uri = "files/service/fileDownload";
+                options.extraHref = "id="+$(evt.target).attr("_id");
+                options.type = 'GET';
+                                
+                 API_HELPER.downloadFile(options, function (error, response) {
+                       if (error) {
+                                  console.log('error', error);
+                                  return;
+                        }
+                        console.log(response);
+                        window.location= response.url;
+                 });
+
             }else if (evt.target.id === 'delete'){
                 var options={};
                 options.formData = JSON.stringify({ name : "AA" });
@@ -123,80 +151,10 @@ $(document).ready(function () {
                         location.reload(); // need to change, reload only template
                         //console.log(response);
                  });
-
-
             }
          });
 
 }
 
-
-     /* $('.uploadform').alpaca({
-    "schema": {
-        "type": "object",
-        "properties": {
-            "doctype": {
-                "type": "string",
-                "enum": ["License", "LoadDoc", "UnloadDoc", "Photo", "Insurance", "Other"],
-                "required": false
-            },
-            "other": {
-                "type": "string",
-                "required": true,
-                "pattern": {}
-            },
-            "file": {
-                "type": "string",
-                "required": false
-            }
-        },
-        "dependencies": {  
-          "other":"doctype"
-        },
-        "required": false
-    },
-    "options": {
-        "fields": {
-            "doctype": {
-                "type": "select",
-                "label": "File Type:",
-                 "helpers": [],
-            },
-            "other": {
-                "label": "Other:",
-                 "helpers": [],
-                 "dependencies": {
-                    "doctype":"Other"
-                 }
-            },
-            "file": {
-                "type": "file",
-                "name": "files"
-            }
-        },
-        "form": {
-            "attributes": {
-                "method": "POST",
-                "action": CONSTANTS.apiServer + "files/service/fileupload?id="+moduleData.id+"&type=123"    
-             },
-            "buttons": {
-                "submit": {
-                    "title": "Upload",
-                    "click": function() {
-                      //  console.log(this);
-                        this.ajaxSubmit();
-                    //  var formData = new FormData(this);
-                   //   console.log(this.getValue());
-                      //  alert(JSON.stringify(this.getValue(), null, "  "));
-                    }
-                }
-            }
-        },  
-        "view": "bootstrap-create-horizontal"
-    }
-});  */
-
-
- 
-
 });
+

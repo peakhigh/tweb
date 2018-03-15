@@ -8,6 +8,6 @@
 {{> tile}}
 {{{{raw-helper}}}}
 <script type="text/javascript">
-    $(document).ready(function(){navigateToPage=function(a){var n;switch(a){case"Quoted":case"Paymentpending":case"Running":case"Assigned":n={data:{status:a}},a="manageTrip"}MENU_HELPER.menuClick(a,a,n)}});
+    $(document).ready(function(){navigateToPage=function(e){var a;switch(console.log(e),e){case"manageRequests":case"payments":MENU_HELPER.menuClick(e);break;case"Quoted":case"Paymentpending":case"Running":case"Assigned":a={data:{status:e}};case"manageTrip":e="manageTrip",MENU_HELPER.menuClick(e,e,a);break;case"manageTrucks":case"manageUsers":MENU_HELPER.menuClick(e,e,a)}}});
 </script>
 {{{{/raw-helper}}}}

@@ -1,6 +1,6 @@
 {{{{raw-helper}}}}
 <style>
-.upload-files-content{margin-top:30px;margin-right:auto;margin-left:auto}.btn-glyphicon{padding:6px;background:#fff}.uploadform{margin-bottom:25px}.hidden{display:none!important;visibility:hidden!important}.show{display:block!important}.mydiv{position:absolute;top:50%;left:50%;margin-top:-50px;margin-left:-50px;width:100px;height:100px}
+.upload-files-content{margin-top:30px;margin-right:auto;margin-left:auto}.btn-glyphicon{padding:6px;background:#fff}.uploadform{margin-bottom:25px}.hidden{display:none!important;visibility:hidden!important}input[type=file]{width:100px;color:transparent}.show{display:block!important}.mydiv{position:absolute;top:50%;left:50%;margin-top:-50px;margin-left:-50px;width:100px;height:100px}
 </style>
 {{{{/raw-helper}}}}
 {{> header}}
@@ -24,7 +24,8 @@
                         </div>
                         <div class="form-group" id="uploadform">
                             <label for="keyName"></label>
-                            <input type="file" name="upload" id="upload" value="Upload" />
+                            <input type="file" name="upload" id="upload" value="Upload">
+                            <!-- <label id="fileLabel">Choose file</label> -->
                             <!-- <input type="file" id="keyName" class="file" name="photos"/> -->
                         </div>
                         <button type="submit" class="btn btn-default">Upload</button>
@@ -73,9 +74,7 @@
                   <td>
                     <div class="actions">
                     <button class="btn btn-glyphicon" role="button"><span  _id="{{_id}}" id="download" class="glyphicon glyphicon-save"></span></button>
-                    {{#isloggedIn (getLoggedInUser) createdby._id}}
                     <button class="btn btn-glyphicon"  role="button"><span _id="{{_id}}" id="delete" class="glyphicon glyphicon-trash"></span></button>
-                    {{/isloggedIn}}
                     </div>
                   </td>
                 </tr>
@@ -92,6 +91,6 @@
 {{{{/raw-helper}}}}
 {{{{raw-helper}}}}
 <script type="text/javascript">
-    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData(),t=new qq.FineUploaderBasic({request:{endpoint:CONSTANTS.apiServer+"files/service/fileupload",customHeaders:{Authorization:"Bearer "+API_HELPER.getToken()},params:{id:e.id,type:"unknown"},paramsInBody:!1},validation:{allowedExtensions:["jpeg","jpg","txt","png","pdf"],itemLimit:1,sizeLimit:5e6},callbacks:{onComplete:function(e,t,a){location.reload()}},button:document.getElementById("uploadform"),autoUpload:!1,multiple:!1});$("#typeofdocument").on("change",function(){"Other"===this.value?$("#otherinputdiv").removeClass("hidden"):$("#otherinputdiv").addClass("hidden")}),$("#myform").on("submit",function(e){e.preventDefault();var a=UTILS.getCurrentTemplateData(),o=new FormData(this);o.append("photo",o);var n="Other"===$("#typeofdocument").val()?$("#otherinput").val():$("#typeofdocument").val();t.setParams({id:a.id,type:n}),t.uploadStoredFiles()}),showUploadedFiles=function(){var t=$("#grid-row-template-details").html(),a=Handlebars.compile(t);if($(".datarea").html(""),$(".datarea").html(a(e)),$(".upload-files-content").find(".pager-container")){var o={};o.total=e.total,o.size=5;new GRID_HELPER.PAGER($(".upload-files-content").find(".pager-container"),o,function(e,t){MENU_HELPER.reloadData({data:{skip:(e-1)*t,limit:t}},function(e){console.log(e),$(".datarea").html(""),$(".datarea").html(a(e))})})}$(".actions").on("click","button",function(e){if("download"===e.target.id)console.log("download not implemented");else if("delete"===e.target.id){var t={};t.formData=JSON.stringify({name:"AA"}),t.uri="files/service/fileupload",t.extraHref="id="+$(e.target).attr("_id"),t.type="DELETE",API_HELPER.uploadFiles(t,function(e,t){return e?void console.log("error",e):void location.reload()})}})}});
+    console.log("template data",UTILS.getCurrentTemplateData()),$(document).ready(function(){var e=UTILS.getCurrentTemplateData(),t=new qq.FineUploaderBasic({request:{endpoint:CONSTANTS.apiServer+"files/service/fileupload",customHeaders:{Authorization:"Bearer "+API_HELPER.getToken()},params:{id:e.id,type:"unknown"},paramsInBody:!1},validation:{allowedExtensions:["jpeg","jpg","txt","png","pdf"],itemLimit:1,sizeLimit:5e6},callbacks:{onComplete:function(e,t,a){location.reload()}},button:document.getElementById("uploadform"),autoUpload:!1,multiple:!1});$("#typeofdocument").on("change",function(){"Other"===this.value?$("#otherinputdiv").removeClass("hidden"):$("#otherinputdiv").addClass("hidden")}),$("#myform").on("submit",function(e){e.preventDefault();var a=UTILS.getCurrentTemplateData(),o="Other"===$("#typeofdocument").val()?$("#otherinput").val():$("#typeofdocument").val();t.setParams({id:a.id,type:o}),t.uploadStoredFiles()}),showUploadedFiles=function(){var t=$("#grid-row-template-details").html(),a=Handlebars.compile(t);if($(".datarea").html(""),$(".datarea").html(a(e)),$(".upload-files-content").find(".pager-container")){var o={};o.total=e.total,o.size=5;new GRID_HELPER.PAGER($(".upload-files-content").find(".pager-container"),o,function(e,t){MENU_HELPER.reloadData({data:{skip:(e-1)*t,limit:t}},function(e){console.log(e),$(".datarea").html(""),$(".datarea").html(a(e))})})}$(".actions").on("click","button",function(e){if("download"===e.target.id){var t={};t.formData=JSON.stringify({name:"AA"}),t.uri="files/service/fileDownload",t.extraHref="id="+$(e.target).attr("_id"),t.type="GET",API_HELPER.downloadFile(t,function(e,t){return e?void console.log("error",e):(console.log(t),void(window.location=t.url))})}else if("delete"===e.target.id){var t={};t.formData=JSON.stringify({name:"AA"}),t.uri="files/service/fileupload",t.extraHref="id="+$(e.target).attr("_id"),t.type="DELETE",API_HELPER.uploadFiles(t,function(e,t){return e?void console.log("error",e):void location.reload()})}})}});
 </script>
 {{{{/raw-helper}}}}

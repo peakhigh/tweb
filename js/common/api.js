@@ -81,13 +81,20 @@ API_HELPER = new function() {
         });
     }
     this.downloadFile = function(options, callback){
-         /*    $.ajax({
-                 url: CONSTANTS.apiServer + options.uri + "?"+ options.extraHref,
-                success: function (data) {
-                   // console.log(data);
-                callback(null,data);
+        $.ajax({
+            url: CONSTANTS.apiServer + options.uri + "?"+ options.extraHref,
+            data: options.formData,
+            type: options.type,       
+            cache: false,
+            contentType: false,
+            processData: false,     
+            success: function (response) {  
+                callback(null, response);                  
+            },
+            error: function (e) {
+                callback(e, null);
             }
-         });  */
+        });
     }
     this.postData = function(options,callback){
         var uri = CONSTANTS.apiServer + options.uri;

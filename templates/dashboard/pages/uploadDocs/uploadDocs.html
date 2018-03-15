@@ -19,7 +19,8 @@
                         </div>
                         <div class="form-group" id="uploadform">
                             <label for="keyName"></label>
-                            <input type="file" name="upload" id="upload" value="Upload" />
+                            <input type="file" name="upload" id="upload" value="Upload">
+                            <!-- <label id="fileLabel">Choose file</label> -->
                             <!-- <input type="file" id="keyName" class="file" name="photos"/> -->
                         </div>
                         <button type="submit" class="btn btn-default">Upload</button>
@@ -78,9 +79,9 @@
                   <td>
                     <div class="actions">
                     <button class="btn btn-glyphicon" role="button"><span  _id="{{_id}}" id="download" class="glyphicon glyphicon-save"></span></button>
-                    {{#isloggedIn (getLoggedInUser) createdby._id}}
+                    <!-- {{#isloggedIn (getLoggedInUser) createdby._id}} -->
                     <button class="btn btn-glyphicon"  role="button"><span _id="{{_id}}" id="delete" class="glyphicon glyphicon-trash"></span></button>
-                    {{/isloggedIn}}
+                  <!--   {{/isloggedIn}} -->
                     </div>
                   </td>
                 </tr>
