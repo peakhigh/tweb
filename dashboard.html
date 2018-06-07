@@ -78,8 +78,9 @@
         MODULE_DATA = {
             loggedIn: false
         };
-        var partials = ['navbar', 'topmenu', 'messagemenu', 'alertmenu', 'usermenu', 'sidemenu', 'header', 'loading', 'cards', 'tile', 'footer', 'grid', 'griddata', 'pager', 'gridsort', 'griddefaultfilters'];
+        var partials = ['navbar', 'topmenu', 'messagemenu', 'alertmenu', 'usermenu', 'sidemenu', 'header', 'loading', 'cards', 'tile', 'footer', 'grid', 'griddata', 'pager', 'gridsort', 'griddefaultfilters', 'breadcrumb'];
         partials.push(MENU_HELPER.getHomePageByLocation(true));
+        console.log(partials);
         $.handlebars({
             templatePath: 'templates/dashboard',
             templateExtension: 'html',

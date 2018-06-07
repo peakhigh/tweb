@@ -1,8 +1,13 @@
- <div class="container">
-                    <ol class="breadcrumb breadcrumb-arrow">
-                     {{#each data}}  
-                        <li><a href="javascript:MENU_HELPER.removeFromBreadCrumb('{{@index}}');">
-                                {{title}}</a></li> 
-                        {{/each}}
-                    </ol>
- </div> 
+{{#if data }}  
+        <div class="container">
+                <ol class="breadcrumb breadcrumb-arrow">
+                {{#each data}}  
+                        <li>
+                                <a href="javascript:MENU_HELPER.getCurrentPageConfig().breadcrum.removePage('{{@index}}');">
+                                        {{title}}
+                                </a>
+                        </li> 
+                {{/each}}
+                </ol>
+        </div>
+ {{/if}}

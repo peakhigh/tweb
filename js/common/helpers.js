@@ -121,10 +121,10 @@ Handlebars.registerHelper('formatDate', function(date) {
 
 
 Handlebars.registerHelper('getBredCrumbStack', function() {  
-    if(MENU_HELPER.getBreadCrumbStack().length>1){
-        return {"data":MENU_HELPER.getBreadCrumbStack()};
+    if(typeof CURRENT_PAGE_CONFIG === "object" && CURRENT_PAGE_CONFIG && CURRENT_PAGE_CONFIG.breadcrum && CURRENT_PAGE_CONFIG.breadcrum.getPages().length > 1){
+        return {"data": CURRENT_PAGE_CONFIG.breadcrum.getPages()};
     }
-   return;
+   return {};
 });
 
 Handlebars.registerHelper('getIcon', function(mimetype) {

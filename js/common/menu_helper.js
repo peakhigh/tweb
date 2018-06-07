@@ -1,9 +1,8 @@
 MENU_HELPER = new function () {
-    breadCrumbStack = [];
     this.menuClick = function (page, parentpage, extraOptions) {
         // console.log(page, parentpage, CURRENT_MODULE);
-       //  console.log(MODULE_DATA); 
-        $("#content-wrapper").html(Handlebars.compile('{{> loading }}')); 
+        //  console.log(MODULE_DATA); 
+        $("#content-wrapper").html(Handlebars.compile('{{> loading }}'));
 
         CURRENT_PAGE = page;
         CURRENT_PARENT_PAGE = parentpage;
@@ -19,14 +18,13 @@ MENU_HELPER = new function () {
         }
         if (currentPageDetails) {
             CURRENT_PAGE_CONFIG = currentPageDetails;
-            console.log(currentPageDetails);
             /** TODO: how to get partials list in a template ? change lib ? set in api level ?*/
             $.handlebars({
                 templatePath: 'templates/' + CURRENT_MODULE + '/pages',
                 templateExtension: 'html',
                 partialPath: 'templates/' + CURRENT_MODULE + '/partials',
                 partialExtension: 'html',
-                partials: ['loading','breadCrumb']
+                partials: ['loading']//, 'breadCrumb'
             });
             var helperData = {};
             helperData.pageHeading = currentPageDetails.title;
@@ -34,6 +32,10 @@ MENU_HELPER = new function () {
             helperData.pageIcon = currentPageDetails.icon;
             helperData.extraOptions = extraOptions;
             currentPageDetails.extraOptions = extraOptions;
+            if (!currentPageDetails.breadcrum) {//if breadcrum already not exists
+                currentPageDetails.breadcrum = new MENU_HELPER.BREADCRUM();
+            }                
+            currentPageDetails.breadcrum.addPage(MODULE_DATA.loggedInUser.menu.SideMenu, page, parentpage);
             if (currentPageDetails.service) {//first load the service, get the service data & render the template 
                 if (extraOptions && extraOptions.data) {
                     if (!extraOptions.data) {
@@ -42,7 +44,7 @@ MENU_HELPER = new function () {
                     if (!currentPageDetails.data) {
                         currentPageDetails.data = {};
                     }
-                    
+
                     $.extend(true, currentPageDetails.data, extraOptions.data);
                 }
                 if (MENU_HELPER_CALLBACKS[page] && MENU_HELPER_CALLBACKS[page].setFilters) {
@@ -80,20 +82,16 @@ MENU_HELPER = new function () {
                     href += '/' + extraOptions.extraHref;
                 }
             }
-            
-           // window.location.href = href;
-           if(extraOptions && extraOptions.skiphistory){
-                   //dont add state..
-           }else{
-                history.pushState(page,null,href)
-           }       
-           
-           MENU_HELPER.addToBreadCrumbStack(MODULE_DATA.loggedInUser.menu.SideMenu,page,parentpage);
-        /*        breadCrumbStack.forEach(function(entry) {
-            console.log(entry);
-        });  */
+
+            // window.location.href = href;
+            if (extraOptions && extraOptions.skiphistory) {
+                //dont add state..
+            } else {
+                history.pushState(page, null, href)
+            }       
+            MENU_HELPER.setCurrentPageDetails(page, parentpage, currentPageDetails);
         }
-        
+
     }
 
     this.setCurrentPageDetails = function (page, parentpage, currentPageDetails) {
@@ -101,52 +99,10 @@ MENU_HELPER = new function () {
         CURRENT_PARENT_PAGE = parentpage;
         CURRENT_PAGE_CONFIG = currentPageDetails;
     }
-    // BreadCrumb methods start
-    this.addToBreadCrumbStack = function(menu,page,parentpage){
-            for (var i = 0; i < menu.length; i++) {
-                if (parentpage && menu[i]['page'] === parentpage) {
-                    return  MENU_HELPER.addToBreadCrumbStack(menu[i].Menu, page);
-                } else if (menu[i]['page'] === page) {
-                    if(menu[i]['hide'] === true){
-                        if(MENU_HELPER.checkTopPageisSame(menu[i]) === false){
-                            breadCrumbStack.push(menu[i]);
-                        }
-                    }else{
-                        breadCrumbStack.length = 0;
-                        breadCrumbStack.push(menu[i]);
-                    }
-                }
-            }
-    }
-     //Dont navigate if we are already on the same page
-    this.checkTopPageisSame = function(currentPage){ 
-        if(breadCrumbStack.length > 0){
-            var top = breadCrumbStack.length -1 ;
-            var topPage = breadCrumbStack[top];
-            if(topPage.page === currentPage.page){
-                return true;
-            }
-        }
-        return false;
-    }
-    //Pop the item from the breadcrumb stack.
-    this.removeFromBreadCrumb = function(index){
-        if(index < breadCrumbStack.length -1){
-            for(var i = breadCrumbStack.length -1 ; i>index;i--){
-                breadCrumbStack.pop();
-            }
-            if(breadCrumbStack[index].hide === true){
-                MENU_HELPER.menuClick(breadCrumbStack[index].page,CURRENT_PARENT_PAGE);
-            }else{
-                MENU_HELPER.menuClick(breadCrumbStack[index].page);
-            }
-       }
-    }
 
-    this.getBreadCrumbStack = function(){
-        return breadCrumbStack;
+    this.getCurrentPageConfig = function() {
+        return CURRENT_PAGE_CONFIG;
     }
-    // BreadCrumb methods end
 
     this.getMenuItem = function (menu, page, parentpage) {
         for (var i = 0; i < menu.length; i++) {
@@ -166,12 +122,14 @@ MENU_HELPER = new function () {
             return 'loading';
         }
     }
+
     this.setUIMenuItem = function (page, parentpage) {
         if (parentpage) {
             $('#submenu' + parentpage).addClass("in");
             $('#submenu' + parentpage).prop('aria-expanded', true);
         }
     }
+
     this.getCurrentPageDetailsByLocation = function () {
         var details = {};
         if (window.location.href.indexOf('#') > 0) {
@@ -197,6 +155,7 @@ MENU_HELPER = new function () {
         }
         return details;
     }
+
     this.reloadData = function (options, cb) {
         var pageDetails = MENU_HELPER.getCurrentPageDetailsByLocation();
         pageDetails.currentPageConfig.extraOptions = {
@@ -223,73 +182,74 @@ MENU_HELPER = new function () {
         });
     }
 
-    this.showViewAsPopUp = function(){
-        if(API_HELPER.getLoggedInUser().role === "CALL_CENTER_USER"){
-            
+    this.showViewAsPopUp = function () {
+        if (API_HELPER.getLoggedInUser().role === "CALL_CENTER_USER") {
+
             var selectedUser;
             var userType = "TRUCK_ADMIN";
             //move this code main js file
-            var userdata = new Bloodhound({ 
-                datumTokenizer: function(d) {
-                var test = Bloodhound.tokenizers.whitespace(d.value);
-                    $.each(test,function(k,v){
+            var userdata = new Bloodhound({
+                datumTokenizer: function (d) {
+                    var test = Bloodhound.tokenizers.whitespace(d.value);
+                    $.each(test, function (k, v) {
                         i = 0;
                         for (; i < v.length; i++) {
-                            test.push(v.substr(i,v.length));
+                            test.push(v.substr(i, v.length));
                             i++;
                         }
                     })
                     return test;
                 },
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
-                  remote: {
+                remote: {
                     url: CONSTANTS.apiServer + "users/service/manageUser?userType=",
-                     replace: function (url, query) {
-                     //   console.log(url,query);
-                        url += encodeURIComponent(userType);
-                        return url;
-                    }, 
-                    identify: function(obj) { 
-                        return obj.id; },
-                    ajax : {
-                         type: "GET"
-                     },
-                     filter: function(data) {
-                        //console.log("** Filter response to get remote data **")
-                         return $.map(data.data, function(item) {  
-                             return {
-                               id:item._id,value: item.firstName+" "+item.lastName
-                             };
-                         });
-                     }
-                },    
-        /*         prefetch: {
-                    url: CONSTANTS.apiServer + "users/service/manageUser?profile.userType=TRIP_ADMIN",
                     replace: function (url, query) {
-                        console.log(userType);
+                        //   console.log(url,query);
                         url += encodeURIComponent(userType);
                         return url;
                     },
-                    ajax : {
-                         type: "GET"
-                     },
-                     filter: function(data) {
+                    identify: function (obj) {
+                        return obj.id;
+                    },
+                    ajax: {
+                        type: "GET"
+                    },
+                    filter: function (data) {
                         //console.log("** Filter response to get remote data **")
-                         return $.map(data.data, function(item) {  
-                             return {
-                               id:item._id,value: item.firstName+" "+item.lastName
-                             };
-                         });
-                     }
-                }  */
+                        return $.map(data.data, function (item) {
+                            return {
+                                id: item._id, value: item.firstName + " " + item.lastName
+                            };
+                        });
+                    }
+                },
+                /*         prefetch: {
+                            url: CONSTANTS.apiServer + "users/service/manageUser?profile.userType=TRIP_ADMIN",
+                            replace: function (url, query) {
+                                console.log(userType);
+                                url += encodeURIComponent(userType);
+                                return url;
+                            },
+                            ajax : {
+                                 type: "GET"
+                             },
+                             filter: function(data) {
+                                //console.log("** Filter response to get remote data **")
+                                 return $.map(data.data, function(item) {  
+                                     return {
+                                       id:item._id,value: item.firstName+" "+item.lastName
+                                     };
+                                 });
+                             }
+                        }  */
             });
             // If prefetch is used, clear cache
             userdata.clearPrefetchCache();
             //console.log("** Clear cache called **")
             //Initialize the bloodhound suggestion engine
             userdata.initialize();
-            
-          var val =  $(".modal-body").alpaca({
+
+            var val = $(".modal-body").alpaca({
                 "schema": {
                     "type": "object",
                     "properties": {
@@ -311,7 +271,7 @@ MENU_HELPER = new function () {
                             "label": "User Type:",
                             "hideNone": true,
                             "helpers": [],
-                            "onFieldChange": function(e) {
+                            "onFieldChange": function (e) {
                                 userType = this.getValue();
                                 userdata.clearRemoteCache();
                                 userdata.initialize(true);
@@ -341,48 +301,98 @@ MENU_HELPER = new function () {
                         "buttons": {
                             "submit": {
                                 "title": "Submit",
-                                "click": function() {
-                                    if(this.getValue().userName){
-                                      var currentUser = this.getValue();
-                                      currentUser._id = selectedUser.id;
-                                      API_HELPER.setViewAsUser(currentUser);
+                                "click": function () {
+                                    if (this.getValue().userName) {
+                                        var currentUser = this.getValue();
+                                        currentUser._id = selectedUser.id;
+                                        API_HELPER.setViewAsUser(currentUser);
                                     }
                                     this.clear();
                                     location.reload();
-                                    console.log("Value is: " , this.getValue());
+                                    console.log("Value is: ", this.getValue());
                                 }
                             },
                             "cancel": {
                                 "title": "Cancel",
-                                "click": function() {
-                                 //   console.log("Value is: " + this.getValue());
-                                    $('#myModal').modal('hide'); 
+                                "click": function () {
+                                    //   console.log("Value is: " + this.getValue());
+                                    $('#myModal').modal('hide');
                                     this.clear();
                                 }
                             }
                         }
                     }
                 },
-               
-            }).on('typeahead:selected', function(obj, datum, name) {
+
+            }).on('typeahead:selected', function (obj, datum, name) {
                 selectedUser = datum;
             });
-        
-            $('.img-wrap .close').on('click', function() {
+
+            $('.img-wrap .close').on('click', function () {
                 API_HELPER.setViewAsUser();
                 location.reload();
             });
 
             $("#myModal").modal("show");
-          }
-          
+        }
+
     }
 
-    this.clearViewAsSelection = function(){
+    this.clearViewAsSelection = function () {
         API_HELPER.setViewAsUser();
         location.reload();
     }
 
+    this.BREADCRUM = function () {
+        //breadcrum items stack
+        this.pages = [];
+
+        //add item to breadcrum
+        this.addPage = function (menu, page, parentpage) {
+            let parentPageItem = null;
+            if (parentpage) {
+                parentPageItem = MENU_HELPER.getMenuItem(menu, parentpage);
+                if (parentPageItem && !this.isExists(parentPageItem)) {
+                    this.pages.push(parentPageItem);
+                }
+            }
+            let pageItem = MENU_HELPER.getMenuItem(parentPageItem && parentPageItem.Menu ? parentPageItem.Menu : menu, page);
+            if (pageItem && !this.isExists(pageItem)) {
+                this.pages.push(pageItem);
+            }
+        }
+        
+        //check if we are already on the same page
+        this.isExists = function (currentPage) {
+            if (this.pages.length > 0) {
+                for (var i = 0; i < this.pages.length; i++) {
+                    if(this.pages[i].page === currentPage.page) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        //Pop the item from the breadcrumb stack.
+        this.removePage = function (index) {
+            if (index < this.pages.length - 1) {
+                for (var i = this.pages.length - 1; i > index; i--) {
+                    this.pages.pop();
+                }
+                if (this.pages[index].hide === true) {
+                    MENU_HELPER.menuClick(this.pages[index].page, CURRENT_PARENT_PAGE);
+                } else {
+                    MENU_HELPER.menuClick(this.pages[index].page);
+                }
+            }
+        }
+
+        //get all items from breadcrum
+        this.getPages = function () {
+            return this.pages;
+        }
+    }
 }
 
 MENU_HELPER_CALLBACKS = {//define callbacks for each menu item
