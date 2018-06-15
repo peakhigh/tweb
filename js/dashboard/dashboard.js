@@ -1,8 +1,10 @@
 var pageDetails = MENU_HELPER.getCurrentPageDetailsByLocation();
 CURRENT_MODULE = 'dashboard';
-CURRENT_PAGE = pageDetails.page;
-CURRENT_PARENT_PAGE = pageDetails.parentPage;
-CURRENT_PAGE_CONFIG = pageDetails.currentPageConfig;
+if (typeof CURRENT_PAGE === "undefined" || !CURRENT_PAGE) {
+    CURRENT_PAGE = pageDetails.page;
+    CURRENT_PARENT_PAGE = pageDetails.parentPage;
+    CURRENT_PAGE_CONFIG = pageDetails.currentPageConfig;
+}
 
 $(function() {
     $(window).bind("load resize", setPageHeight);
