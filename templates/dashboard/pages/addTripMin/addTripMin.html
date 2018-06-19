@@ -1,12 +1,22 @@
 {{> header}}
 <div class='new-trips'>
+    
+    <div class="alert alert-danger fade in" style="display:none;">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <strong>Error!</strong>
+         No ViewAsUser found, select a user.
+    </div>
+
     <div class="container-fluid" id="loadPrevious">
         Auto fill from Previous Trip? &nbsp; <input type="checkbox" name="autofill" value="autofill">
       </div>
     <div class='new-trips-content' id="newtripscontainer">
+
     </div>
 
     <div class='new-trips-content-full' id="newtripscontainerfull" style="display: none;">
+
+      
     </div>
 </div> 
 

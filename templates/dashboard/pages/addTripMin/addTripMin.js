@@ -61,6 +61,7 @@ function initializeItemsToDropInEditMode(config) {
 }
 
 function drawTripsForm(config,callback){
+    var now = new Date();
     FORM_HELPER.draw(".new-trips-content", config, {
         // type: config.data ? 'edit' : 'create',
          bindings: {
@@ -147,6 +148,7 @@ function drawTripsForm(config,callback){
                         date: {
                             picker: {
                                 "sideBySide": true,
+                                "minDate": new Date().setDate(now.getDate()),
                             },
                             dateFormat: "YYYY-MM-DD HH:mm:ss"
                         }
@@ -158,6 +160,7 @@ function drawTripsForm(config,callback){
                         date: {
                             picker: {
                                 "sideBySide": true,
+                                "minDate": new Date().setDate(now.getDate()),
                             },
                             dateFormat: "YYYY-MM-DD HH:mm:ss"
                         }
@@ -171,12 +174,18 @@ function drawTripsForm(config,callback){
         callbacks: {
             preRender: function (config) {//before drawing alpaca dom form - used to adjust the config 
             },
-            beforeSubmit: function () { 
+            beforeSubmit: function (arr, $form, options) { 
+                //TODO: abort the ajax
             },//here in all callbacks, this stands for alpaca object
             afterSubmit: function () {
-                MENU_HELPER.menuClick('manageTrip', 'manageTrip');
+                if(API_HELPER.getLoggedInUser().role === 'CALL_CENTER_USER' && API_HELPER.getViewAsUser() == null){
+                          $('.alert').show();
+                   }else {
+                        MENU_HELPER.menuClick('manageTrip', 'manageTrip');
+                   }
             },
-            onSubmitError: function () { },//on submission if error occurs
+            onSubmitError: function () {
+             },//on submission if error occurs
             postRender: function (renderedField) {
 
                 initializeItemsToDropInEditMode(config);

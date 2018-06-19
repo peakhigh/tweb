@@ -1,33 +1,51 @@
 {{> header}}
 <div class='upload-files'>
+    
      <div class="col-sm-12">
          <div>
-                <form id="myform" class="form-inline" role="form" data-toggle="validator">
-                        <div class="form-group">
-                          <label for="typeofdocument">Doc Type:</label>
-                          <select class="form-control" id="typeofdocument">
-                              <option value="License">License</option>
-                              <option value="Photo">Photo</option>
-                              <option value="LoadDoc">Load doc</option>
-                              <option value="UnloadDoc">Unload doc</option>
-                              <option value="Other">Other</option>
-                            </select>
-                        </div>
-                        <div class="form-group hidden" id="otherinputdiv">
-                          <label for="otherinput"></label>
-                          <input type="text" class="form-control" id="otherinput">
-                        </div>
-                        <div class="form-group" id="uploadform">
-                            <label for="keyName"></label>
-                            <input type="file" name="upload" id="upload" value="Upload">
-                            <!-- <label id="fileLabel">Choose file</label> -->
-                            <!-- <input type="file" id="keyName" class="file" name="photos"/> -->
-                        </div>
-                        <button type="submit" class="btn btn-default">Upload</button>
-                      </form>  
+                    <div class="container">
+                            <form data-toggle="validator" role="form" id='myForm'>            
+                                <!-- <div class="row">   -->
+                                    <div class="form-group col-sm-3">
+                                            <input id="typeofdocument" class="form-control" placeholder="Filetype or name" 
+                                            type="text" required> 
+                                    </div>  
+                                    <div class="col-sm-6 form-group">  
+                                        <div class="input-group image-preview form-group">
+                                            <input type="text" class="form-control image-preview-filename" disabled="disabled">  
+                                            <span class="input-group-btn">
+                                                <!-- image-preview-clear button -->
+                                                    <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
+                                                    <span class="glyphicon glyphicon-remove"></span> Clear
+                                                </button>
+
+                                                <button type="button" type="submit" class="btn btn-default image-preview-upload" 
+                                                style="display:none;">
+                                                    <span class="glyphicon glyphicon-cloud-upload"></span> Upload
+                                                </button>
+                                                <!-- image-preview-input -->
+                                                <div class="btn btn-default image-preview-input">
+                                                    <span class="glyphicon glyphicon-folder-open"></span>
+                                                    <span class="image-preview-input-title">Browse</span>
+                                                    <input type="file" name="input-file-preview"/> <!-- rename it -->
+                                                </div>
+                                            </span>
+                                        </div>
+
+                                       <div id="myProgress" style="display:none;">
+                                                <div id="myBar"></div>
+                                        </div>  
+                                    </div>
+                                    <div class="alert alert-warning col-sm-12" id='alert' role="alert" style="display:none;">
+                                            File type or name is empty
+                                    </div>
+                                <!-- </div> -->
+                           </form>
+
+                  </div>
          </div> 
          <div class="upload-files-content">
-            <a href="javascript:showUploadedFiles();">View uploaded docs</a>
+            <a href="javascript:showUploadedFiles();" id="upload_link_button">View uploaded docs</a>
          </div>
      </div>
      <div class="row">    
@@ -63,7 +81,6 @@
               <thead>
                 <tr>
                   <th>Filetype</th>
-                  <th>Filename</th>
                   <th>Type of Document</th>
                   <th>Uploadedby</th>
                   <th>Actions</th>
@@ -73,15 +90,14 @@
                 {{#each data}}
                 <tr>
                   <td><i class="fa {{getIcon mimetype}} fa-2x" aria-hidden="true"></i></td>
-                  <td>{{originalname}}</td>
                   <td>{{typeofdocument}}</td>
-                  <td>{{createdby.username}}</td>
+                  <td>{{json createdby 'username'}}</td>
                   <td>
                     <div class="actions">
                     <button class="btn btn-glyphicon" role="button"><span  _id="{{_id}}" id="download" class="glyphicon glyphicon-save"></span></button>
-                     {{#isloggedIn (getLoggedInUser) createdby}} 
+                      {{#isloggedIn (getLoggedInUser) createdby}} 
                     <button class="btn btn-glyphicon"  role="button"><span _id="{{_id}}" id="delete" class="glyphicon glyphicon-trash"></span></button>
-                     {{/isloggedIn}}
+                    {{/isloggedIn}} 
                     </div>
                   </td>
                 </tr>

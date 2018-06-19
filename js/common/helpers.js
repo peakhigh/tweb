@@ -102,9 +102,12 @@ Handlebars.registerHelper('getLoggedInRole', function () {
     return API_HELPER.getLoggedInUser().role;
 });
 
+Handlebars.registerHelper('json', function(obj,keyvalue) {
+     return JSON.parse(obj)[keyvalue];
+ });
+
 Handlebars.registerHelper('isloggedIn', function(arg1, arg2, options) {
-    console.log(arg1,arg2);
-    return (arg1._id == arg2) ? options.fn(this) : options.inverse(this);
+    return (arg1._id == JSON.parse(arg2)._id) ? options.fn(this) : options.inverse(this);
 });
 
 Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {

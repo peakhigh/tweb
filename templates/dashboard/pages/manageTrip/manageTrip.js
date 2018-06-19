@@ -62,7 +62,7 @@ $(document).ready(function () {
                     approveTrip(record);
                 });
 
-                  $(rowElement).find('.reject-bid').click(function() {
+                  $(rowElement).find('.reject-quote').click(function() {
                       var options = {};
                         options.formData = JSON.stringify({ truckDetails : record});
                         options.uri = "requests/service/setStatus";
@@ -75,7 +75,7 @@ $(document).ready(function () {
                                             return;
                                 }
                             });
-                            MENU_HELPER.menuClick('manageTrip', 'manageTrip', {extraHref: record._id});
+                            MENU_HELPER.menuClick('manageTrip', 'manageTrip');
                 });
             }
             // click: function() {
@@ -212,7 +212,7 @@ $(document).ready(function () {
                                 console.log('error', error);
                                 return;
                     }
-                    MENU_HELPER.menuClick('paymentPending', 'manageTrip', {extraHref: record._id});
+                    MENU_HELPER.menuClick('manageTrip', 'manageTrip', {extraHref: record._id});
                 }); 
              $('#viewquotesmodalid').modal('hide');   
         });
