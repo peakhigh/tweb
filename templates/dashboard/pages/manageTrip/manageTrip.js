@@ -176,15 +176,10 @@ $(document).ready(function () {
     /**
      * callback from the HTML
      */
-    statusChanged = function(newStatus){
-        
-        var options = {
-            data : {
-                status: newStatus
-            }
-        };
-        if(newStatus === 'All'){
-            options.data = {};   
+    statusChanged = function(newStatus){   
+        var options = {};
+        if(newStatus !== 'All'){
+            options.data = {status: newStatus};   
         }
         MENU_HELPER.menuClick('manageTrip','manageTrip',options);
     }
